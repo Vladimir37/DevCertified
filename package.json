@@ -1,0 +1,26 @@
+{
+  "name": "dev-certified",
+  "version": "0.0.1",
+  "description": "",
+  "main": "DevCertified.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Vladimir37/DevCertified.git"
+  },
+  "author": "Vladimir37",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Vladimir37/DevCertified/issues"
+  },
+  "homepage": "https://github.com/Vladimir37/DevCertified#readme",
+  "dependencies": {
+    "body-parser": "^1.15.1",
+    "express": "^4.14.0",
+    "formidable": "^1.0.17",
+    "mongoose": "^4.5.0",
+    "passport": "^0.3.2"
+  }
+}
