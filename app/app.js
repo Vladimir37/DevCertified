@@ -1,10 +1,10 @@
 var express = require('express');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var session = require('express-session'); 
+var session = require('express-session');
 var passport = require('passport');
 
-// var router = require('./router/main');
+var router = require('./app/router/main');
 var middlewares = new (require('./app/controllers/middlewares'))();
 var config = require('../config.json');
 
@@ -29,6 +29,6 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
-// app.use(router);
+app.use(router);
 
 module.exports = app;
