@@ -1,6 +1,9 @@
 'use strict';
 
 var _ = require('underscore');
+var md5 = require('md5');
+
+var Mail = new (require('./mail'))();
 
 class Additional {
     serialize(status, body) {
@@ -15,6 +18,9 @@ class Additional {
         return _.values(obj).every(function (value) {
             return value;
         })
+    }
+    confirm(user) {
+        Mail.confirm(user);
     }
 }
 

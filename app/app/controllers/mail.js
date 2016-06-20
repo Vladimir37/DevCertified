@@ -10,13 +10,16 @@ var text = require('../../../configs/text.json');
 
 class Mail {
     constructor() {
-        this.letter_files = ['certify', 'pass_change', 'registration', 'reminder'];
+        this.letter_files = ['certify', 'pass_change', 'registration', 'reminder', 'confirm'];
         this.letter_files.forEach((subject) => {
             fs.readFile('client/templates/' + subject + '.ejs', 'utf-8', (err, tpl) => {
                 assert.ifError(err);
                 this[subject + '_tpl'] = tpl;
             });
             this[subject] = (data, addr) => {
+                if (!addr) {
+                    addr = data.mail;
+                }
                 var letter = ejs.render(this[subject + '_tpl'], data);
                 this.send(letter, text['letter_title_' + subject], addr);
             }

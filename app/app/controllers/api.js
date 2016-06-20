@@ -32,12 +32,13 @@ class API {
             _.extend(user_data, additional_user_data);
             return Models.users.create(user_data);
         }).then(function (user) {
-            Mail.registration(user, user.mail);
+            Mail.registration(user);
             return res.send(Additional.serialize(0));
         }).catch(function (err) {
             console.log(err);
+            // TODO Error - user exists
             return res.send(Additional.serialize(1, 'Server error'));
-        })
+        });
     }
     login(req, res, next) {
         passport.authenticate('local', function(err, user) {
@@ -64,7 +65,34 @@ class API {
         if (!user_data) {
             return res.send(Additional.serialize(1));
         }
+        user_data._id = null;
+        user_data.pass = null;
         return res.send(Additional.serialize(0, user_data));
+    }
+    confirmation(req, res, next) {
+        var confirmation_code = req.body.code;
+        if (!confirmation_code) {
+            return res.send(Additional.serialize(2, 'No code'));
+        }
+        Models.users.findOne({
+            _id: confirmation_code,
+            status: 0
+        }).then(function (user) {
+            if (!user) {
+                return res.send(Additional.serialize(2, 'Incorrect code'));
+            }
+            return Models.users.update({
+                _id: confirmation_code,
+                status: 0
+            }, {
+                status: 1
+            });
+        }).then(function () {
+            return res.send(Additional.serialize(0));
+        }).catch(function (err) {
+            console.log(err);
+            return res.send(Additional.serialize(1, 'Server error'));
+        });
     }
 }
 
