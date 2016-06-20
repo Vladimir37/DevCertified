@@ -9,6 +9,7 @@ var Additional = new (require('./additional'))();
 var Mail = new (require('./mail'))();
 
 class API {
+    // Auth and registration
     registration(req, res, next) {
         var user_data = {
             mail: req.body.mail,
@@ -55,7 +56,7 @@ class API {
                     return res.send(Additional.serialize(1, 'Server error'));
                 }
                 else {
-                    return res.send(Additional.serialize(0));
+                    return res.send(Additional.serialize(0, user));
                 }
             });
         })(req, res, next);
@@ -70,7 +71,7 @@ class API {
         return res.send(Additional.serialize(0, user_data));
     }
     confirmation(req, res, next) {
-        var confirmation_code = req.body.code;
+        var confirmation_code = req.query.code;
         if (!confirmation_code) {
             return res.send(Additional.serialize(2, 'No code'));
         }
@@ -93,6 +94,11 @@ class API {
             console.log(err);
             return res.send(Additional.serialize(1, 'Server error'));
         });
+    }
+    // Reports
+    report(req, res, next) {
+        var text = req.body.text;
+        var question = req.body.question;
     }
 }
 
