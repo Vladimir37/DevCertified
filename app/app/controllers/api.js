@@ -6,6 +6,7 @@ var md5 = require('md5');
 
 var Models = require('../models/main');
 var Additional = new (require('./additional'))();
+var Mail = new (require('./mail'))();
 
 class API {
     registration(req, res, next) {
@@ -30,8 +31,8 @@ class API {
             };
             _.extend(user_data, additional_user_data);
             return Models.users.create(user_data);
-        }).then(function () {
-            // TODO send mail
+        }).then(function (user) {
+            Mail.registration(user, user.mail);
             return res.send(Additional.serialize(0));
         }).catch(function (err) {
             console.log(err);
