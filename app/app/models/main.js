@@ -18,7 +18,7 @@ connection.on('error', function(err) {
 
 var models = {
     reports,
-    user,
+    users,
     certificates,
     tests: tests.test,
     question: tests.question
