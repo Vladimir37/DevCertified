@@ -4,7 +4,7 @@ var LocalStrategy = require('passport-local').Strategy;
 var md5 = require('md5');
 
 var Models = require('../models/main');
-var Additional = require('./additional');
+var Additional = new (require('./additional'))();
 
 class Middlewares {
     strategy() {

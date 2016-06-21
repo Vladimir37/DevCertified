@@ -21,7 +21,7 @@ var models = {
     users,
     certificates,
     tests: tests.test,
-    question: tests.question
+    questions: tests.question
 };
 
 mongoose.connect('mongodb://localhost/devcertified');

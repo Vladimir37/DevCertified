@@ -23,7 +23,8 @@ var testScheme = new mongoose.Schema({
     easyTime: Number,
     middleTime: Number,
     hardTime: Number,
-    img: String
+    img: String,
+    active: Boolean
 });
 var testModel = mongoose.model('Test', testScheme);
 
