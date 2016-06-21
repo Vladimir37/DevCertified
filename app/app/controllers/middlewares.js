@@ -4,6 +4,7 @@ var LocalStrategy = require('passport-local').Strategy;
 var md5 = require('md5');
 
 var Models = require('../models/main');
+var Additional = require('./additional');
 
 class Middlewares {
     strategy() {
@@ -42,11 +43,19 @@ class Middlewares {
         });
     }
     onlyUsers(req, res, next) {
-        if (req.user && req.user.status > 2) {
+        if (req.user && req.user.status < 2) {
             next();
         }
         else {
-            res.redirect('/login');
+            res.send(Additional.serialize(10, 'You are not authorized'));
+        }
+    }
+    onlyAdmin(req, res, next) {
+        if (req.user && req.user.status === 2) {
+            next();
+        }
+        else {
+            res.send(Additional.serialize(11, 'You are not admin'));
         }
     }
 }

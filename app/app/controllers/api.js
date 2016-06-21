@@ -2,6 +2,7 @@
 
 var passport = require('passport');
 var _ = require('underscore');
+var formidable = require('formidable');
 var md5 = require('md5');
 
 var Models = require('../models/main');
@@ -139,6 +140,31 @@ class API {
             console.log(err);
             return res.send(Additional.serialize(1, 'Server error'));
         });
+    }
+    // Admin
+    createTest(req, res, next) {
+        var form = new formidable.IncomingForm({
+            uploadDir: "temp"
+        });
+        form.parse(req, function (err, field, files) {
+            if (err) {
+                console.log(err);
+                return res.send(Additional.serialize(1, 'Server error'));
+            }
+            var test_data = {
+                title: req.body.title,
+                description: req.body.description,
+                easyCol: req.body.easy_col,
+                middleCol: req.body.middle_col,
+                hardCol: req.body.hard_col,
+                easyTime: req.body.easy_time,
+                middleTime: req.body.middle_time,
+                hardTime: req.body.hard_time,
+            }
+            if (!Additional.checkArguments(test_data)) {
+                return res.send(Additional.serialize(2, 'Required fields are empty'));
+            }
+        })
     }
 }
 
