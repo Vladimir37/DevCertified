@@ -9,5 +9,7 @@ router.get('/confirm', API.confirmation);
 
 router.post('/registration', API.registration);
 router.post('/login', API.login);
+router.post('/report', API.report);
+router.post('/solve-report', API.solveReport);
 
 module.exports = router;

@@ -97,8 +97,48 @@ class API {
     }
     // Reports
     report(req, res, next) {
-        var text = req.body.text;
-        var question = req.body.question;
+        var report_type = req.body.type;
+        var report_data = {
+            text: req.body.text,
+            question: req.body.question
+        };
+        if (!report_data.text || !report_type) {
+            return res.send(Additional.serialize(2, 'Incorrect data'));
+        }
+        var additional_report_data = {
+            type: report_type,
+            date: new Date(),
+            solved: false
+        };
+        _.extend(report_data, additional_report_data);
+        Models.reports.create(report_data).then(function () {
+            return res.send(Additional.serialize(0));
+        }).catch(function (err) {
+            console.log(err);
+            return res.send(Additional.serialize(1, 'Server error'));
+        });
+    }
+    solveReport(req, res, next) {
+        var report_num = req.body.report;
+        if (!report_num) {
+            return res.send(Additional.serialize(2, 'Incorrect data'));
+        }
+        Models.reports.update({
+            _id: report_num,
+            solved: false
+        }, {
+            solved: true
+        }).then(function (info) {
+            if (info.n) {
+                return res.send(Additional.serialize(0));
+            }
+            else {
+                return res.send(Additional.serialize(3, 'Incorrect report number'));
+            }
+        }).catch(function (err) {
+            console.log(err);
+            return res.send(Additional.serialize(1, 'Server error'));
+        });
     }
 }
 

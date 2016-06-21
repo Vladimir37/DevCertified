@@ -1,10 +1,9 @@
 var mongoose = require('mongoose');
 
 var certificateSchema = new mongoose.Schema({
-    type: Number,
-    text: String,
-    question: String,
-    status: Number
+    title: String,
+    name: String,
+    date: String
 });
 
 var certificateModel = mongoose.model('Certificate', certificateSchema);
