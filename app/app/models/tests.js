@@ -28,5 +28,15 @@ var testScheme = new mongoose.Schema({
 });
 var testModel = mongoose.model('Test', testScheme);
 
+var solutionSchema = new mongoose.Schema({
+    start: Date,
+    test: String,
+    questions: Array,
+    answers: Array,
+    result: Number
+});
+var solutionModel = mongoose.model('Solution', solutionModel);
+
 exports.question = questionModel;
 exports.test = testModel;
+exports.solution = solutionModel;

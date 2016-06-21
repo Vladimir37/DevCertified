@@ -323,6 +323,35 @@ class API {
             return res.send(Additional.serialize(1, 'Server error'));
         });
     }
+
+    getTests(req, res, next) {
+        var request_type = Number(req.body.type);
+        var user = req.user;
+        var query = {};
+        var target_tests;
+        Models.tests.find().then(function (all_tests) {
+            switch (request_type) {
+                // only not solved
+                case 1:
+                    target_tests = all_tests.filter(function (test) {
+                        return !(user.success_tests.indexOf(test._id) > -1);
+                    });
+                    break;
+                // only solved
+                case 2:
+                    target_tests = all_tests.filter(function (test) {
+                        return user.success_tests.indexOf(test._id) > -1;
+                    });
+                    break;
+                default:
+                    target_tests = all_tests;
+            };
+            return res.send(Additional.serialize(0, target_tests));
+        }).catch(function (err) {
+            console.log(err);
+            return res.send(Additional.serialize(1, 'Server error'));
+        });
+    }
 }
 
 module.exports = API;
