@@ -255,6 +255,74 @@ class API {
             });
         });
     }
+
+    addQuestion(req, res, next) {
+        var question_data = {
+            text: req.body.text,
+            answer1: req.body.an1,
+            answer2: req.body.an2,
+            answer3: req.body.an3,
+            answer4: req.body.an4,
+            true_answer: req.body.true_an,
+            complexity: req.body.complexity,
+            test: req.body.test
+        };
+        if (req.body.code) {
+            var additional_question_data = {
+                code: req.body.code,
+                lang: req.body.lang
+            }
+            _.extend(question_data, additional_question_data);
+        }
+        if (!Additional.checkArguments(question_data)) {
+            return res.send(Additional.serialize(2, 'Required fields are empty'));
+        }
+        Models.questions.create(question_data).then(function () {
+            return res.send(Additional.serialize(0));
+        }).catch(function (err) {
+            console.log(err);
+            return res.send(Additional.serialize(1, 'Server error'));
+        });
+    }
+
+    editQuestion(req, res, next) {
+        var question_data = {
+            text: req.body.text,
+            answer1: req.body.an1,
+            answer2: req.body.an2,
+            answer3: req.body.an3,
+            answer4: req.body.an4,
+            true_answer: req.body.true_an,
+            complexity: req.body.complexity
+        };
+        var question_num = req.body.num;
+        if (!Additional.checkArguments(question_data) || !question_data) {
+            return res.send(Additional.serialize(2, 'Required fields are empty'));
+        }
+        Models.questions.update({
+            _id: question_num
+        }, question_data).then(function () {
+            return res.send(Additional.serialize(0));
+        }).catch(function (err) {
+            console.log(err);
+            return res.send(Additional.serialize(1, 'Server error'));
+        });
+    }
+
+    deleteQuestion(req, res, next) {
+        var question_num = req.body.num;
+        if (!question_data) {
+            return res.send(Additional.serialize(2, 'Required fields are empty'));
+        }
+        Models.questions.destroy({
+            _id: question_num
+        }).then(function () {
+            return res.send(Additional.serialize(0));
+        }).catch(function (err) {
+            console.log(err);
+            return res.send(Additional.serialize(1, 'Server error'));
+        });
+    }
 }
 
 module.exports = API;
