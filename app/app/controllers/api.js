@@ -330,6 +330,9 @@ class API {
         var user = req.user;
         var query = {};
         var target_tests;
+        if (!request_type) {
+            return res.send(Additional.serialize(2, 'Required fields are empty'));
+        }
         Models.tests.find({
             active: true
         }).then(function (all_tests) {
@@ -371,6 +374,12 @@ class API {
         var test_num = req.query.num;
         var test;
         var all_question;
+        if (!test_num) {
+            return res.send(Additional.serialize(2, 'Required fields are empty'));
+        }
+        if (!user.success_tests.indexOf(test_num) > -1) {
+            return res.send(Additional.serialize(3, 'You have already passed this test'));
+        }
         Additional.checkAvailable(user, test_num).then(function (result) {
             return Models.tests.findOne({
                 _id: test_num,
@@ -405,6 +414,73 @@ class API {
             return res.send(Additional.serialize(0));
         }).catch(function (err) {
             return res.send(Additional.serialize(err));
+        });
+    }
+
+    takeAnswer(req, res, next) {
+        var answer_data = {
+            user: req.user,
+            answer_num: req.body.answer_num,
+            question_num: req.body.question,
+            test_num: req.body.test,
+            solution_num: req.body.solution
+        };
+        if (!Additional.checkArguments(answer_data)) {
+            return res.send(Additional.serialize(2, 'Required fields are empty'));
+        }
+        var search = [];
+        search.push(Models.solutions.findOne({
+            _id: answer_data.solution_num,
+            user: answer_data.user._id
+        }));
+        search.push(Models.questions.findOne({
+            _id: answer_data.question_num
+        }));
+        Promise.all(search).then(function (result) {
+            if (
+                !result[0] || !result[1] ||
+                result[0].questions.indexOf(question_num) == -1 ||
+                result[1].test != test_num
+            ) {
+                return res.send(Additional.serialize(3, 'Incorrect data'));
+            }
+            var current_answers = result[0].answers;
+            current_answers.push(answer_num);
+            return Models.solutions.update({
+                answers: current_answers
+            });
+        }).then(function () {
+            return res.send(Additional.serialize(0));
+        }).catch(function (err) {
+            return res.send(Additional.serialize(1, 'Server error'));
+        });
+    }
+
+    getQuestion(req, res, next) {
+        var question_data = {
+            user: req.user,
+            question_num: req.body.question,
+            test_num: req.body.test,
+            solution_num: req.body.solution
+        };
+        if (!Additional.checkArguments(question_data)) {
+            return res.send(Additional.serialize(2, 'Required fields are empty'));
+        }
+        Models.solutions.findOne({
+            _id: question_data.solution_num,
+            user: question_data.user._id
+        }).then(function (solution) {
+            if (!solution || solution.questions.indexOf(question_num) == -1) {
+                return res.send(Additional.serialize(3, 'Incorrect data'));
+            }
+            return Models.questions.findOne({
+                _id: question_data,
+                test: test_nums
+            });
+        }).then(function (question) {
+            return res.send(Additional.serialize(0, question));
+        }).catch(function (err) {
+            return res.send(Additional.serialize(1, 'Server error'));
         });
     }
 }

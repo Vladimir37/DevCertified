@@ -21,5 +21,6 @@ router.post('/add-quest', Middlewares.onlyAdmin, API.addQuestion);
 router.post('/edit-quest', Middlewares.onlyAdmin, API.editQuestion);
 router.post('/delete-quest', Middlewares.onlyAdmin, API.deleteQuestion);
 router.post('/start-testing', Middlewares.onlyUser, API.startTesting);
+router.post('/take-answer', Middlewares.onlyUser, API.takeAnswer);
 
 module.exports = router;
