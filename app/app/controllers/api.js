@@ -446,6 +446,9 @@ class API {
             }
             var current_answers = result[0].answers;
             current_answers.push(answer_num);
+            if (current_answers >= result[0].questions) {
+                // TODO end test
+            }
             return Models.solutions.update({
                 answers: current_answers
             });
