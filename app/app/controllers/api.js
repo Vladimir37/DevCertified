@@ -359,37 +359,52 @@ class API {
     availableTest(req, res, next) {
         var user = req.user;
         var test = req.query.num;
-        var available_data = {};
-        if (!user || !test) {
-            return Additional.serialize(2, 'Data not found');
-        }
-        Models.solutions.find({
-            user: user._id,
-            test
-        }).limit(3).sort({
-            start: -1
-        }).then(function (solutions) {
-            var max_date = new Date();
-            max_date.setDays(max_date.getDays() - 50);
-            var block = solutions.every(function (solution) {
-                return solution.start > max_date;
-            });
-            if (block) {
-                var next_date = solution[2].start;
-                next_date.setDate(next_date.getDate() + 50);
-                available_data.available = false;
-                available_data.results = solutions;
-                available_data.next = next_date;
-                return Additional.serialize(0, available_data);
-            }
-            else {
-                available_data.available = true;
-                available_data.results = solutions;
-                return Additional.serialize(0, available_data);
-            }
+        Additional.checkAvailable(user, test).then(function (result) {
+            return res.send(Additional.serialize(0, result));
         }).catch(function (err) {
-            console.log(err);
-            return res.send(Additional.serialize(1, 'Server error'));
+            return res.send(Additional.serialize(err));
+        });
+    }
+
+    startTesting(req, res, next) {
+        var user = req.user;
+        var test_num = req.query.num;
+        var test;
+        var all_question;
+        Additional.checkAvailable(user, test_num).then(function (result) {
+            return Models.tests.findOne({
+                _id: test_num,
+                active: true
+            });
+        }).then(function (target_test) {
+            test = target_test;
+            var question_search = [];
+            for (var i = 0; i < 2; i++) {
+                question_search.push(Models.questions.find({
+                    complexity: i
+                }));
+            }
+            return Promise.all(question_search);
+        }).then(function (questions) {
+            var easy = _.sample(questions[0], test.easyCol);
+            var middle = _.sample(questions[1], test.middleCol);
+            var hard = _.sample(questions[2], test.hardCol);
+            easy = _.pluck(easy, '_id');
+            middle = _.pluck(middle, '_id');
+            hard = _.pluck(hard, '_id');
+            all_question = easy.concat(middle, hard);
+            return Models.solutions.create({
+                start: new Date(),
+                user: user._id,
+                test: test_num,
+                questions: all_question,
+                answers: [],
+                result: null
+            });
+        }).then(function () {
+            return res.send(Additional.serialize(0));
+        }).catch(function (err) {
+            return res.send(Additional.serialize(err));
         });
     }
 }
