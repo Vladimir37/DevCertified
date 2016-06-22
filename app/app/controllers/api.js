@@ -36,6 +36,7 @@ class API {
             return Models.users.create(user_data);
         }).then(function (user) {
             Mail.registration(user);
+            Mail.confirm(user);
             return res.send(Additional.serialize(0));
         }).catch(function (err) {
             console.log(err);
@@ -329,7 +330,9 @@ class API {
         var user = req.user;
         var query = {};
         var target_tests;
-        Models.tests.find().then(function (all_tests) {
+        Models.tests.find({
+            active: true
+        }).then(function (all_tests) {
             switch (request_type) {
                 // only not solved
                 case 1:
@@ -347,6 +350,43 @@ class API {
                     target_tests = all_tests;
             };
             return res.send(Additional.serialize(0, target_tests));
+        }).catch(function (err) {
+            console.log(err);
+            return res.send(Additional.serialize(1, 'Server error'));
+        });
+    }
+
+    availableTest(req, res, next) {
+        var user = req.user;
+        var test = req.query.num;
+        var available_data = {};
+        if (!user || !test) {
+            return Additional.serialize(2, 'Data not found');
+        }
+        Models.solutions.find({
+            user: user._id,
+            test
+        }).limit(3).sort({
+            start: -1
+        }).then(function (solutions) {
+            var max_date = new Date();
+            max_date.setDays(max_date.getDays() - 50);
+            var block = solutions.every(function (solution) {
+                return solution.start > max_date;
+            });
+            if (block) {
+                var next_date = solution[2].start;
+                next_date.setDate(next_date.getDate() + 50);
+                available_data.available = false;
+                available_data.results = solutions;
+                available_data.next = next_date;
+                return Additional.serialize(0, available_data);
+            }
+            else {
+                available_data.available = true;
+                available_data.results = solutions;
+                return Additional.serialize(0, available_data);
+            }
         }).catch(function (err) {
             console.log(err);
             return res.send(Additional.serialize(1, 'Server error'));

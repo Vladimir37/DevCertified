@@ -7,6 +7,8 @@ var router = express.Router();
 
 router.get('/check', API.checkStatus);
 router.get('/confirm', API.confirmation);
+router.get('/get-tests', API.getTests);
+router.get('/available-test', Middlewares.onlyUser, API.availableTest);
 
 router.post('/registration', API.registration);
 router.post('/login', API.login);

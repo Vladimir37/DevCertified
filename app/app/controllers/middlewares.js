@@ -42,7 +42,7 @@ class Middlewares {
             });
         });
     }
-    onlyUsers(req, res, next) {
+    onlyUser(req, res, next) {
         if (req.user && req.user.status < 2) {
             next();
         }

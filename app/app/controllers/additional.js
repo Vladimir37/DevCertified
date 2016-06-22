@@ -4,6 +4,7 @@ var _ = require('underscore');
 var md5 = require('md5');
 
 var Mail = new (require('./mail'))();
+var Models = require('../models/main');
 
 class Additional {
     serialize(status, body) {
@@ -14,13 +15,11 @@ class Additional {
         };
         return JSON.stringify(result);
     }
+
     checkArguments(obj) {
         return _.values(obj).every(function (value) {
             return value;
         })
-    }
-    confirm(user) {
-        Mail.confirm(user);
     }
 }
 

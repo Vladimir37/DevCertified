@@ -30,12 +30,13 @@ var testModel = mongoose.model('Test', testScheme);
 
 var solutionSchema = new mongoose.Schema({
     start: Date,
+    user: String,
     test: String,
     questions: Array,
     answers: Array,
     result: Number
 });
-var solutionModel = mongoose.model('Solution', solutionModel);
+var solutionModel = mongoose.model('Solution', solutionSchema);
 
 exports.question = questionModel;
 exports.test = testModel;
