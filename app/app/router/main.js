@@ -6,6 +6,6 @@ var client = require('./client');
 var router = express.Router();
 
 router.use('/api', api);
-// router.use(clients);
+router.use(client);
 
 module.exports = router;
