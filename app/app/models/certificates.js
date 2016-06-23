@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 var certificateSchema = new mongoose.Schema({
     title: String,
     name: String,
-    date: String
+    date: Date
 });
 
 var certificateModel = mongoose.model('Certificate', certificateSchema);

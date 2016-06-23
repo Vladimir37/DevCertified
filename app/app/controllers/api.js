@@ -428,6 +428,8 @@ class API {
         if (!Additional.checkArguments(answer_data)) {
             return res.send(Additional.serialize(2, 'Required fields are empty'));
         }
+        var last_question = false;
+        var target_solution;
         var search = [];
         search.push(Models.solutions.findOne({
             _id: answer_data.solution_num,
@@ -444,16 +446,28 @@ class API {
             ) {
                 return res.send(Additional.serialize(3, 'Incorrect data'));
             }
+            target_solution = result[0];
             var current_answers = result[0].answers;
             current_answers.push(answer_num);
             if (current_answers >= result[0].questions) {
-                // TODO end test
+                last_question = true;
             }
-            return Models.solutions.update({
-                answers: current_answers
-            });
+            else {
+                return Models.solutions.update({
+                    answers: current_answers
+                });
+            }
         }).then(function () {
-            return res.send(Additional.serialize(0));
+            if (last_question) {
+                return Additional.finishTest(target_solution);
+            }
+            else {
+                return res.send(Additional.serialize(0));
+            }
+        }).then(function (result) {
+            if (result) {
+                return res.send(Additional.serialize(0, result));
+            }
         }).catch(function (err) {
             return res.send(Additional.serialize(1, 'Server error'));
         });

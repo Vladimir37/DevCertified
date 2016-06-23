@@ -58,6 +58,68 @@ class Additional {
             });
         })
     }
+
+    finishTest(solution) {
+        return new Promise(function(resolve, reject) {
+            var certify = false;
+            var true_answers_col = 0;
+            var questions_search = [];
+            solution.questions.forEach(function (item) {
+                questions_search.push(Models.questions.findOne({
+                    _id: item
+                }));
+            });
+            Promise.all(questions_search).then(function (questions) {
+                true_answers = _.pluck(questions, 'true_answer');
+                solution.answer.forEach(function (answer, index) {
+                    answer == true_answers[index] ? true_answers_col++ : false;
+                });
+                var min_value = Math.ceil(questions.length * 0.75);
+                if (true_answers_col >= min_value) {
+                    certify = true
+                }
+                return Models.solutions.update({
+                    certify
+                });
+            }).then(function () {
+                if (certify) {
+                    var query = [];
+                    query.push(Models.users.findOne({
+                        _id: solution.user
+                    }));
+                    query.push(Models.tests.findOne({
+                        _id: solution.test
+                    }));
+                }
+                else {
+                    resolve({
+                        success: false,
+                        answers: true_answers_col
+                    });
+                }
+            }).then(function (data) {
+                if (!user) {
+                    reject(1);
+                }
+                else {
+                    return Models.certificates.create({
+                        title: data[1].title,
+                        name: data[0].first + ' ' + data[0].last,
+                        date: new Date()
+                    });
+                }
+            }).then(function (certificate) {
+                resolve({
+                    success: true,
+                    answers: true_answers_col,
+                    certificate: certificate._id
+                });
+            }).catch(function (err) {
+                console.log(err);
+                reject(1);
+            });
+        });
+    }
 }
 
 module.exports = Additional;

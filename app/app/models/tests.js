@@ -34,7 +34,8 @@ var solutionSchema = new mongoose.Schema({
     test: String,
     questions: Array,
     answers: Array,
-    result: Number
+    result: Number,
+    certify: Boolean
 });
 var solutionModel = mongoose.model('Solution', solutionSchema);
 
