@@ -17,8 +17,7 @@ module.exports = {
     },
 
     plugins: [
-        // Не записывать собранные файлы в случае ошибок
-        // при сборке хотя бы одного из них
+        // Stop if error
         new webpack.NoErrorsPlugin()
     ],
 
