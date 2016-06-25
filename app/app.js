@@ -6,7 +6,7 @@ var passport = require('passport');
 
 var router = require('./app/router/main');
 var middlewares = new (require('./app/controllers/middlewares'))();
-var config = require('../config.json');
+var config = require('../configs/app.json');
 
 var app = express();
 

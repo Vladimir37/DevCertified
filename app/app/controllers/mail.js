@@ -23,7 +23,7 @@ class Mail {
                 var letter = ejs.render(this[subject + '_tpl'], data);
                 this.send(letter, text['letter_title_' + subject], addr);
             }
-        })
+        });
         this.transporter = nodemailer.createTransport({
             service: config.service,
             auth: {

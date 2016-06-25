@@ -2,15 +2,12 @@ var webpack = require('webpack');
 var path = require('path');
 
 const script_dir = __dirname;
-const root_dir = path.join(script_dir, '../../..')
-const client_js = path.join(script_dir, 'client/source/scripts');
+const root_dir = path.join(script_dir, '../../..');
 const build_dir = path.join(root_dir, 'client/source/build');
 
 module.exports = {
     context: script_dir,
-    entry: {
-        'app': './app'
-    },
+    entry: ['./app', 'angular-route'],
     output: {
         path: build_dir,
         filename: '/bundle.js'

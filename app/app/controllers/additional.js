@@ -70,7 +70,7 @@ class Additional {
                 }));
             });
             Promise.all(questions_search).then(function (questions) {
-                true_answers = _.pluck(questions, 'true_answer');
+                var true_answers = _.pluck(questions, 'true_answer');
                 solution.answer.forEach(function (answer, index) {
                     answer == true_answers[index] ? true_answers_col++ : false;
                 });

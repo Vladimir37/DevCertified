@@ -351,7 +351,7 @@ class API {
                     break;
                 default:
                     target_tests = all_tests;
-            };
+            }
             return res.send(Additional.serialize(0, target_tests));
         }).catch(function (err) {
             console.log(err);

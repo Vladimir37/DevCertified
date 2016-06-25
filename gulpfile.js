@@ -9,12 +9,17 @@ const client_css = path.join(root_dir, 'client/source/styles');
 const build_dir = path.join(root_dir, 'client/source/build');
 
 
-gulp.task('js', () => {
+gulp.task('build-js', () => {
     return gulp.src(client_js)
     .pipe(shell('cd ' + client_js + ' && webpack'));
 });
 
-gulp.task('css', () => {
+gulp.task('watch-js', () => {
+    return gulp.src(client_js)
+        .pipe(shell('cd ' + client_js + ' && webpack --watch'));
+});
+
+gulp.task('build-css', () => {
     return gulp.src([
         client_css + '/main.less'
     ])
