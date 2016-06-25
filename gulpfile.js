@@ -2,6 +2,7 @@ var path = require('path');
 var gulp = require('gulp');
 var less = require('gulp-less');
 var shell = require('gulp-shell');
+var concat = require('gulp-concat');
 
 const root_dir = __dirname;
 const client_js = path.join(root_dir, 'client/source/scripts');
@@ -11,7 +12,7 @@ const build_dir = path.join(root_dir, 'client/source/build');
 
 gulp.task('build-js', () => {
     return gulp.src(client_js)
-    .pipe(shell('cd ' + client_js + ' && webpack'));
+        .pipe(shell('cd ' + client_js + ' && webpack'));
 });
 
 gulp.task('watch-js', () => {
@@ -21,8 +22,11 @@ gulp.task('watch-js', () => {
 
 gulp.task('build-css', () => {
     return gulp.src([
+        client_css + '/reset.css',
+        client_css + '/bootstrap.css',
         client_css + '/main.less'
     ])
-    .pipe(less())
-    .pipe(gulp.dest(build_dir));
+        .pipe(less())
+        .pipe(concat('bundle.css'))
+        .pipe(gulp.dest(build_dir));
 });

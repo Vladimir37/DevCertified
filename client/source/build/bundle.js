@@ -60,6 +60,10 @@
 
 	var _controller = __webpack_require__(4);
 
+	var _router = __webpack_require__(7);
+
+	var _router2 = _interopRequireDefault(_router);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var app = _angular2.default.module('DevCertified', ['ngRoute']);
@@ -67,17 +71,7 @@
 	app.controller('one', _controller.one);
 	app.controller('two', _controller.two);
 
-	app.config(['$locationProvider', '$routeProvider', function ($locationProvider, $routeProvider) {
-	  $routeProvider.when('/one', {
-	    templateUrl: '/src/scripts/views/title.html',
-	    controller: 'one'
-	  }).when('/two', {
-	    templateUrl: '/src/scripts/views/title.html',
-	    controller: 'two'
-	  }).otherwise('/one');
-
-	  $locationProvider.html5Mode(true);
-	}]);
+	app.config(['$locationProvider', '$routeProvider', _router2.default]);
 
 /***/ },
 /* 2 */
@@ -17643,6 +17637,30 @@
 	    };
 	  }
 	})(window, window.angular);
+
+/***/ },
+/* 7 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	exports.default = function ($locationProvider, $routeProvider) {
+	    $routeProvider.when('/one', {
+	        templateUrl: '/src/scripts/ng/views/title.html',
+	        controller: 'one'
+	    }).when('/two', {
+	        templateUrl: '/src/scripts/ng/views/title.html',
+	        controller: 'two'
+	    }).otherwise('/one');
+
+	    $locationProvider.html5Mode(true);
+	};
+
+	;
 
 /***/ }
 /******/ ]);
