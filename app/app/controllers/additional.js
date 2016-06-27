@@ -19,7 +19,7 @@ class Additional {
     checkArguments(obj) {
         return _.values(obj).every(function (value) {
             return value;
-        })
+        });
     }
 
     checkAvailable(user, test) {

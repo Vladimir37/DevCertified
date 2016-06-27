@@ -1,0 +1,16 @@
+<div class="modal-header">
+    <h3 class="modal-title">Registration</h3>
+</div>
+<div class="modal-body">
+    <div class="alert alert-danger" ng-if="error">
+        {{ error }}
+    </div>
+    <input type="text" class="form-control" placeholder="Mail" ng-model="reg_data.mail"><br>
+    <input type="text" class="form-control" placeholder="First name" ng-model="reg_data.first"><br>
+    <input type="text" class="form-control" placeholder="Last name" ng-model="reg_data.last"><br>
+    <input type="password" class="form-control" placeholder="Password" ng-model="reg_data.password"><br>
+    <input type="password" class="form-control" placeholder="Password again" ng-model="reg_data.password_two">
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="send_reg()">Registration</button>
+</div>
