@@ -7,7 +7,7 @@ const build_dir = path.join(root_dir, 'client/source/build');
 
 module.exports = {
     context: script_dir,
-    entry: ['./ng/app', 'angular-route', 'underscore'],
+    entry: ['./ng/app', 'angular-route'],
     output: {
         path: build_dir,
         filename: '/bundle.js'

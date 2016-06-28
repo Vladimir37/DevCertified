@@ -2,8 +2,13 @@
     <h3 class="modal-title">Login</h3>
 </div>
 <div class="modal-body">
-    <input type="text" class="form-control" placeholder="Mail" ng-model="log_data.username"><br>
-    <input type="password" class="form-control" placeholder="Password" ng-model="log_data.password">
+    <div class="alert alert-danger" ng-if="error">
+        {{ error }}
+    </div>
+    <form name="log_form">
+        <input type="text" class="form-control" placeholder="Mail" ng-model="log_data.username" required><br>
+        <input type="password" class="form-control" placeholder="Password" ng-model="log_data.password" required>
+    </form>
 </div>
 <div class="modal-footer">
     <button class="btn btn-primary" type="button" ng-click="send_log()">Login</button>

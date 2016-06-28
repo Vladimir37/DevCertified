@@ -5,11 +5,13 @@
     <div class="alert alert-danger" ng-if="error">
         {{ error }}
     </div>
-    <input type="text" class="form-control" placeholder="Mail" ng-model="reg_data.mail"><br>
-    <input type="text" class="form-control" placeholder="First name" ng-model="reg_data.first"><br>
-    <input type="text" class="form-control" placeholder="Last name" ng-model="reg_data.last"><br>
-    <input type="password" class="form-control" placeholder="Password" ng-model="reg_data.password"><br>
-    <input type="password" class="form-control" placeholder="Password again" ng-model="reg_data.password_two">
+    <form name="reg_form">
+        <input type="text" class="form-control" placeholder="Mail" ng-model="reg_data.mail" required><br>
+        <input type="text" class="form-control" placeholder="First name" ng-model="reg_data.first" required><br>
+        <input type="text" class="form-control" placeholder="Last name" ng-model="reg_data.last" required><br>
+        <input type="password" class="form-control" placeholder="Password" ng-model="reg_data.password" ng-minlength="6" required><br>
+        <input type="password" class="form-control" placeholder="Password again" ng-model="reg_data.password_two" required>
+    </form>
 </div>
 <div class="modal-footer">
     <button class="btn btn-primary" type="button" ng-click="send_reg()">Registration</button>

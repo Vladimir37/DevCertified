@@ -1,14 +1,8 @@
-import {validate} from '../../additional';
-
 export default function($scope, $uibModal) {
-    $scope.log_data = {
-        username: null,
-        password: null
-    };
+    $scope.log_data = {};
     $scope.reg_data = {};
-
     $scope.open_login = function (size) {
-        var modalInstance = $uibModal.open({
+        $uibModal.open({
             animation: true,
             templateUrl: '/src/scripts/ng/views/modal_login.html',
             controller: 'header',
@@ -16,7 +10,7 @@ export default function($scope, $uibModal) {
         });
     };
     $scope.open_registration = function (size) {
-        var modalInstance = $uibModal.open({
+        $uibModal.open({
             animation: true,
             templateUrl: '/src/scripts/ng/views/modal_registration.html',
             controller: 'header',
@@ -25,9 +19,33 @@ export default function($scope, $uibModal) {
     };
 
     $scope.send_log = function () {
-        console.log(validate($scope.log_data));
+        if ($scope.log_form.$valid) {
+            $scope.error = null;
+        }
+        else {
+            $scope.error = 'Required fields are empty!';
+            return false;
+        }
+        //
     }
     $scope.send_reg = function () {
-        //
+        console.log($scope.reg_form);
+        if ($scope.reg_form.$valid) {
+            $scope.error = null;
+        }
+        else {
+            if ($scope.reg_form.$error.minlength) {
+                $scope.error = 'Password is too short!';
+                return false;
+            }
+            else {
+                $scope.error = 'Required fields are empty!';
+                return false;
+            }
+        }
+        if ($scope.reg_data.password != $scope.reg_data.password_two) {
+            $scope.error = 'The entered passwords are not equal!';
+            return false;
+        }
     };
 }
