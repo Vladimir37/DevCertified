@@ -15,7 +15,7 @@ class API {
     registration(req, res, next) {
         var user_data = {
             mail: req.body.mail,
-            pass: md5(req.body.pass),
+            pass: md5(req.body.password),
             first: req.body.first,
             last: req.body.last
         };

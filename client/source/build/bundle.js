@@ -70,11 +70,28 @@
 
 	var _header2 = _interopRequireDefault(_header);
 
+	var _login = __webpack_require__(10);
+
+	var _login2 = _interopRequireDefault(_login);
+
+	var _registration = __webpack_require__(11);
+
+	var _registration2 = _interopRequireDefault(_registration);
+
+	var _end_registration = __webpack_require__(12);
+
+	var _end_registration2 = _interopRequireDefault(_end_registration);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var app = _angular2.default.module('DevCertified', ['ngRoute', 'ui.bootstrap']);
 
 	app.controller('header', _header2.default);
+
+	// modal controllers
+	app.controller('login', _login2.default);
+	app.controller('registration', _registration2.default);
+	app.controller('end_registration', _end_registration2.default);
 
 	app.config(['$locationProvider', '$routeProvider', _router2.default]);
 
@@ -17183,52 +17200,22 @@
 	    value: true
 	});
 
-	exports.default = function ($scope, $uibModal) {
-	    $scope.log_data = {};
-	    $scope.reg_data = {};
+	exports.default = function ($scope, $uibModal, $http) {
 	    $scope.open_login = function (size) {
 	        $uibModal.open({
 	            animation: true,
-	            templateUrl: '/src/scripts/ng/views/modal_login.html',
-	            controller: 'header',
+	            templateUrl: '/src/scripts/ng/views/modals/login.html',
+	            controller: 'login',
 	            size: ''
 	        });
 	    };
 	    $scope.open_registration = function (size) {
 	        $uibModal.open({
 	            animation: true,
-	            templateUrl: '/src/scripts/ng/views/modal_registration.html',
-	            controller: 'header',
+	            templateUrl: '/src/scripts/ng/views/modals/registration.html',
+	            controller: 'registration',
 	            size: ''
 	        });
-	    };
-
-	    $scope.send_log = function () {
-	        if ($scope.log_form.$valid) {
-	            $scope.error = null;
-	        } else {
-	            $scope.error = 'Required fields are empty!';
-	            return false;
-	        }
-	        //
-	    };
-	    $scope.send_reg = function () {
-	        console.log($scope.reg_form);
-	        if ($scope.reg_form.$valid) {
-	            $scope.error = null;
-	        } else {
-	            if ($scope.reg_form.$error.minlength) {
-	                $scope.error = 'Password is too short!';
-	                return false;
-	            } else {
-	                $scope.error = 'Required fields are empty!';
-	                return false;
-	            }
-	        }
-	        if ($scope.reg_data.password != $scope.reg_data.password_two) {
-	            $scope.error = 'The entered passwords are not equal!';
-	            return false;
-	        }
 	    };
 	};
 
@@ -18273,6 +18260,117 @@
 	    };
 	  }
 	})(window, window.angular);
+
+/***/ },
+/* 10 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	exports.default = function ($scope, $http, $uibModalInstance) {
+	    $scope.log_data = {};
+	    $scope.send_log = function () {
+	        if ($scope.log_form.$valid) {
+	            $scope.error = null;
+	        } else {
+	            $scope.error = 'Required fields are empty!';
+	            return false;
+	        }
+	        $http({
+	            method: 'POST',
+	            url: '/api/login',
+	            data: $scope.log_data
+	        }).then(function (response) {
+	            if (response.data.status == 0) {
+	                window.location.reload();
+	            } else {
+	                $scope.error = response.data.body;
+	            }
+	        }).catch(function (err) {
+	            console.log(err);
+	            $scope.error = 'Server error';
+	        });
+	    };
+
+	    $scope.close = function () {
+	        $uibModalInstance.close();
+	    };
+	};
+
+/***/ },
+/* 11 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	exports.default = function ($scope, $http, $uibModal, $uibModalInstance) {
+	    $scope.reg_data = {};
+	    $scope.send_reg = function () {
+	        if ($scope.reg_form.$valid) {
+	            $scope.error = null;
+	        } else {
+	            if ($scope.reg_form.$error.minlength) {
+	                $scope.error = 'Password is too short!';
+	                return false;
+	            } else {
+	                $scope.error = 'Required fields are empty!';
+	                return false;
+	            }
+	        }
+	        if ($scope.reg_data.password != $scope.reg_data.password_two) {
+	            $scope.error = 'The entered passwords are not equal!';
+	            return false;
+	        }
+	        $http({
+	            method: 'POST',
+	            url: '/api/registration',
+	            data: $scope.reg_data
+	        }).then(function (response) {
+	            if (response.data.status == 0) {
+	                $uibModalInstance.close();
+	                $uibModal.open({
+	                    animation: true,
+	                    templateUrl: '/src/scripts/ng/views/modals/end_registration.html',
+	                    controller: 'end_registration',
+	                    size: ''
+	                });
+	            } else {
+	                $scope.error = response.data.body;
+	            }
+	        }).catch(function (err) {
+	            console.log(err);
+	            $scope.error = 'Server error';
+	        });
+	    };
+
+	    $scope.close = function () {
+	        $uibModalInstance.close();
+	    };
+	};
+
+/***/ },
+/* 12 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	exports.default = function ($scope, $uibModalInstance) {
+	    $scope.close = function () {
+	        $uibModalInstance.close();
+	    };
+	};
 
 /***/ }
 /******/ ]);
