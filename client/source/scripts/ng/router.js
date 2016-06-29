@@ -1,11 +1,13 @@
 export default function ($locationProvider, $routeProvider) {
-    // $routeProvider.when('/one', {
-    //     templateUrl: '/src/scripts/ng/views/title.html',
-    //     controller: 'one'
-    // }).when('/two', {
-    //     templateUrl: '/src/scripts/ng/views/title.html',
-    //     controller: 'two'
-    // }).otherwise('/one');
+    $routeProvider.when('/', {
+        templateUrl: '/src/scripts/ng/views/pages/index.html',
+        controller: 'index'
+    }).when('/admin', {
+        templateUrl: '/src/scripts/ng/views/pages/admin.html',
+        controller: 'admin'
+    }).otherwise({
+        templateUrl: '/src/scripts/ng/views/pages/e404.html'
+    });
 
     $locationProvider.html5Mode(true);
 };

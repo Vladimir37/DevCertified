@@ -69,6 +69,7 @@ class API {
 
     logout(req, res, next) {
         req.logout();
+        res.clearCookie('dclog');
         return res.send(Additional.serialize(0));
     }
 
