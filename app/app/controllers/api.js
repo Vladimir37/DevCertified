@@ -60,10 +60,16 @@ class API {
                     return res.send(Additional.serialize(1, 'Server error'));
                 }
                 else {
+                    res.cookie('dclog', user._id);
                     return res.send(Additional.serialize(0, user));
                 }
             });
         })(req, res, next);
+    }
+
+    logout(req, res, next) {
+        req.logout();
+        return res.send(Additional.serialize(0));
     }
 
     checkStatus(req, res, next) {

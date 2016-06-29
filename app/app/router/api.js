@@ -12,6 +12,7 @@ router.get('/available-test', Middlewares.onlyUser, API.availableTest);
 
 router.post('/registration', API.registration);
 router.post('/login', API.login);
+router.post('/logout', API.logout);
 router.post('/report', API.report);
 router.post('/solve-report', API.solveReport);
 router.post('/create-test', Middlewares.onlyAdmin, API.createTest);

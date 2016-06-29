@@ -14,7 +14,12 @@ export default function($scope, $http, $uibModalInstance) {
             data: $scope.log_data
         }).then(function (response) {
             if (response.data.status == 0) {
-                window.location.reload();
+                if (response.data.body.status == 2) {
+                    window.location.pathname = '/admin';
+                }
+                else {
+                    window.location.pathname = '/cabinet';
+                }
             }
             else {
                 $scope.error = response.data.body;

@@ -14,7 +14,8 @@ var app = express();
 app.use(session({
     secret: config.secret,
     resave: true,
-    saveUninitialized: true
+    saveUninitialized: true,
+    cookie: { httpOnly: false }
 }));
 passport.use(middlewares.strategy());
 app.use(passport.initialize());
