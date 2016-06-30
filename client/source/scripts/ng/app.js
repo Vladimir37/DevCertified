@@ -1,5 +1,6 @@
 import Angular from 'angular';
-import Bootstrap from 'angular-ui-bootstrap';
+import UI_Bootstrap from 'angular-ui-bootstrap';
+// import UI_Router from 'angular-ui-router';
 import Cookies from 'angular-cookies';
 
 import Router from './router';
@@ -11,9 +12,11 @@ import end_registration from './controllers/modals/end_registration';
 import index from './controllers/index';
 import admin from './controllers/admin';
 
+import auth from './services/auth';
+
 import navbar from './directives/navbar';
 
-var app = Angular.module('DevCertified', ['ngRoute', 'ui.bootstrap', 'ngCookies']);
+var app = Angular.module('DevCertified', ['ui.router', 'ui.bootstrap', 'ngCookies']);
 
 // controllers
 app.controller('header', header);
@@ -28,4 +31,7 @@ app.controller('end_registration', end_registration);
 // directives
 app.directive('navbar', navbar);
 
-app.config(Router);
+// services
+app.service('auth', auth);
+
+app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', Router]);
