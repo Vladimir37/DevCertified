@@ -9,7 +9,8 @@ import end_registration from './controllers/modals/end_registration';
 import index from './controllers/index';
 import admin from './controllers/admin';
 
-import auth from './services/auth';
+import auth_check from './services/auth';
+import admin_check from './services/admin';
 
 import navbar from './directives/navbar';
 
@@ -29,6 +30,7 @@ app.controller('end_registration', end_registration);
 app.directive('navbar', navbar);
 
 // services
-app.service('auth', auth);
+app.service('auth_check', auth_check);
+app.service('admin_check', admin_check);
 
 app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', Router]);

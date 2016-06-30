@@ -1,3 +1,7 @@
 <section class="admin">
-    //
+    <accordion close-others="oneAtATime" ng-repeat="group in groups">
+        <accordion-group heading="Static Header, initially expanded" is-open="false">
+            This content is straight in the template.
+        </accordion-group>
+  </accordion>
 </section>

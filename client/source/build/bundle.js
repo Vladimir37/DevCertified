@@ -19787,6 +19787,10 @@
 
 	var _auth2 = _interopRequireDefault(_auth);
 
+	var _admin3 = __webpack_require__(18);
+
+	var _admin4 = _interopRequireDefault(_admin3);
+
 	var _navbar = __webpack_require__(17);
 
 	var _navbar2 = _interopRequireDefault(_navbar);
@@ -19809,7 +19813,8 @@
 	app.directive('navbar', _navbar2.default);
 
 	// services
-	app.service('auth', _auth2.default);
+	app.service('auth_check', _auth2.default);
+	app.service('admin_check', _admin4.default);
 
 	app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', _router2.default]);
 
@@ -19832,8 +19837,8 @@
 	        controller: 'index'
 	    }).state('check_admin', {
 	        url: "/admin",
-	        controller: function controller($state, auth) {
-	            auth($state, 'admin');
+	        controller: function controller($state, admin_check) {
+	            admin_check($state, 'admin');
 	        }
 	    }).state('admin', {
 	        templateUrl: '/src/scripts/ng/views/pages/admin.html'
@@ -19843,20 +19848,6 @@
 	    });
 
 	    $locationProvider.html5Mode(true);
-	    // $routeProvider.when('/', {
-	    //     templateUrl: '/src/scripts/ng/views/pages/index.html',
-	    //     controller: 'index'
-	    // }).when('/admin', {
-	    //     templateUrl: function (auth) {
-	    //         console.log(auth);
-	    //         // return auth('admin').then(function (resolve) {
-	    //         //     return resolve;
-	    //         // })
-	    //     },
-	    //     controller: 'admin'
-	    // }).otherwise({
-	    //     templateUrl: '/src/scripts/ng/views/pages/e404.html'
-	    // });
 	};
 
 	;
@@ -20035,7 +20026,7 @@
 	});
 
 	exports.default = function ($scope, $http) {
-	    // console.log($scope);
+	    //
 	};
 
 /***/ },
@@ -20054,7 +20045,6 @@
 	            method: 'GET',
 	            url: '/api/check'
 	        }).then(function (response) {
-	            console.log(response.data);
 	            if (response.data.status === 0) {
 	                $state.go(component);
 	            } else {
@@ -20092,6 +20082,34 @@
 	        }
 	    };
 	}
+
+/***/ },
+/* 18 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	exports.default = function ($http) {
+	    return function ($state, component) {
+	        return $http({
+	            method: 'GET',
+	            url: '/api/check'
+	        }).then(function (response) {
+	            if (response.data.status === 0 && response.data.body.status === 2) {
+	                $state.go(component);
+	            } else {
+	                $state.go('otherwise', {}, { location: false });
+	            }
+	        }).catch(function (err) {
+	            console.log(err);
+	            $state.go('otherwise', {}, { location: false });
+	        });
+	    };
+	};
 
 /***/ }
 /******/ ]);

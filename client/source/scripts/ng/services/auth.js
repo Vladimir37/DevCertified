@@ -4,7 +4,6 @@ export default function ($http) {
             method: 'GET',
             url: '/api/check'
         }).then(function (response) {
-            console.log(response.data);
             if (response.data.status === 0) {
                 $state.go(component);
             }
