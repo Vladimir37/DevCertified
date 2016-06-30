@@ -1,3 +1,3 @@
 export default function($scope, $http) {
-    console.log($scope);
+    // console.log($scope);
 }

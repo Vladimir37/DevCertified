@@ -1,7 +1,4 @@
 import Angular from 'angular';
-import UI_Bootstrap from 'angular-ui-bootstrap';
-// import UI_Router from 'angular-ui-router';
-import Cookies from 'angular-cookies';
 
 import Router from './router';
 

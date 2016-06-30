@@ -1,18 +1,19 @@
 export default function ($http) {
-    return function (page) {
+    return function ($state, component) {
         return $http({
             method: 'GET',
             url: '/api/check'
         }).then(function (response) {
-            if (response.status === 0) {
-                return '/src/scripts/ng/views/pages/' + page + '.html';
+            console.log(response.data);
+            if (response.data.status === 0) {
+                $state.go(component);
             }
             else {
-                return '/src/scripts/ng/views/pages/e404.html';
+                $state.go('otherwise', {}, {location: false});
             }
         }).catch(function (err) {
             console.log(err);
-            return '/src/scripts/ng/views/pages/e404.html';
+            $state.go('otherwise', {}, {location: false});
         })
     }
 }
