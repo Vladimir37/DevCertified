@@ -164,7 +164,7 @@ class API {
         form.parse(req, function (err, field, files) {
             if (err) {
                 console.log(err);
-                return res.send(Additional.serialize(1, 'Server error'));
+                throw res.send(Additional.serialize(1, 'Server error'));
             }
             var test_data = {
                 title: field.title,
@@ -177,15 +177,15 @@ class API {
                 hardTime: field.hard_time,
                 img: Date.now() + '.png'
             };
-            var image = files.image;
-            if (!Additional.checkArguments(test_data)) {
-                return res.send(Additional.serialize(2, 'Required fields are empty'));
+            var image = files.img;
+            if (!Additional.checkArguments(test_data) || !image) {
+                throw res.send(Additional.serialize(2, 'Required fields are empty'));
             }
             test_data.active = false;
-            fs.rename(image.path, 'client/source/uploaded/' + test_data.img, function(err) {
+            fs.rename(image.path, 'client/source/images/uploaded/' + test_data.img, function(err) {
                 if (err) {
                     console.log(err);
-                    return res.send(Additional.serialize(1, 'Server error'));
+                    throw res.send(Additional.serialize(1, 'Server error'));
                 }
             });
             Models.tests.create(test_data).then(function () {
@@ -212,6 +212,7 @@ class API {
         if (!Additional.checkArguments(test_data) || !test_num) {
             return res.send(Additional.serialize(2, 'Required fields are empty'));
         }
+        test_data.active = req.body.active;
         Models.tests.update({
             _id: test_num
         }, test_data).then(function (info) {

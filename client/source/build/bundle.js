@@ -19787,13 +19787,17 @@
 
 	var _auth2 = _interopRequireDefault(_auth);
 
-	var _admin3 = __webpack_require__(18);
+	var _admin3 = __webpack_require__(17);
 
 	var _admin4 = _interopRequireDefault(_admin3);
 
-	var _navbar = __webpack_require__(17);
+	var _navbar = __webpack_require__(18);
 
 	var _navbar2 = _interopRequireDefault(_navbar);
+
+	var _upload = __webpack_require__(19);
+
+	var _upload2 = _interopRequireDefault(_upload);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -19811,6 +19815,7 @@
 
 	// directives
 	app.directive('navbar', _navbar2.default);
+	app.directive('upload', _upload2.default);
 
 	// services
 	app.service('auth_check', _auth2.default);
@@ -19828,7 +19833,7 @@
 	    value: true
 	});
 
-	exports.default = function ($stateProvider, $urlRouterProvider, $locationProvider, auth) {
+	exports.default = function ($stateProvider, $urlRouterProvider, $locationProvider, admin_check) {
 	    $urlRouterProvider.otherwise('otherwise');
 
 	    $stateProvider.state('index', {
@@ -19841,7 +19846,8 @@
 	            admin_check($state, 'admin');
 	        }
 	    }).state('admin', {
-	        templateUrl: '/src/scripts/ng/views/pages/admin.html'
+	        templateUrl: '/src/scripts/ng/views/pages/admin.html',
+	        controller: 'admin'
 	    }).state("otherwise", {
 	        url: "*path",
 	        templateUrl: "/src/scripts/ng/views/pages/e404.html"
@@ -20026,7 +20032,11 @@
 	});
 
 	exports.default = function ($scope, $http) {
-	    //
+	    $scope.new_test_scope = {};
+	    $scope.forms = {};
+	    $scope.send_new_test = function () {
+	        console.log($scope.new_test_scope);
+	    };
 	};
 
 /***/ },
@@ -20066,6 +20076,34 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+
+	exports.default = function ($http) {
+	    return function ($state, component) {
+	        return $http({
+	            method: 'GET',
+	            url: '/api/check'
+	        }).then(function (response) {
+	            if (response.data.status === 0 && response.data.body.status === 2) {
+	                $state.go(component);
+	            } else {
+	                $state.go('otherwise', {}, { location: false });
+	            }
+	        }).catch(function (err) {
+	            console.log(err);
+	            $state.go('otherwise', {}, { location: false });
+	        });
+	    };
+	};
+
+/***/ },
+/* 18 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
 	exports.default = navbar;
 	function navbar($cookies) {
 	    return {
@@ -20084,30 +20122,32 @@
 	}
 
 /***/ },
-/* 18 */
+/* 19 */
 /***/ function(module, exports) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
 
-	exports.default = function ($http) {
-	    return function ($state, component) {
-	        return $http({
-	            method: 'GET',
-	            url: '/api/check'
-	        }).then(function (response) {
-	            if (response.data.status === 0 && response.data.body.status === 2) {
-	                $state.go(component);
-	            } else {
-	                $state.go('otherwise', {}, { location: false });
-	            }
-	        }).catch(function (err) {
-	            console.log(err);
-	            $state.go('otherwise', {}, { location: false });
-	        });
+	exports.default = function () {
+	    return {
+	        scope: {
+	            fileread: "="
+	        },
+	        link: function link(scope, element, attributes) {
+	            element.bind("change", function (changeEvent) {
+	                var reader = new FileReader();
+	                reader.onload = function (loadEvent) {}
+	                //     scope.$apply(function () {
+	                //         scope.fileread = loadEvent.target.result;
+	                //     });
+
+	                // reader.readAsDataURL(changeEvent.target.files[0]);
+	                ;
+	            });
+	        }
 	    };
 	};
 

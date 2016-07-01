@@ -1,7 +1,26 @@
 <section class="admin">
-    <accordion close-others="oneAtATime" ng-repeat="group in groups">
-        <accordion-group heading="Static Header, initially expanded" is-open="false">
-            This content is straight in the template.
-        </accordion-group>
-  </accordion>
+    <uib-accordion>
+        <uib-accordion-group heading="New test">
+            <form method="POST" action="/api/create-test" enctype="multipart/form-data">
+                <input type="text" placeholder="Title" class="form-control" name="title" required>
+                <br>
+                <textarea placeholder="Description" class="form-control" name="description" required></textarea>
+                <br>
+                <input type="text" placeholder="Easy col" class="form-control" name="easy_col" required>
+                <br>
+                <input type="text" placeholder="Middle col" class="form-control" name="middle_col" required>
+                <br>
+                <input type="text" placeholder="Hard col" class="form-control" name="hard_col" required>
+                <br>
+                <input type="text" placeholder="Easy time" class="form-control" name="easy_time" required>
+                <br>
+                <input type="text" placeholder="Middle time" class="form-control" name="middle_time" required>
+                <br>
+                <input type="text" placeholder="Hard time" class="form-control" name="hard_time" required>
+                <br>
+                <input type="file" name="img" required>
+                <button class="btn btn-default">Create</button>
+            </form>
+        </uib-accordion-group>
+    </uib-accordion>
 </section>

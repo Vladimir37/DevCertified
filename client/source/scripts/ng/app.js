@@ -13,6 +13,7 @@ import auth_check from './services/auth';
 import admin_check from './services/admin';
 
 import navbar from './directives/navbar';
+import upload from './directives/upload';
 
 var app = Angular.module('DevCertified', ['ui.router', 'ui.bootstrap', 'ngCookies']);
 
@@ -28,6 +29,7 @@ app.controller('end_registration', end_registration);
 
 // directives
 app.directive('navbar', navbar);
+app.directive('upload', upload);
 
 // services
 app.service('auth_check', auth_check);

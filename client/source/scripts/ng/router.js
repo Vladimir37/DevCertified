@@ -1,4 +1,4 @@
-export default function ($stateProvider, $urlRouterProvider, $locationProvider, auth) {
+export default function ($stateProvider, $urlRouterProvider, $locationProvider, admin_check) {
     $urlRouterProvider.otherwise('otherwise');
 
     $stateProvider.state('index', {
@@ -12,6 +12,7 @@ export default function ($stateProvider, $urlRouterProvider, $locationProvider, 
         }
     }).state('admin', {
         templateUrl: '/src/scripts/ng/views/pages/admin.html',
+        controller: 'admin'
     }).state("otherwise", {
         url: "*path",
         templateUrl: "/src/scripts/ng/views/pages/e404.html"
