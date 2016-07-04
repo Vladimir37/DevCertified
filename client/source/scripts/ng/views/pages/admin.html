@@ -6,7 +6,7 @@
         {{ message }}
     </div>
     <uib-accordion>
-        <uib-accordion-group heading="New test">
+        <uib-accordion-group heading="Create test">
             <form method="POST" action="/api/create-test" enctype="multipart/form-data">
                 <input type="text" placeholder="Title" class="form-control" name="title" required>
                 <br>
@@ -56,13 +56,14 @@
                     <input type="checkbox" ng-model="active.edit_test.active"> Active
                 </label>
                 <br>
-                <button class="btn btn-default" ng-click="send_edit()">Edit</button>
+                <button class="btn btn-default" ng-click="send_edit_test()">Edit</button>
             </article>
         </uib-accordion-group>
         <uib-accordion-group heading="Image test">
             <select class="form-control" ng-model="selected_data.image_test">
                 <option ng-repeat="(i, test) in tests" value="{{ i }}">{{ test.title }}</option>
             </select>
+            <br>
             <button class="btn btn-default" ng-click="select_image_test()">Enter</button>
             <article ng-if="active.image_test">
                 <form method="POST" action="/api/image-test" enctype="multipart/form-data">
@@ -72,6 +73,44 @@
                     <button class="btn btn-default" ng-click="send_image()">Enter</button>
                 </form>
             </article>
+        </uib-accordion-group>
+        <uib-accordion-group heading="Create question">
+            <form name="active.new_question">
+                <input type="text" placeholder="Question" ng-model="question_data.text" required class="form-control">
+                <br>
+                <label>
+                    <input type="checkbox" ng-model="allow_code.create"> Allow code
+                </label>
+                <br>
+                <textarea class="form-control" ng-model="question_data.code" ng-disabled="!allow_code.create"></textarea>
+                <br>
+                <input type="text" placeholder="Answer 1" ng-model="question_data.answer1" required class="form-control">
+                <br>
+                <input type="text" placeholder="Answer 2" ng-model="question_data.answer2" required class="form-control">
+                <br>
+                <input type="text" placeholder="Answer 3" ng-model="question_data.answer3" required class="form-control">
+                <br>
+                <input type="text" placeholder="Answer 4" ng-model="question_data.answer4" required class="form-control">
+                <br>
+                <select ng-model="question_data.true_answer" class="form-control" required>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                </select>
+                <br>
+                <select ng-model="question_data.complexity" class="form-control" required>
+                    <option value="1">Easy</option>
+                    <option value="2">Middle</option>
+                    <option value="3">Hard</option>
+                </select>
+                <br>
+                <select ng-model="question_data.test" class="form-control" required>
+                    <option ng-repeat="test in tests" value="{{ test._id }}">{{ test.title }}</option>
+                </select>
+                <br>
+            </form>
+            <button class="btn btn-default" ng-click="send_create_quest()">Create</button>
         </uib-accordion-group>
     </uib-accordion>
 </section>

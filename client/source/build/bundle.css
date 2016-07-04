@@ -7242,6 +7242,9 @@ a.list-group-item-danger.active:focus {
 body {
   background: #b5b5b5;
 }
+textarea {
+  resize: none;
+}
 a:focus {
   outline: none;
 }

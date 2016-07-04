@@ -268,20 +268,16 @@ class API {
     addQuestion(req, res, next) {
         var question_data = {
             text: req.body.text,
-            answer1: req.body.an1,
-            answer2: req.body.an2,
-            answer3: req.body.an3,
-            answer4: req.body.an4,
-            true_answer: req.body.true_an,
+            answer1: req.body.answer1,
+            answer2: req.body.answer2,
+            answer3: req.body.answer3,
+            answer4: req.body.answer4,
+            true_answer: req.body.true_answer,
             complexity: req.body.complexity,
             test: req.body.test
         };
         if (req.body.code) {
-            var additional_question_data = {
-                code: req.body.code,
-                lang: req.body.lang
-            }
-            _.extend(question_data, additional_question_data);
+            question_data.code = req.body.code;
         }
         if (!Additional.checkArguments(question_data)) {
             return res.send(Additional.serialize(2, 'Required fields are empty'));
@@ -297,13 +293,16 @@ class API {
     editQuestion(req, res, next) {
         var question_data = {
             text: req.body.text,
-            answer1: req.body.an1,
-            answer2: req.body.an2,
-            answer3: req.body.an3,
-            answer4: req.body.an4,
-            true_answer: req.body.true_an,
+            answer1: req.body.answer1,
+            answer2: req.body.answer2,
+            answer3: req.body.answer3,
+            answer4: req.body.answer4,
+            true_answer: req.body.true_answer,
             complexity: req.body.complexity
         };
+        if (req.body.code) {
+            question_data.code = req.body.code;
+        }
         var question_num = req.body.num;
         if (!Additional.checkArguments(question_data) || !question_data) {
             return res.send(Additional.serialize(2, 'Required fields are empty'));
