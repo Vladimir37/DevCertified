@@ -375,6 +375,15 @@ class API {
         });
     }
 
+    allQuestions(req, res, next) {
+        Models.questions.find().then(function (tests) {
+            return res.send(Additional.serialize(0, tests));
+        }).catch(function (err) {
+            console.log(err);
+            return res.send(Additional.serialize(1, 'Server error'));
+        });
+    }
+
     availableTest(req, res, next) {
         var user = req.user;
         var test = req.query.num;

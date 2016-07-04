@@ -18,6 +18,15 @@ export default function($scope, $http) {
         }
         $scope.active.image_test = $scope.tests[$scope.selected_data.image_test];
     };
+    $scope.select_edit_quest = function () {
+        if (!$scope.selected_data.edit_quest) {
+            $scope.error = 'Question is not selected';
+        }
+        $scope.active.edit_quest = $scope.questions[$scope.selected_data.edit_quest];
+        $scope.active.edit_quest.true_answer = String($scope.active.edit_quest.true_answer);
+        $scope.active.edit_quest.complexity = String($scope.active.edit_quest.complexity);
+        $scope.allow_code = Boolean($scope.active.edit_quest.code);
+    };
     $scope.send_edit_test = function () {
         $http({
             method: 'POST',
@@ -67,6 +76,7 @@ export default function($scope, $http) {
         });
     };
 
+    // Request for tests and questions
     $http({
         method: 'GET',
         url: '/api/all-tests'
@@ -74,6 +84,21 @@ export default function($scope, $http) {
         response = response.data;
         if (response.status == 0) {
             $scope.tests = response.body;
+        }
+        else {
+            $scope.error = response.body;
+        }
+    }).catch(function (err) {
+        console.log(err);
+        $scope.error = 'Server error';
+    });
+    $http({
+        method: 'GET',
+        url: '/api/all-questions'
+    }).then(function (response) {
+        response = response.data;
+        if (response.status == 0) {
+            $scope.questions = response.body;
         }
         else {
             $scope.error = response.body;

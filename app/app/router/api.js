@@ -9,6 +9,7 @@ router.get('/check', API.checkStatus);
 router.get('/confirm', API.confirmation);
 router.get('/get-tests', API.getTests);
 router.get('/all-tests', Middlewares.onlyAdmin, API.allTests);
+router.get('/all-questions', Middlewares.onlyAdmin, API.allQuestions);
 router.get('/available-test', Middlewares.onlyUser, API.availableTest);
 
 router.post('/registration', API.registration);
