@@ -164,28 +164,28 @@ class API {
         form.parse(req, function (err, field, files) {
             if (err) {
                 console.log(err);
-                throw res.send(Additional.serialize(1, 'Server error'));
+                return res.send(Additional.serialize(1, 'Server error'));
             }
             var test_data = {
                 title: field.title,
                 description: field.description,
-                easyCol: field.easy_col,
-                middleCol: field.middle_col,
-                hardCol: field.hard_col,
-                easyTime: field.easy_time,
-                middleTime: field.middle_time,
-                hardTime: field.hard_time,
+                easyCol: field.easyCol,
+                middleCol: field.middleCol,
+                hardCol: field.hardCol,
+                easyTime: field.easyTime,
+                middleTime: field.middleTime,
+                hardTime: field.hardTime,
                 img: Date.now() + '.png'
             };
             var image = files.img;
             if (!Additional.checkArguments(test_data) || !image) {
-                throw res.send(Additional.serialize(2, 'Required fields are empty'));
+                return res.send(Additional.serialize(2, 'Required fields are empty'));
             }
             test_data.active = false;
             fs.rename(image.path, 'client/source/images/uploaded/' + test_data.img, function(err) {
                 if (err) {
                     console.log(err);
-                    throw res.send(Additional.serialize(1, 'Server error'));
+                    return res.send(Additional.serialize(1, 'Server error'));
                 }
             });
             Models.tests.create(test_data).then(function () {
@@ -201,14 +201,14 @@ class API {
         var test_data = {
             title: req.body.title,
             description: req.body.description,
-            easyCol: req.body.easy_col,
-            middleCol: req.body.middle_col,
-            hardCol: req.body.hard_col,
-            easyTime: req.body.easy_time,
-            middleTime: req.body.middle_time,
-            hardTime: req.body.hard_time
+            easyCol: req.body.easyCol,
+            middleCol: req.body.middleCol,
+            hardCol: req.body.hardCol,
+            easyTime: req.body.easyTime,
+            middleTime: req.body.middleTime,
+            hardTime: req.body.hardTime
         };
-        var test_num = req.body.id;
+        var test_num = req.body._id;
         if (!Additional.checkArguments(test_data) || !test_num) {
             return res.send(Additional.serialize(2, 'Required fields are empty'));
         }
@@ -232,16 +232,16 @@ class API {
         var form = new formidable.IncomingForm({
             uploadDir: "temp"
         });
-        form.parse(req, function (err, field, files) {
+        form.parse(req, function (err, fields, files) {
             var data = {
                 num: fields.test,
-                img: files.image
+                img: files.img
             };
             if (!Additional.checkArguments(data)) {
                 return res.send(Additional.serialize(2, 'Required fields are empty'));
             }
             var filename = Date.now() + '.png';
-            fs.rename(image.path, 'client/source/uploaded/' + filename, function(err) {
+            fs.rename(data.img.path, 'client/source/images/uploaded/' + filename, function(err) {
                 if (err) {
                     console.log(err);
                     return res.send(Additional.serialize(1, 'Server error'));
@@ -361,6 +361,15 @@ class API {
                     target_tests = all_tests;
             }
             return res.send(Additional.serialize(0, target_tests));
+        }).catch(function (err) {
+            console.log(err);
+            return res.send(Additional.serialize(1, 'Server error'));
+        });
+    }
+
+    allTests(req, res, next) {
+        Models.tests.find().then(function (tests) {
+            return res.send(Additional.serialize(0, tests));
         }).catch(function (err) {
             console.log(err);
             return res.send(Additional.serialize(1, 'Server error'));

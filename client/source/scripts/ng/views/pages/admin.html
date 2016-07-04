@@ -1,4 +1,10 @@
 <section class="admin">
+    <div class="alert alert-danger" ng-if="error">
+        {{ error }}
+    </div>
+    <div class="alert alert-success" ng-if="message">
+        {{ message }}
+    </div>
     <uib-accordion>
         <uib-accordion-group heading="New test">
             <form method="POST" action="/api/create-test" enctype="multipart/form-data">
@@ -6,21 +12,66 @@
                 <br>
                 <textarea placeholder="Description" class="form-control" name="description" required></textarea>
                 <br>
-                <input type="text" placeholder="Easy col" class="form-control" name="easy_col" required>
+                <input type="text" placeholder="Easy col" class="form-control" name="easyCol" required>
                 <br>
-                <input type="text" placeholder="Middle col" class="form-control" name="middle_col" required>
+                <input type="text" placeholder="Middle col" class="form-control" name="middleCol" required>
                 <br>
-                <input type="text" placeholder="Hard col" class="form-control" name="hard_col" required>
+                <input type="text" placeholder="Hard col" class="form-control" name="hardCol" required>
                 <br>
-                <input type="text" placeholder="Easy time" class="form-control" name="easy_time" required>
+                <input type="text" placeholder="Easy time" class="form-control" name="easyTime" required>
                 <br>
-                <input type="text" placeholder="Middle time" class="form-control" name="middle_time" required>
+                <input type="text" placeholder="Middle time" class="form-control" name="middleTime" required>
                 <br>
-                <input type="text" placeholder="Hard time" class="form-control" name="hard_time" required>
+                <input type="text" placeholder="Hard time" class="form-control" name="hardTime" required>
                 <br>
                 <input type="file" name="img" required>
                 <button class="btn btn-default">Create</button>
             </form>
+        </uib-accordion-group>
+        <uib-accordion-group heading="Edit test">
+            <select class="form-control" ng-model="selected_data.edit_test">
+                <option ng-repeat="(i, test) in tests" value="{{ i }}">{{ test.title }}</option>
+            </select>
+            <br>
+            <button class="btn btn-default" ng-click="select_edit_test()">Edit</button>
+            <br>
+            <article ng-if="active.edit_test">
+                <input type="text" placeholder="Title" class="form-control" ng-model="active.edit_test.title" required>
+                <br>
+                <textarea placeholder="Description" class="form-control" ng-model="active.edit_test.description" required></textarea>
+                <br>
+                <input type="text" placeholder="Easy col" class="form-control" ng-model="active.edit_test.easyCol" required>
+                <br>
+                <input type="text" placeholder="Middle col" class="form-control" ng-model="active.edit_test.middleCol" required>
+                <br>
+                <input type="text" placeholder="Hard col" class="form-control" ng-model="active.edit_test.hardCol" required>
+                <br>
+                <input type="text" placeholder="Easy time" class="form-control" ng-model="active.edit_test.easyTime" required>
+                <br>
+                <input type="text" placeholder="Middle time" class="form-control" ng-model="active.edit_test.middleTime" required>
+                <br>
+                <input type="text" placeholder="Hard time" class="form-control" ng-model="active.edit_test.hardTime" required>
+                <br>
+                <label>
+                    <input type="checkbox" ng-model="active.edit_test.active"> Active
+                </label>
+                <br>
+                <button class="btn btn-default" ng-click="send_edit()">Edit</button>
+            </article>
+        </uib-accordion-group>
+        <uib-accordion-group heading="Image test">
+            <select class="form-control" ng-model="selected_data.image_test">
+                <option ng-repeat="(i, test) in tests" value="{{ i }}">{{ test.title }}</option>
+            </select>
+            <button class="btn btn-default" ng-click="select_image_test()">Enter</button>
+            <article ng-if="active.image_test">
+                <form method="POST" action="/api/image-test" enctype="multipart/form-data">
+                    <input type="hidden" name="test" value="{{ active.image_test._id }}" required>
+                    <input type="file" name="img" required>
+                    <br>
+                    <button class="btn btn-default" ng-click="send_image()">Enter</button>
+                </form>
+            </article>
         </uib-accordion-group>
     </uib-accordion>
 </section>
