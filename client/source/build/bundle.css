@@ -7248,6 +7248,9 @@ textarea {
 a:focus {
   outline: none;
 }
+th {
+  font-weight: bold;
+}
 .main {
   width: 980px;
   margin: 15px auto;

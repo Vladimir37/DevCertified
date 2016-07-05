@@ -316,11 +316,11 @@ class API {
     }
 
     deleteQuestion(req, res, next) {
-        var question_num = req.body.num;
-        if (!question_data) {
+        var question_num = req.body._id;
+        if (!question_num) {
             return res.send(Additional.serialize(2, 'Required fields are empty'));
         }
-        Models.questions.destroy({
+        Models.questions.findOneAndRemove({
             _id: question_num
         }).then(function () {
             return res.send(Additional.serialize(0));
@@ -411,7 +411,7 @@ class API {
         }).then(function (target_test) {
             test = target_test;
             var question_search = [];
-            for (var i = 0; i < 2; i++) {
+            for (var i = 1; i <= 3; i++) {
                 question_search.push(Models.questions.find({
                     complexity: i
                 }));
@@ -519,6 +519,40 @@ class API {
             });
         }).then(function (question) {
             return res.send(Additional.serialize(0, question));
+        }).catch(function (err) {
+            return res.send(Additional.serialize(1, 'Server error'));
+        });
+    }
+
+    getQuestionsCol(req, res, next) {
+        Models.tests.find().then(function (tests) {
+            var question_requests = tests.map(function (test) {
+                var test_all_complexity = [];
+                var activity = test.active ? '' : ' (inactive)';
+                test_all_complexity.push(test.title + activity);
+                for (var i = 1; i <= 3; i++) {
+                    test_all_complexity.push(Models.questions.count({
+                        test: test._id,
+                        complexity: i
+                    }));
+                }
+                return Promise.all(test_all_complexity);
+            });
+            return Promise.all(question_requests);
+        }).then(function (questions) {
+            questions = questions.map(function (test) {
+                var total = test.reduce(function (sum, current) {
+                    if (typeof current == 'number') {
+                        return sum + current;
+                    }
+                    else {
+                        return sum;
+                    }
+                }, 0);
+                test.push(total);
+                return test;
+            });
+            return res.send(Additional.serialize(0, questions));
         }).catch(function (err) {
             return res.send(Additional.serialize(1, 'Server error'));
         });

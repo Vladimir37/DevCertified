@@ -158,5 +158,32 @@
                 <button class="btn btn-default" ng-click="send_edit_quest()">Edit</button>
             </article>
         </uib-accordion-group>
+        <uib-accordion-group heading="Delete question">
+            <select class="form-control" ng-model="selected_data.delete_quest">
+                <option ng-repeat="(i, quest) in questions" value="{{ i }}">{{ quest.text }}</option>
+            </select>
+            <br>
+            <button class="btn btn-default" ng-click="select_delete_quest()">Enter</button>
+            <br>
+            <article ng-if="active.delete_quest">
+                <p>Are you sure?</p>
+                <button class="btn btn-default" ng-click="send_delete_quest()">Delete</button>
+            </article>
+        </uib-accordion-group>
+        <hr>
+        <uib-accordion-group heading="Nmber of questions in tests">
+            <table class="table table-hover">
+                <tr>
+                    <th>Name</th>
+                    <th>Easy</th>
+                    <th>Middle</th>
+                    <th>Hard</th>
+                    <th>Total</th>
+                </tr>
+                <tr ng-repeat="test in questions_cols">
+                    <td ng-repeat="value in test track by $index">{{ value }}</td>
+                </tr>
+            </table>
+        </uib-accordion-group>
     </uib-accordion>
 </section>
