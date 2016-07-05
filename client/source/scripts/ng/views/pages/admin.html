@@ -113,45 +113,49 @@
             <button class="btn btn-default" ng-click="send_create_quest()">Create</button>
         </uib-accordion-group>
         <uib-accordion-group heading="Edit question">
-            <select class="form-control" ng-model="selected_data.edit_quest">
-                <option ng-repeat="(i, quest) in questions" value="{{ i }}">{{ quest.text }}</option>
-            </select>
-            <br>
-            <button class="btn btn-default" ng-click="select_edit_quest()">Enter</button>
-            <br>
-            <article ng-if="active.edit_quest">
-                <input type="text" placeholder="Question" ng-model="active.edit_quest.text" required class="form-control">
-                <br>
-                <label>
-                    <input type="checkbox" ng-model="allow_code.edit"> Allow code
-                </label>
-                <br>
-                <textarea class="form-control" ng-model="active.edit_quest.code" ng-disabled="!allow_code.edit"></textarea>
-                <br>
-                <input type="text" placeholder="Answer 1" ng-model="active.edit_quest.answer1" required class="form-control">
-                <br>
-                <input type="text" placeholder="Answer 2" ng-model="active.edit_quest.answer2" required class="form-control">
-                <br>
-                <input type="text" placeholder="Answer 3" ng-model="active.edit_quest.answer3" required class="form-control">
-                <br>
-                <input type="text" placeholder="Answer 4" ng-model="active.edit_quest.answer4" required class="form-control">
-                <br>
-                <select ng-model="active.edit_quest.true_answer" class="form-control" required>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
+            <form name="active.edit_question">
+                <select class="form-control" ng-model="selected_data.edit_quest">
+                    <option ng-repeat="(i, quest) in questions" value="{{ i }}">{{ quest.text }}</option>
                 </select>
                 <br>
-                <select ng-model="active.edit_quest.complexity" class="form-control" required>
-                    <option value="1">Easy</option>
-                    <option value="2">Middle</option>
-                    <option value="3">Hard</option>
-                </select>
+                <button class="btn btn-default" ng-click="select_edit_quest()">Enter</button>
                 <br>
-                <select ng-model="active.edit_quest.test" class="form-control" required>
-                    <option ng-repeat="test in tests" value="{{ test._id }}">{{ test.title }}</option>
-                </select>
+                <article ng-if="active.edit_quest">
+                    <input type="text" placeholder="Question" ng-model="active.edit_quest.text" required class="form-control">
+                    <br>
+                    <label>
+                        <input type="checkbox" ng-model="allow_code.edit"> Allow code
+                    </label>
+                    <br>
+                    <textarea class="form-control" ng-model="active.edit_quest.code" ng-disabled="!allow_code.edit"></textarea>
+                    <br>
+                    <input type="text" placeholder="Answer 1" ng-model="active.edit_quest.answer1" required class="form-control">
+                    <br>
+                    <input type="text" placeholder="Answer 2" ng-model="active.edit_quest.answer2" required class="form-control">
+                    <br>
+                    <input type="text" placeholder="Answer 3" ng-model="active.edit_quest.answer3" required class="form-control">
+                    <br>
+                    <input type="text" placeholder="Answer 4" ng-model="active.edit_quest.answer4" required class="form-control">
+                    <br>
+                    <select ng-model="active.edit_quest.true_answer" class="form-control" required>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                    </select>
+                    <br>
+                    <select ng-model="active.edit_quest.complexity" class="form-control" required>
+                        <option value="1">Easy</option>
+                        <option value="2">Middle</option>
+                        <option value="3">Hard</option>
+                    </select>
+                    <br>
+                    <select ng-model="active.edit_quest.test" class="form-control" required>
+                        <option ng-repeat="test in tests" value="{{ test._id }}">{{ test.title }}</option>
+                    </select>
+                </form>
+                <br>
+                <button class="btn btn-default" ng-click="send_edit_quest()">Edit</button>
             </article>
         </uib-accordion-group>
     </uib-accordion>

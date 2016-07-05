@@ -25,7 +25,7 @@ export default function($scope, $http) {
         $scope.active.edit_quest = $scope.questions[$scope.selected_data.edit_quest];
         $scope.active.edit_quest.true_answer = String($scope.active.edit_quest.true_answer);
         $scope.active.edit_quest.complexity = String($scope.active.edit_quest.complexity);
-        $scope.allow_code = Boolean($scope.active.edit_quest.code);
+        $scope.allow_code.edit = Boolean($scope.active.edit_quest.code);
     };
     $scope.send_edit_test = function () {
         $http({
@@ -59,6 +59,34 @@ export default function($scope, $http) {
             method: 'POST',
             url: '/api/add-quest',
             data: $scope.question_data
+        }).then(function (response) {
+            response = response.data;
+            if (response.status == 0) {
+                $scope.message = 'Success!';
+                $scope.error = null;
+                $scope.question_data = {};
+            }
+            else {
+                $scope.error = response.body;
+                $scope.message = null;
+            }
+        }).catch(function (err) {
+            console.log(err);
+            $scope.error = 'Server error';
+        });
+    };
+    $scope.send_edit_quest = function () {
+        if ($scope.active.edit_question.$invalid) {
+            $scope.error = 'Required fields are empty!'
+            return false;
+        }
+        if (!$scope.allow_code.edit) {
+            $scope.active.edit_quest.code = null;
+        }
+        $http({
+            method: 'POST',
+            url: '/api/edit-quest',
+            data: $scope.active.edit_quest
         }).then(function (response) {
             response = response.data;
             if (response.status == 0) {

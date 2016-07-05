@@ -300,13 +300,11 @@ class API {
             true_answer: req.body.true_answer,
             complexity: req.body.complexity
         };
-        if (req.body.code) {
-            question_data.code = req.body.code;
-        }
-        var question_num = req.body.num;
-        if (!Additional.checkArguments(question_data) || !question_data) {
+        var question_num = req.body._id;
+        if (!Additional.checkArguments(question_data) || !question_num) {
             return res.send(Additional.serialize(2, 'Required fields are empty'));
         }
+        question_data.code = req.body.code;
         Models.questions.update({
             _id: question_num
         }, question_data).then(function () {
