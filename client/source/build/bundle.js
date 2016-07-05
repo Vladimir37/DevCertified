@@ -19795,6 +19795,10 @@
 
 	var _navbar2 = _interopRequireDefault(_navbar);
 
+	var _test_card = __webpack_require__(19);
+
+	var _test_card2 = _interopRequireDefault(_test_card);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var app = _angular2.default.module('DevCertified', ['ui.router', 'ui.bootstrap', 'ngCookies']);
@@ -19811,6 +19815,7 @@
 
 	// directives
 	app.directive('navbar', _navbar2.default);
+	app.directive('testCard', _test_card2.default);
 
 	// services
 	app.service('auth_check', _auth2.default);
@@ -20006,14 +20011,23 @@
 /* 14 */
 /***/ function(module, exports) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
 	exports.default = index;
 	function index($scope, $http) {
-	    //
+	    $http({
+	        method: 'GET',
+	        url: '/api/get-tests'
+	    }).then(function (response) {
+	        if (response.data.status == 0) {
+	            $scope.tests = response.data.body;
+	        }
+	    }).catch(function (err) {
+	        console.log(err);
+	    });
 	}
 
 /***/ },
@@ -20280,11 +20294,34 @@
 	        scope: false,
 	        templateUrl: function templateUrl() {
 	            if (this.status) {
-	                return '/src/scripts/ng/views/menu/user.html';
+	                return '/src/scripts/ng/views/directives/user.html';
 	            } else {
-	                return '/src/scripts/ng/views/menu/guest.html';
+	                return '/src/scripts/ng/views/directives/guest.html';
 	            }
 	        }
+	    };
+	}
+
+/***/ },
+/* 19 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = test_card;
+	function test_card() {
+	    return {
+	        restrict: 'EA',
+	        controller: function controller() {
+	            console.log('LOAD');
+	        },
+
+	        scope: {},
+	        template: '<h1>QWE</h1>'
+	        // templateUrl: '/src/scripts/ng/views/directives/text_card.html'
 	    };
 	}
 

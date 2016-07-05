@@ -6,10 +6,10 @@ export default function navbar ($cookies) {
         scope: false,
         templateUrl() {
             if (this.status) {
-                return '/src/scripts/ng/views/menu/user.html';
+                return '/src/scripts/ng/views/directives/user.html';
             }
             else {
-                return '/src/scripts/ng/views/menu/guest.html';
+                return '/src/scripts/ng/views/directives/guest.html';
             }
         }
     }

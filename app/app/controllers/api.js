@@ -335,9 +335,6 @@ class API {
         var user = req.user;
         var query = {};
         var target_tests;
-        if (!request_type) {
-            return res.send(Additional.serialize(2, 'Required fields are empty'));
-        }
         Models.tests.find({
             active: true
         }).then(function (all_tests) {
