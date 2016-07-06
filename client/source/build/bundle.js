@@ -19791,11 +19791,15 @@
 
 	var _admin4 = _interopRequireDefault(_admin3);
 
-	var _navbar = __webpack_require__(18);
+	var _test_check = __webpack_require__(18);
+
+	var _test_check2 = _interopRequireDefault(_test_check);
+
+	var _navbar = __webpack_require__(19);
 
 	var _navbar2 = _interopRequireDefault(_navbar);
 
-	var _test_card = __webpack_require__(19);
+	var _test_card = __webpack_require__(20);
 
 	var _test_card2 = _interopRequireDefault(_test_card);
 
@@ -19820,8 +19824,9 @@
 	// services
 	app.service('auth_check', _auth2.default);
 	app.service('admin_check', _admin4.default);
+	app.service('test_check', _test_check2.default);
 
-	app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', _router2.default]);
+	app.config(_router2.default);
 
 /***/ },
 /* 9 */
@@ -19833,24 +19838,30 @@
 	    value: true
 	});
 
-	exports.default = function ($stateProvider, $urlRouterProvider, $locationProvider, admin_check) {
+	exports.default = function ($stateProvider, $urlRouterProvider, $locationProvider, admin_check, test_check) {
 	    $urlRouterProvider.otherwise('otherwise');
 
 	    $stateProvider.state('index', {
-	        url: "/",
+	        url: '/',
 	        templateUrl: '/src/scripts/ng/views/pages/index.html',
 	        controller: 'index'
 	    }).state('check_admin', {
-	        url: "/admin",
+	        url: '/admin',
 	        controller: function controller($state, admin_check) {
 	            admin_check($state, 'admin');
 	        }
 	    }).state('admin', {
 	        templateUrl: '/src/scripts/ng/views/pages/admin.html',
 	        controller: 'admin'
-	    }).state("otherwise", {
-	        url: "*path",
-	        templateUrl: "/src/scripts/ng/views/pages/e404.html"
+	    }).state('check_test_card', {
+	        url: '/test_card/:id',
+	        controller: function controller($state, test_check) {
+	            console.log();
+	            test_check($state);
+	        }
+	    }).state('otherwise', {
+	        url: '*path',
+	        templateUrl: '/src/scripts/ng/views/pages/e404.html'
 	    });
 
 	    $locationProvider.html5Mode(true);
@@ -20285,6 +20296,37 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+
+	exports.default = function ($http) {
+	    return function ($state, component) {
+	        return $http({
+	            method: 'GET',
+	            url: '/api/get-test'
+	        }). // data: {test: }
+	        then(function (response) {
+	            console.log($state);
+	            // if (response.data.status === 0) {
+	            //     $state.go(component);
+	            // }
+	            // else {
+	            //     $state.go('otherwise', {}, {location: false});
+	            // }
+	        }).catch(function (err) {
+	            console.log(err);
+	            $state.go('otherwise', {}, { location: false });
+	        });
+	    };
+	};
+
+/***/ },
+/* 19 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
 	exports.default = navbar;
 	function navbar($cookies) {
 	    return {
@@ -20303,7 +20345,7 @@
 	}
 
 /***/ },
-/* 19 */
+/* 20 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -20314,14 +20356,11 @@
 	exports.default = test_card;
 	function test_card() {
 	    return {
-	        restrict: 'EA',
-	        controller: function controller() {
-	            console.log('LOAD');
+	        restrict: 'E',
+	        scope: {
+	            test: '='
 	        },
-
-	        scope: {},
-	        template: '<h1>QWE</h1>'
-	        // templateUrl: '/src/scripts/ng/views/directives/text_card.html'
+	        templateUrl: '/src/scripts/ng/views/directives/test_card.html'
 	    };
 	}
 

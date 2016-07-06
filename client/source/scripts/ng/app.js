@@ -11,6 +11,7 @@ import admin from './controllers/admin';
 
 import auth_check from './services/auth';
 import admin_check from './services/admin';
+import test_check from './services/test_check';
 
 import navbar from './directives/navbar';
 import test_card from './directives/test_card';
@@ -34,5 +35,6 @@ app.directive('testCard', test_card);
 // services
 app.service('auth_check', auth_check);
 app.service('admin_check', admin_check);
+app.service('test_check', test_check);
 
-app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', Router]);
+app.config(Router);

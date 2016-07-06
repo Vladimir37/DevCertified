@@ -7266,3 +7266,12 @@ th {
 .not_block {
   display: inline-block;
 }
+.test_card {
+  display: inline-block;
+  width: 250px;
+  vertical-align: top;
+  text-align: center;
+}
+.test_card img {
+  width: 200px;
+}

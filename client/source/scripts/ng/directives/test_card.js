@@ -1,11 +1,9 @@
 export default function test_card () {
     return {
-        restrict: 'EA',
-        controller() {
-            console.log('LOAD');
+        restrict: 'E',
+        scope: {
+            test: '='
         },
-        scope: {},
-        template: '<h1>QWE</h1>'
-        // templateUrl: '/src/scripts/ng/views/directives/text_card.html'
+        templateUrl: '/src/scripts/ng/views/directives/test_card.html'
     }
 }

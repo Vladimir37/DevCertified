@@ -330,8 +330,26 @@ class API {
         });
     }
 
+    getTest(req, res, next) {
+        var target_test = req.query.test;
+        Models.tests.findOne({
+            _id: target_test,
+            active: true
+        }).then(function (test) {
+            if (!test) {
+                return res.send(Additional.serialize(2, 'Not found'));
+            }
+            else {
+                return res.send(Additional.serialize(0, test));
+            }
+        }).catch(function (err) {
+            console.log(err);
+            return res.send(Additional.serialize(1, 'Server error'));
+        });
+    }
+
     getTests(req, res, next) {
-        var request_type = Number(req.body.type);
+        var request_type = Number(req.query.type);
         var user = req.user;
         var query = {};
         var target_tests;
