@@ -12,6 +12,7 @@ export default function($scope, $http) {
             return false;
         }
         $scope.active.edit_test = $scope.tests[$scope.selected_data.edit_test];
+        $scope.active.edit_test.subjects = $scope.active.edit_test.subjects.join('|');
     };
     $scope.select_image_test = function () {
         if (!$scope.selected_data.image_test) {

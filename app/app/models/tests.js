@@ -16,6 +16,7 @@ var questionModel = mongoose.model('Question', questionSchema);
 var testScheme = new mongoose.Schema({
     title: String,
     description: String,
+    subjects: Array,
     easyCol: Number,
     middleCol: Number,
     hardCol: Number,

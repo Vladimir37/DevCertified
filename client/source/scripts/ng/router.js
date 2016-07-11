@@ -25,6 +25,7 @@ export default function ($stateProvider, $urlRouterProvider, $locationProvider) 
             _id: null,
             title: null,
             description: null,
+            subjects: null,
             easyCol: null,
             middleCol: null,
             hardCol: null,

@@ -6,6 +6,13 @@
         </article>
         <article class="col-md-6 right">
             {{ test_data.description }}
+            <ul class="subjects">
+                <li ng-repeat="subject in test_data.subjects">{{ subject }}</li>
+            </ul>
         </article>
+    </article>
+    <article class="start_block">
+        <button class="btn btn-primary">Start</button>
+        <article class="alert alert-success">Incorrect test</article>
     </article>
 </section>

@@ -7269,6 +7269,21 @@ th {
 .test_full .right {
   text-align: right;
 }
+.test_full .right .subjects {
+  list-style-type: circle;
+  width: 200px;
+  text-align: left;
+  float: right;
+  margin-top: 15px;
+}
+.test_full .start_block {
+  width: 300px;
+  margin: 15px auto;
+  text-align: center;
+}
+.test_full .start_block button {
+  margin-bottom: 10px;
+}
 .not_block {
   display: inline-block;
 }

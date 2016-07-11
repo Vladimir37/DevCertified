@@ -24,24 +24,26 @@ class Additional {
 
     checkAvailable(user, test) {
         return new Promise(function (resolve, reject) {
-            var available_data = {};
+            var available_data = {
+                error: null,
+                available: false,
+                results: null,
+                next: null
+            };
             if (!user || !test) {
-                reject(2);
+                available_data.error = 2;
+                resolve(available_data);
             }
-            Models.solutions.find({
+            Models.solutions.findOne({
                 user: user._id,
                 test
-            }).limit(3).sort({
-                start: -1
-            }).then(function (solutions) {
+            }).then(function (solution) {
                 var max_date = new Date();
-                max_date.setDays(max_date.getDays() - 50);
-                var block = solutions.every(function (solution) {
-                    return solution.start > max_date;
-                });
+                max_date.setDays(max_date.getDays() - 30);
+                var block = solution.start > max_date;
                 if (block) {
-                    var next_date = solution[2].start;
-                    next_date.setDate(next_date.getDate() + 50);
+                    var next_date = solution.start;
+                    next_date.setDate(next_date.getDate() + 30);
                     available_data.available = false;
                     available_data.results = solutions;
                     available_data.next = next_date;
@@ -54,7 +56,8 @@ class Additional {
                 }
             }).catch(function (err) {
                 console.log(err);
-                reject(1);
+                available_data.error = 1;
+                resolve(available_data);
             });
         })
     }

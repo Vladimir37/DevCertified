@@ -169,6 +169,7 @@ class API {
             var test_data = {
                 title: field.title,
                 description: field.description,
+                subjects: field.subjects,
                 easyCol: field.easyCol,
                 middleCol: field.middleCol,
                 hardCol: field.hardCol,
@@ -188,6 +189,7 @@ class API {
                     return res.send(Additional.serialize(1, 'Server error'));
                 }
             });
+            test_data.subjects = test_data.subjects.split('|');
             Models.tests.create(test_data).then(function () {
                 return res.send(Additional.serialize(0));
             }).catch(function (err) {
@@ -201,6 +203,7 @@ class API {
         var test_data = {
             title: req.body.title,
             description: req.body.description,
+            subjects: req.body.subjects,
             easyCol: req.body.easyCol,
             middleCol: req.body.middleCol,
             hardCol: req.body.hardCol,
@@ -213,6 +216,7 @@ class API {
             return res.send(Additional.serialize(2, 'Required fields are empty'));
         }
         test_data.active = req.body.active;
+        test_data.subjects = test_data.subjects.split('|');
         Models.tests.update({
             _id: test_num
         }, test_data).then(function (info) {
@@ -418,7 +422,10 @@ class API {
         if (!user.success_tests.indexOf(test_num) > -1) {
             return res.send(Additional.serialize(3, 'You have already passed this test'));
         }
-        Additional.checkAvailable(user, test_num).then(function (result) {
+        Additional.checkAvailable(user, test_num).then(function (err) {
+            if (result) {
+                return res.send(Additional.serialize(4, 'The recent failed attempt'));
+            }
             return Models.tests.findOne({
                 _id: test_num,
                 active: true
@@ -568,6 +575,39 @@ class API {
                 return test;
             });
             return res.send(Additional.serialize(0, questions));
+        }).catch(function (err) {
+            return res.send(Additional.serialize(1, 'Server error'));
+        });
+    }
+
+    getTestStatus(req, res, next) {
+        var test_num = req.query.test;
+        var user = req.user;
+        if (!test_num) {
+            return res.send(Additional.serialize(2, 'Required fields are empty'));
+        }
+        if (!user) {
+            return res.send(Additional.serialize(3, 'You must be a user'));
+        }
+        if (user.success_tests.indexOf(test_num) > -1) {
+            return res.send(Additional.serialize(5, 'You already have this certificate'));
+        }
+        Models.tests.findOne({
+            _id: test_num,
+            active: true
+        }).then(function (test) {
+            if (!test) {
+                return res.send(Additional.serialize(4, 'Test not found'));
+            }
+            return Additional.checkAvailable(user, test_num);
+        }).then(function (status) {
+            if (status.error) {
+                throw status.error;
+            }
+            if (!status.available) {
+                return res.send(Additional.serialize(0, status));
+            }
+            return res.send(Additional.serialize(6, status));
         }).catch(function (err) {
             return res.send(Additional.serialize(1, 'Server error'));
         });
