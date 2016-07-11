@@ -38,8 +38,12 @@ class Additional {
                 user: user._id,
                 test
             }).then(function (solution) {
+                if (!solution) {
+                    available_data.available = true;
+                    return resolve(available_data);
+                }
                 var max_date = new Date();
-                max_date.setDays(max_date.getDays() - 30);
+                max_date.setDate(max_date.getDate() - 30);
                 var block = solution.start > max_date;
                 if (block) {
                     var next_date = solution.start;

@@ -605,9 +605,9 @@ class API {
                 throw status.error;
             }
             if (!status.available) {
-                return res.send(Additional.serialize(0, status));
+                return res.send(Additional.serialize(6, status));
             }
-            return res.send(Additional.serialize(6, status));
+            return res.send(Additional.serialize(0, status));
         }).catch(function (err) {
             return res.send(Additional.serialize(1, 'Server error'));
         });

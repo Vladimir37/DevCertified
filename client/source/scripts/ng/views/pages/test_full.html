@@ -12,7 +12,29 @@
         </article>
     </article>
     <article class="start_block">
-        <button class="btn btn-primary">Start</button>
-        <article class="alert alert-success">Incorrect test</article>
+        <button class="btn btn-primary" ng-disabled="response.status">Start</button>
+        <article ng-if="alert" class="alert {{ alert_type }}">
+            <span ng-if="response.status == 1">
+                Server error
+            </span>
+            <span ng-if="response.status == 2">
+                Incorrect test
+            </span>
+            <span ng-if="response.status == 3">
+                You must be logged
+            </span>
+            <span ng-if="response.status == 4">
+                Test not found
+            </span>
+            <span ng-if="response.status == 5">
+                You already have this certificate
+            </span>
+            <span ng-if="response.status == 6">
+                Next attempt: {{ response.next }}
+            </span>
+            <span ng-if="error">
+                Server error
+            </span>
+        </article>
     </article>
 </section>
