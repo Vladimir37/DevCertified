@@ -19838,7 +19838,7 @@
 	    value: true
 	});
 
-	exports.default = function ($stateProvider, $urlRouterProvider, $locationProvider, admin_check, test_check) {
+	exports.default = function ($stateProvider, $urlRouterProvider, $locationProvider) {
 	    $urlRouterProvider.otherwise('otherwise');
 
 	    $stateProvider.state('index', {
@@ -19854,17 +19854,20 @@
 	        templateUrl: '/src/scripts/ng/views/pages/admin.html',
 	        controller: 'admin'
 	    }).state('check_test_card', {
-	        url: '/test_card/:id',
-	        controller: function controller($state, test_check) {
-	            console.log();
-	            test_check($state);
+	        url: '/test_card/:cardId',
+	        controller: function controller($state, $stateParams, test_check) {
+	            console.log($stateParams);
+	            // test_check($state);
 	        }
 	    }).state('otherwise', {
 	        url: '*path',
-	        templateUrl: '/src/scripts/ng/views/pages/e404.html'
+	        // templateUrl: '/src/scripts/ng/views/pages/e404.html'
+	        onEnter: function onEnter($state) {
+	            $state.go('index');
+	        }
 	    });
 
-	    $locationProvider.html5Mode(true);
+	    // $locationProvider.html5Mode(true);
 	};
 
 	;
@@ -19928,10 +19931,16 @@
 	            data: $scope.log_data
 	        }).then(function (response) {
 	            if (response.data.status == 0) {
+	                // todo reload navbar
+	                console.log($scope.$parent);
 	                if (response.data.body.status == 2) {
-	                    window.location.pathname = '/admin';
+	                    window.location.pathname = '/#/admin';
+	                    $scope.close();
+	                    window.location.reload();
 	                } else {
-	                    window.location.pathname = '/cabinet';
+	                    window.location.pathname = '/#/cabinet';
+	                    $scope.close();
+	                    window.location.reload();
 	                }
 	            } else {
 	                $scope.error = response.data.body;

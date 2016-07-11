@@ -14,11 +14,17 @@ export default function($scope, $http, $uibModalInstance) {
             data: $scope.log_data
         }).then(function (response) {
             if (response.data.status == 0) {
+                // todo reload navbar
+                console.log($scope.$parent);
                 if (response.data.body.status == 2) {
-                    window.location.pathname = '/admin';
+                    window.location.pathname = '/#/admin';
+                    $scope.close();
+                    window.location.reload();
                 }
                 else {
-                    window.location.pathname = '/cabinet';
+                    window.location.pathname = '/#/cabinet';
+                    $scope.close();
+                    window.location.reload();
                 }
             }
             else {
