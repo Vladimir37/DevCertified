@@ -1,20 +1,24 @@
 export default function ($http) {
-    return function ($state, component) {
+    return function ($state, $stateParams) {
+        if (!$stateParams.cardId) {
+            return $state.go('otherwise', {});
+        }
         return $http({
             method: 'GET',
             url: '/api/get-test',
-            // data: {test: }
+            params: {
+                test: $stateParams.cardId
+            }
         }).then(function (response) {
-            console.log($state);
-            // if (response.data.status === 0) {
-            //     $state.go(component);
-            // }
-            // else {
-            //     $state.go('otherwise', {}, {location: false});
-            // }
+            if (response.data.status === 0) {
+                $state.go('test_full', response.data.body);
+            }
+            else {
+                $state.go('otherwise', {});
+            }
         }).catch(function (err) {
             console.log(err);
-            $state.go('otherwise', {}, {location: false});
+            $state.go('otherwise', {});
         })
     }
 }

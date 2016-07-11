@@ -8,6 +8,7 @@ import registration from './controllers/modals/registration';
 import end_registration from './controllers/modals/end_registration';
 import index from './controllers/index';
 import admin from './controllers/admin';
+import test_full from './controllers/test_full';
 
 import auth_check from './services/auth';
 import admin_check from './services/admin';
@@ -22,6 +23,7 @@ var app = Angular.module('DevCertified', ['ui.router', 'ui.bootstrap', 'ngCookie
 app.controller('header', header);
 app.controller('index', index);
 app.controller('admin', admin);
+app.controller('test_full', test_full);
 
 // modal controllers
 app.controller('login', login);

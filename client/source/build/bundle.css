@@ -7263,6 +7263,12 @@ th {
   margin-left: -10px;
   margin-right: -10px;
 }
+.test_full .left img {
+  width: 100%;
+}
+.test_full .right {
+  text-align: right;
+}
 .not_block {
   display: inline-block;
 }

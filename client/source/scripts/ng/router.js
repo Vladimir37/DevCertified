@@ -13,12 +13,26 @@ export default function ($stateProvider, $urlRouterProvider, $locationProvider) 
     }).state('admin', {
         templateUrl: '/src/scripts/ng/views/pages/admin.html',
         controller: 'admin'
-    }).state('check_test_card', {
-        url: '/test_card/:cardId',
+    }).state('check_test_full', {
+        url: '/test_full/:cardId',
         controller: function ($state, $stateParams, test_check) {
-            console.log($stateParams);
-            // test_check($state);
+            test_check($state, $stateParams);
         },
+    }).state('test_full', {
+        templateUrl: '/src/scripts/ng/views/pages/test_full.html',
+        controller: 'test_full',
+        params: {
+            _id: null,
+            title: null,
+            description: null,
+            easyCol: null,
+            middleCol: null,
+            hardCol: null,
+            easyTime: null,
+            middleTime: null,
+            hardTime: null,
+            img: null
+        }
     }).state('otherwise', {
         url: '*path',
         // templateUrl: '/src/scripts/ng/views/pages/e404.html'

@@ -19783,23 +19783,27 @@
 
 	var _admin2 = _interopRequireDefault(_admin);
 
-	var _auth = __webpack_require__(16);
+	var _test_full = __webpack_require__(16);
+
+	var _test_full2 = _interopRequireDefault(_test_full);
+
+	var _auth = __webpack_require__(17);
 
 	var _auth2 = _interopRequireDefault(_auth);
 
-	var _admin3 = __webpack_require__(17);
+	var _admin3 = __webpack_require__(18);
 
 	var _admin4 = _interopRequireDefault(_admin3);
 
-	var _test_check = __webpack_require__(18);
+	var _test_check = __webpack_require__(19);
 
 	var _test_check2 = _interopRequireDefault(_test_check);
 
-	var _navbar = __webpack_require__(19);
+	var _navbar = __webpack_require__(20);
 
 	var _navbar2 = _interopRequireDefault(_navbar);
 
-	var _test_card = __webpack_require__(20);
+	var _test_card = __webpack_require__(21);
 
 	var _test_card2 = _interopRequireDefault(_test_card);
 
@@ -19811,6 +19815,7 @@
 	app.controller('header', _header2.default);
 	app.controller('index', _index2.default);
 	app.controller('admin', _admin2.default);
+	app.controller('test_full', _test_full2.default);
 
 	// modal controllers
 	app.controller('login', _login2.default);
@@ -19853,11 +19858,25 @@
 	    }).state('admin', {
 	        templateUrl: '/src/scripts/ng/views/pages/admin.html',
 	        controller: 'admin'
-	    }).state('check_test_card', {
-	        url: '/test_card/:cardId',
+	    }).state('check_test_full', {
+	        url: '/test_full/:cardId',
 	        controller: function controller($state, $stateParams, test_check) {
-	            console.log($stateParams);
-	            // test_check($state);
+	            test_check($state, $stateParams);
+	        }
+	    }).state('test_full', {
+	        templateUrl: '/src/scripts/ng/views/pages/test_full.html',
+	        controller: 'test_full',
+	        params: {
+	            _id: null,
+	            title: null,
+	            description: null,
+	            easyCol: null,
+	            middleCol: null,
+	            hardCol: null,
+	            easyTime: null,
+	            middleTime: null,
+	            hardTime: null,
+	            img: null
 	        }
 	    }).state('otherwise', {
 	        url: '*path',
@@ -20244,6 +20263,20 @@
 /* 16 */
 /***/ function(module, exports) {
 
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	exports.default = function ($scope, $stateParams) {
+	    $scope.test_data = $stateParams;
+	};
+
+/***/ },
+/* 17 */
+/***/ function(module, exports) {
+
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
@@ -20269,7 +20302,7 @@
 	};
 
 /***/ },
-/* 17 */
+/* 18 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -20297,7 +20330,7 @@
 	};
 
 /***/ },
-/* 18 */
+/* 19 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -20307,28 +20340,31 @@
 	});
 
 	exports.default = function ($http) {
-	    return function ($state, component) {
+	    return function ($state, $stateParams) {
+	        if (!$stateParams.cardId) {
+	            return $state.go('otherwise', {});
+	        }
 	        return $http({
 	            method: 'GET',
-	            url: '/api/get-test'
-	        }). // data: {test: }
-	        then(function (response) {
-	            console.log($state);
-	            // if (response.data.status === 0) {
-	            //     $state.go(component);
-	            // }
-	            // else {
-	            //     $state.go('otherwise', {}, {location: false});
-	            // }
+	            url: '/api/get-test',
+	            params: {
+	                test: $stateParams.cardId
+	            }
+	        }).then(function (response) {
+	            if (response.data.status === 0) {
+	                $state.go('test_full', response.data.body);
+	            } else {
+	                $state.go('otherwise', {});
+	            }
 	        }).catch(function (err) {
 	            console.log(err);
-	            $state.go('otherwise', {}, { location: false });
+	            $state.go('otherwise', {});
 	        });
 	    };
 	};
 
 /***/ },
-/* 19 */
+/* 20 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -20354,7 +20390,7 @@
 	}
 
 /***/ },
-/* 20 */
+/* 21 */
 /***/ function(module, exports) {
 
 	'use strict';

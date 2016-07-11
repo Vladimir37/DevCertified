@@ -6,7 +6,7 @@
         <img ng-src="/src/images/uploaded/{{ test.img }}" alt="test_cover">
         <br>
         <uib-accordion>
-            <a href="/test-data/{{ test._id }}" class="btn btn-primary">Details</a>
+            <a ui-sref="check_test_full({cardId: test._id })" class="btn btn-primary">Details</a>
         </uib-accordion>
     </div>
 </div>
