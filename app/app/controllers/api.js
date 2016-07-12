@@ -612,6 +612,46 @@ class API {
             return res.send(Additional.serialize(1, 'Server error'));
         });
     }
+
+    getCategoryTests(req, res, next) {
+        var user = req.user;
+        if (!user) {
+            return res.send(Additional.serialize(2, 'Required fields are empty'));
+        }
+        var all_tests = {
+            received: [],
+            unreceived: [],
+            available: [],
+            unavailable: []
+        };
+        var available_requests = [];
+        Models.tests.find({
+            active: true
+        }).then(function (tests) {
+            tests.forEach(function (test) {
+                if (user.success_tests.indexOf(test._id) > -1) {
+                    all_tests.received.push(test);
+                }
+                else {
+                    all_tests.unreceived.push(test);
+                    available_requests.push(Additional.checkAvailable(user, test._id));
+                }
+            });
+            return Promise.all(available_requests);
+        }).then(function (availability) {
+            availability.forEach(function (result, index) {
+                if (result.available) {
+                    all_tests.available.push(all_tests.unreceived[index]);
+                }
+                else {
+                    all_tests.unavailable.push(all_tests.unreceived[index]);
+                }
+            });
+            return res.send(Additional.serialize(0, all_tests));
+        }).catch(function (err) {
+            return res.send(Additional.serialize(1, 'Server error'));
+        });
+    }
 }
 
 module.exports = API;

@@ -7284,6 +7284,9 @@ th {
 .test_full .start_block button {
   margin-bottom: 10px;
 }
+.cabinet_tab {
+  padding: 10px;
+}
 .not_block {
   display: inline-block;
 }

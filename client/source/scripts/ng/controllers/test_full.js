@@ -13,7 +13,6 @@ export default function ($scope, $stateParams, $http) {
     }).then(function (response) {
         response = response.data;
         $scope.response = response;
-        console.log(response);
         if (response.status) {
             $scope.alert = true;
         }

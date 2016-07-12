@@ -19787,6 +19787,10 @@
 
 	var _test_full2 = _interopRequireDefault(_test_full);
 
+	var _cabinet = __webpack_require__(23);
+
+	var _cabinet2 = _interopRequireDefault(_cabinet);
+
 	var _auth = __webpack_require__(17);
 
 	var _auth2 = _interopRequireDefault(_auth);
@@ -19798,6 +19802,10 @@
 	var _test_check = __webpack_require__(19);
 
 	var _test_check2 = _interopRequireDefault(_test_check);
+
+	var _user_check = __webpack_require__(22);
+
+	var _user_check2 = _interopRequireDefault(_user_check);
 
 	var _navbar = __webpack_require__(20);
 
@@ -19816,6 +19824,7 @@
 	app.controller('index', _index2.default);
 	app.controller('admin', _admin2.default);
 	app.controller('test_full', _test_full2.default);
+	app.controller('cabinet', _cabinet2.default);
 
 	// modal controllers
 	app.controller('login', _login2.default);
@@ -19830,6 +19839,7 @@
 	app.service('auth_check', _auth2.default);
 	app.service('admin_check', _admin4.default);
 	app.service('test_check', _test_check2.default);
+	app.service('user_check', _user_check2.default);
 
 	app.config(_router2.default);
 
@@ -19858,10 +19868,18 @@
 	    }).state('admin', {
 	        templateUrl: '/src/scripts/ng/views/pages/admin.html',
 	        controller: 'admin'
+	    }).state('check_cabinet', {
+	        url: '/cabinet',
+	        controller: function controller($state, user_check) {
+	            user_check($state);
+	        }
+	    }).state('cabinet', {
+	        templateUrl: '/src/scripts/ng/views/pages/cabinet.html',
+	        controller: 'cabinet'
 	    }).state('check_test_full', {
 	        url: '/test_full/:cardId',
 	        controller: function controller($state, $stateParams, test_check) {
-	            test_check($state, $stateParams);
+	            test_check($state);
 	        }
 	    }).state('test_full', {
 	        templateUrl: '/src/scripts/ng/views/pages/test_full.html',
@@ -19881,13 +19899,10 @@
 	        }
 	    }).state('otherwise', {
 	        url: '*path',
-	        // templateUrl: '/src/scripts/ng/views/pages/e404.html'
 	        onEnter: function onEnter($state) {
 	            $state.go('index');
 	        }
 	    });
-
-	    // $locationProvider.html5Mode(true);
 	};
 
 	;
@@ -20286,7 +20301,6 @@
 	    }).then(function (response) {
 	        response = response.data;
 	        $scope.response = response;
-	        console.log(response);
 	        if (response.status) {
 	            $scope.alert = true;
 	        }
@@ -20438,6 +20452,56 @@
 	        templateUrl: '/src/scripts/ng/views/directives/test_card.html'
 	    };
 	}
+
+/***/ },
+/* 22 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	exports.default = function ($http) {
+	    return function ($state) {
+	        return $http({
+	            method: 'GET',
+	            url: '/api/check'
+	        }).then(function (response) {
+	            if (response.data.status === 0) {
+	                $state.go('cabinet');
+	            } else {
+	                $state.go('otherwise', response.data.body);
+	            }
+	        }).catch(function (err) {
+	            console.log(err);
+	            $state.go('otherwise', {});
+	        });
+	    };
+	};
+
+/***/ },
+/* 23 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	exports.default = function ($scope, $http) {
+	    $http({
+	        method: 'GET',
+	        url: '/api/get-category-tests'
+	    }).then(function (response) {
+	        console.log(response);
+	    }).catch(function (err) {
+	        $scope.error = err;
+	        console.log(err);
+	    });
+	};
 
 /***/ }
 /******/ ]);

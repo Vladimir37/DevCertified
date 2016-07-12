@@ -13,11 +13,19 @@ export default function ($stateProvider, $urlRouterProvider, $locationProvider) 
     }).state('admin', {
         templateUrl: '/src/scripts/ng/views/pages/admin.html',
         controller: 'admin'
+    }).state('check_cabinet', {
+        url: '/cabinet',
+        controller: function ($state, user_check) {
+            user_check($state);
+        }
+    }).state('cabinet', {
+        templateUrl: '/src/scripts/ng/views/pages/cabinet.html',
+        controller: 'cabinet'
     }).state('check_test_full', {
         url: '/test_full/:cardId',
         controller: function ($state, $stateParams, test_check) {
-            test_check($state, $stateParams);
-        },
+            test_check($state);
+        }
     }).state('test_full', {
         templateUrl: '/src/scripts/ng/views/pages/test_full.html',
         controller: 'test_full',
@@ -36,11 +44,8 @@ export default function ($stateProvider, $urlRouterProvider, $locationProvider) 
         }
     }).state('otherwise', {
         url: '*path',
-        // templateUrl: '/src/scripts/ng/views/pages/e404.html'
         onEnter: function($state) {
             $state.go('index');
         }
     });
-
-    // $locationProvider.html5Mode(true);
 };
