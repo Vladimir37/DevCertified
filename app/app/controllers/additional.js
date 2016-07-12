@@ -111,6 +111,7 @@ class Additional {
                 else {
                     return Models.certificates.create({
                         title: data[1].title,
+                        user: data[0]._id,
                         name: data[0].first + ' ' + data[0].last,
                         date: new Date()
                     });

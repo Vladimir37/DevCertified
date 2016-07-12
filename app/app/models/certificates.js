@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 
 var certificateSchema = new mongoose.Schema({
     title: String,
+    user: String,
     name: String,
     date: Date
 });

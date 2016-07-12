@@ -19879,7 +19879,7 @@
 	    }).state('check_test_full', {
 	        url: '/test_full/:cardId',
 	        controller: function controller($state, $stateParams, test_check) {
-	            test_check($state);
+	            test_check($state, $stateParams);
 	        }
 	    }).state('test_full', {
 	        templateUrl: '/src/scripts/ng/views/pages/test_full.html',
@@ -20496,9 +20496,13 @@
 	        method: 'GET',
 	        url: '/api/get-category-tests'
 	    }).then(function (response) {
-	        console.log(response);
+	        if (response.data.status == 0) {
+	            $scope.tests = response.data.body;
+	        } else {
+	            $scope.error = response.data.body;
+	        }
 	    }).catch(function (err) {
-	        $scope.error = err;
+	        $scope.error = 'Server error';
 	        console.log(err);
 	    });
 	};

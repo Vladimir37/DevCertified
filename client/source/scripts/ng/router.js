@@ -24,7 +24,7 @@ export default function ($stateProvider, $urlRouterProvider, $locationProvider) 
     }).state('check_test_full', {
         url: '/test_full/:cardId',
         controller: function ($state, $stateParams, test_check) {
-            test_check($state);
+            test_check($state, $stateParams);
         }
     }).state('test_full', {
         templateUrl: '/src/scripts/ng/views/pages/test_full.html',

@@ -7284,11 +7284,17 @@ th {
 .test_full .start_block button {
   margin-bottom: 10px;
 }
-.cabinet_tab {
+.cabinet .cert-btn {
+  float: right;
+}
+.cabinet .cabinet_tab {
   padding: 10px;
 }
 .not_block {
   display: inline-block;
+}
+.center-container {
+  text-align: center;
 }
 .test_card {
   display: inline-block;
@@ -7298,4 +7304,7 @@ th {
 }
 .test_card img {
   width: 200px;
+}
+.clearfix {
+  clear: both;
 }

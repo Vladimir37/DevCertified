@@ -15,6 +15,7 @@ router.get('/all-questions', Middlewares.onlyAdmin, API.allQuestions);
 router.get('/get-questions-col', Middlewares.onlyAdmin, API.getQuestionsCol);
 router.get('/available-test', Middlewares.onlyUser, API.availableTest);
 router.get('/get-category-tests', Middlewares.onlyUser, API.getCategoryTests);
+router.get('/get-certificates', Middlewares.onlyUser, API.getCertificates);
 
 router.post('/registration', API.registration);
 router.post('/login', API.login);

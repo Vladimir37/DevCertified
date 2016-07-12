@@ -652,6 +652,20 @@ class API {
             return res.send(Additional.serialize(1, 'Server error'));
         });
     }
+
+    getCertificates(req, res, next) {
+        var user = req.user;
+        if (!user) {
+            return res.send(Additional.serialize(2, 'Required fields are empty'));
+        }
+        Models.certificates.find({
+            user: user._id
+        }).then(function (result) {
+            return res.send(Additional.serialize(0, result));
+        }).catch(function (err) {
+            return res.send(Additional.serialize(1, 'Server error'));
+        });
+    }
 }
 
 module.exports = API;

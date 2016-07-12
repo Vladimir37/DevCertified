@@ -1,23 +1,32 @@
 <section class="cabinet">
+    <div class="alert alert-danger" ng-if="error">
+        {{ error }}
+    </div>
+    <button class="btn btn-default cert-btn">Certificates</button>
+    <div class="clearfix"></div>
     <uib-tabset active="activeJustified" justified="true">
         <uib-tab index="0" heading="Not received">
             <article class="cabinet_tab">
-                //
+                <h3 ng-if="!tests.unreceived.length" class="center-container">Empty</h3>
+                <test-card ng-repeat="test in tests.unreceived" test="test"></test-card>
             </article>
         </uib-tab>
         <uib-tab index="1" heading="Received">
             <article class="cabinet_tab">
-                //
+                <h3 ng-if="!tests.received.length" class="center-container">Empty</h3>
+                <test-card ng-repeat="test in tests.received" test="test"></test-card>
             </article>
         </uib-tab>
         <uib-tab index="2" heading="Available">
             <article class="cabinet_tab">
-                //
+                <h3 ng-if="!tests.available.length" class="center-container">Empty</h3>
+                <test-card ng-repeat="test in tests.available" test="test"></test-card>
             </article>
         </uib-tab>
         <uib-tab index="3" heading="Unavailable">
             <article class="cabinet_tab">
-                //
+                <h3 ng-if="!tests.unavailable.length" class="center-container">Empty</h3>
+                <test-card ng-repeat="test in tests.unavailable" test="test"></test-card>
             </article>
         </uib-tab>
     </uib-tabset>
