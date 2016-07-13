@@ -20,6 +20,7 @@ import cert_check from './services/cert_check';
 
 import navbar from './directives/navbar';
 import test_card from './directives/test_card';
+import certificate from './directives/certificate';
 
 var app = Angular.module('DevCertified', ['ui.router', 'ui.bootstrap', 'ngCookies']);
 
@@ -39,6 +40,7 @@ app.controller('end_registration', end_registration);
 // directives
 app.directive('navbar', navbar);
 app.directive('testCard', test_card);
+app.directive('certificate', certificate);
 
 // services
 app.service('auth_check', auth_check);

@@ -1,3 +1,3 @@
-export default function($scope, $http) {
-    //
+export default function($scope, $stateParams) {
+    $scope.certificate = $stateParams;
 }
