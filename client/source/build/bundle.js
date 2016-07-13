@@ -19787,31 +19787,31 @@
 
 	var _test_full2 = _interopRequireDefault(_test_full);
 
-	var _cabinet = __webpack_require__(23);
+	var _cabinet = __webpack_require__(17);
 
 	var _cabinet2 = _interopRequireDefault(_cabinet);
 
-	var _auth = __webpack_require__(17);
+	var _auth = __webpack_require__(18);
 
 	var _auth2 = _interopRequireDefault(_auth);
 
-	var _admin3 = __webpack_require__(18);
+	var _admin3 = __webpack_require__(19);
 
 	var _admin4 = _interopRequireDefault(_admin3);
 
-	var _test_check = __webpack_require__(19);
+	var _test_check = __webpack_require__(20);
 
 	var _test_check2 = _interopRequireDefault(_test_check);
 
-	var _user_check = __webpack_require__(22);
+	var _user_check = __webpack_require__(21);
 
 	var _user_check2 = _interopRequireDefault(_user_check);
 
-	var _navbar = __webpack_require__(20);
+	var _navbar = __webpack_require__(22);
 
 	var _navbar2 = _interopRequireDefault(_navbar);
 
-	var _test_card = __webpack_require__(21);
+	var _test_card = __webpack_require__(23);
 
 	var _test_card2 = _interopRequireDefault(_test_card);
 
@@ -20327,6 +20327,53 @@
 	    value: true
 	});
 
+	exports.default = function ($scope, $http) {
+	    $scope.tests = {
+	        received: [],
+	        unreceived: [],
+	        available: [],
+	        unavailable: []
+	    };
+	    $scope.certificates = [];
+
+	    $scope.getData = function () {
+	        var requests = [];
+	        requests.push($http({
+	            method: 'GET',
+	            url: '/api/get-category-tests'
+	        }));
+	        requests.push($http({
+	            method: 'GET',
+	            url: '/api/get-certificates'
+	        }));
+
+	        Promise.all(requests).then(function (response) {
+	            if (response[0].data.status == 0 && response[1].data.status == 0) {
+	                $scope.tests = response[0].data.body;
+	                $scope.certificates = response[1].data.body;
+	                $scope.$apply();
+	            } else {
+	                $scope.error = 'Server error';
+	            }
+	        }).catch(function (err) {
+	            $scope.error = 'Server error';
+	            console.log(err);
+	        });
+	    };
+
+	    $scope.getData();
+	};
+
+/***/ },
+/* 18 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
 	exports.default = function ($http) {
 	    return function ($state, component) {
 	        return $http({
@@ -20346,7 +20393,7 @@
 	};
 
 /***/ },
-/* 18 */
+/* 19 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -20374,7 +20421,7 @@
 	};
 
 /***/ },
-/* 19 */
+/* 20 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -20408,53 +20455,7 @@
 	};
 
 /***/ },
-/* 20 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.default = navbar;
-	function navbar($cookies) {
-	    return {
-	        status: $cookies.get('dclog'),
-	        restrict: 'EA',
-	        controller: 'header',
-	        scope: false,
-	        templateUrl: function templateUrl() {
-	            if (this.status) {
-	                return '/src/scripts/ng/views/directives/user.html';
-	            } else {
-	                return '/src/scripts/ng/views/directives/guest.html';
-	            }
-	        }
-	    };
-	}
-
-/***/ },
 /* 21 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.default = test_card;
-	function test_card() {
-	    return {
-	        restrict: 'E',
-	        scope: {
-	            test: '='
-	        },
-	        templateUrl: '/src/scripts/ng/views/directives/test_card.html'
-	    };
-	}
-
-/***/ },
-/* 22 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -20482,6 +20483,32 @@
 	};
 
 /***/ },
+/* 22 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = navbar;
+	function navbar($cookies) {
+	    return {
+	        status: $cookies.get('dclog'),
+	        restrict: 'EA',
+	        controller: 'header',
+	        scope: false,
+	        templateUrl: function templateUrl() {
+	            if (this.status) {
+	                return '/src/scripts/ng/views/directives/user.html';
+	            } else {
+	                return '/src/scripts/ng/views/directives/guest.html';
+	            }
+	        }
+	    };
+	}
+
+/***/ },
 /* 23 */
 /***/ function(module, exports) {
 
@@ -20490,22 +20517,16 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-
-	exports.default = function ($scope, $http) {
-	    $http({
-	        method: 'GET',
-	        url: '/api/get-category-tests'
-	    }).then(function (response) {
-	        if (response.data.status == 0) {
-	            $scope.tests = response.data.body;
-	        } else {
-	            $scope.error = response.data.body;
-	        }
-	    }).catch(function (err) {
-	        $scope.error = 'Server error';
-	        console.log(err);
-	    });
-	};
+	exports.default = test_card;
+	function test_card() {
+	    return {
+	        restrict: 'E',
+	        scope: {
+	            test: '='
+	        },
+	        templateUrl: '/src/scripts/ng/views/directives/test_card.html'
+	    };
+	}
 
 /***/ }
 /******/ ]);

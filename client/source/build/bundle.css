@@ -7289,6 +7289,14 @@ th {
 }
 .cabinet .cabinet_tab {
   padding: 10px;
+  padding-top: 15px;
+}
+.cabinet .nav-tabs {
+  border-bottom: 2px solid white;
+}
+.cabinet .certificates_link li a {
+  font-size: 18px;
+  color: #2C3E50;
 }
 .not_block {
   display: inline-block;
@@ -7304,6 +7312,10 @@ th {
 }
 .test_card img {
   width: 200px;
+}
+.load {
+  text-align: center;
+  padding: 15px;
 }
 .clearfix {
   clear: both;

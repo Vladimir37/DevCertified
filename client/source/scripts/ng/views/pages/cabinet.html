@@ -2,31 +2,52 @@
     <div class="alert alert-danger" ng-if="error">
         {{ error }}
     </div>
-    <button class="btn btn-default cert-btn">Certificates</button>
-    <div class="clearfix"></div>
     <uib-tabset active="activeJustified" justified="true">
         <uib-tab index="0" heading="Not received">
             <article class="cabinet_tab">
                 <h3 ng-if="!tests.unreceived.length" class="center-container">Empty</h3>
-                <test-card ng-repeat="test in tests.unreceived" test="test"></test-card>
+                <article class="row">
+                    <article class="col-md-4" ng-repeat="test in tests.unreceived">
+                        <test-card test="test"></test-card>
+                    </article>
+                </article>
             </article>
         </uib-tab>
         <uib-tab index="1" heading="Received">
             <article class="cabinet_tab">
                 <h3 ng-if="!tests.received.length" class="center-container">Empty</h3>
-                <test-card ng-repeat="test in tests.received" test="test"></test-card>
+                <article class="row">
+                    <article class="col-md-4" ng-repeat="test in tests.received">
+                        <test-card test="test"></test-card>
+                    </article>
+                </article>
             </article>
         </uib-tab>
         <uib-tab index="2" heading="Available">
             <article class="cabinet_tab">
                 <h3 ng-if="!tests.available.length" class="center-container">Empty</h3>
-                <test-card ng-repeat="test in tests.available" test="test"></test-card>
+                <article class="row">
+                    <article class="col-md-4" ng-repeat="test in tests.available">
+                        <test-card test="test"></test-card>
+                    </article>
+                </article>
             </article>
         </uib-tab>
         <uib-tab index="3" heading="Unavailable">
             <article class="cabinet_tab">
                 <h3 ng-if="!tests.unavailable.length" class="center-container">Empty</h3>
-                <test-card ng-repeat="test in tests.unavailable" test="test"></test-card>
+                <article class="row">
+                    <article class="col-md-4" ng-repeat="test in tests.unavailable">
+                        <test-card test="test"></test-card>
+                    </article>
+                </article>
+            </article>
+        </uib-tab>
+        <uib-tab index="4" heading="Certificates">
+            <article class="cabinet_tab">
+                <ul class="certificates_link">
+                    <li ng-repeat="cert in certificates"><a ui-sref="certificate({id: cert._id})">{{ cert.title }}</a></li>
+                </ul>
             </article>
         </uib-tab>
     </uib-tabset>

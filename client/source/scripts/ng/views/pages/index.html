@@ -1,5 +1,9 @@
 <section class="index">
     <section class="cards">
-        <test-card ng-if="tests" ng-repeat="test in tests" test="test"></test-card>
+        <article class="row">
+            <article class="col-md-4" ng-repeat="test in tests">
+                <test-card test="test"></test-card>
+            </article>
+        </article>
     </section>
 </section>
