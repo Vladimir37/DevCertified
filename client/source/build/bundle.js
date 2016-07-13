@@ -19791,6 +19791,10 @@
 
 	var _cabinet2 = _interopRequireDefault(_cabinet);
 
+	var _certificate = __webpack_require__(25);
+
+	var _certificate2 = _interopRequireDefault(_certificate);
+
 	var _auth = __webpack_require__(18);
 
 	var _auth2 = _interopRequireDefault(_auth);
@@ -19806,6 +19810,10 @@
 	var _user_check = __webpack_require__(21);
 
 	var _user_check2 = _interopRequireDefault(_user_check);
+
+	var _cert_check = __webpack_require__(24);
+
+	var _cert_check2 = _interopRequireDefault(_cert_check);
 
 	var _navbar = __webpack_require__(22);
 
@@ -19825,6 +19833,7 @@
 	app.controller('admin', _admin2.default);
 	app.controller('test_full', _test_full2.default);
 	app.controller('cabinet', _cabinet2.default);
+	app.controller('certificate', _certificate2.default);
 
 	// modal controllers
 	app.controller('login', _login2.default);
@@ -19840,6 +19849,7 @@
 	app.service('admin_check', _admin4.default);
 	app.service('test_check', _test_check2.default);
 	app.service('user_check', _user_check2.default);
+	app.service('cert_check', _cert_check2.default);
 
 	app.config(_router2.default);
 
@@ -19896,6 +19906,19 @@
 	            middleTime: null,
 	            hardTime: null,
 	            img: null
+	        }
+	    }).state('check_certify', {
+	        url: '/certificate/:certId',
+	        controller: function controller($state, $stateParams, cert_check) {
+	            cert_check($state, $stateParams);
+	        }
+	    }).state('certificate', {
+	        templateUrl: '/src/scripts/ng/views/pages/certificate.html',
+	        controller: 'certificate',
+	        params: {
+	            title: null,
+	            name: null,
+	            date: null
 	        }
 	    }).state('otherwise', {
 	        url: '*path',
@@ -20527,6 +20550,55 @@
 	        templateUrl: '/src/scripts/ng/views/directives/test_card.html'
 	    };
 	}
+
+/***/ },
+/* 24 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	exports.default = function ($http) {
+	    return function ($state, $stateParams) {
+	        if (!$stateParams.cardId) {
+	            return $state.go('otherwise', {});
+	        }
+	        return $http({
+	            method: 'GET',
+	            url: '/api/get-certificate',
+	            params: {
+	                cert: $stateParams.certId
+	            }
+	        }).then(function (response) {
+	            console.log(response);
+	            if (response.data.status === 0) {
+	                $state.go('certificate', response.data.body);
+	            } else {
+	                $state.go('otherwise', {});
+	            }
+	        }).catch(function (err) {
+	            console.log(err);
+	            $state.go('otherwise', {});
+	        });
+	    };
+	};
+
+/***/ },
+/* 25 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	exports.default = function ($scope, $http) {
+	    //
+	};
 
 /***/ }
 /******/ ]);

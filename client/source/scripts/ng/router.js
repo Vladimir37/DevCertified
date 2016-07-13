@@ -42,6 +42,19 @@ export default function ($stateProvider, $urlRouterProvider, $locationProvider) 
             hardTime: null,
             img: null
         }
+    }).state('check_certify', {
+        url: '/certificate/:certId',
+        controller: function ($state, $stateParams, cert_check) {
+            cert_check($state, $stateParams);
+        }
+    }).state('certificate', {
+        templateUrl: '/src/scripts/ng/views/pages/certificate.html',
+        controller: 'certificate',
+        params: {
+            title: null,
+            name: null,
+            date: null
+        }
     }).state('otherwise', {
         url: '*path',
         onEnter: function($state) {

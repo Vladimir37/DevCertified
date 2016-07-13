@@ -666,6 +666,23 @@ class API {
             return res.send(Additional.serialize(1, 'Server error'));
         });
     }
+
+    getCertificate(req, res, next) {
+        var certificate = req.query.cert;
+        if (!certificate) {
+            return res.send(Additional.serialize(2, 'Required fields are empty'));
+        }
+        Models.certificates.findOne({
+            _id: certificate
+        }).then(function (result) {
+            if (!result) {
+                return res.send(Additional.serialize(2, 'Not found'));
+            }
+            return res.send(Additional.serialize(0, result));
+        }).catch(function (err) {
+            return res.send(Additional.serialize(1, 'Server error'));
+        });
+    }
 }
 
 module.exports = API;
