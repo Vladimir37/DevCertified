@@ -7317,6 +7317,9 @@ th {
   text-align: center;
   padding: 15px;
 }
+#cert_canvas {
+  background: #b5b5b5;
+}
 .clearfix {
   clear: both;
 }

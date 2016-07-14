@@ -19791,23 +19791,27 @@
 
 	var _cabinet2 = _interopRequireDefault(_cabinet);
 
-	var _certificate = __webpack_require__(25);
+	var _certificate = __webpack_require__(18);
 
 	var _certificate2 = _interopRequireDefault(_certificate);
 
-	var _auth = __webpack_require__(18);
+	var _certificate_render = __webpack_require__(19);
+
+	var _certificate_render2 = _interopRequireDefault(_certificate_render);
+
+	var _auth = __webpack_require__(20);
 
 	var _auth2 = _interopRequireDefault(_auth);
 
-	var _admin3 = __webpack_require__(19);
+	var _admin3 = __webpack_require__(21);
 
 	var _admin4 = _interopRequireDefault(_admin3);
 
-	var _test_check = __webpack_require__(20);
+	var _test_check = __webpack_require__(22);
 
 	var _test_check2 = _interopRequireDefault(_test_check);
 
-	var _user_check = __webpack_require__(21);
+	var _user_check = __webpack_require__(23);
 
 	var _user_check2 = _interopRequireDefault(_user_check);
 
@@ -19815,13 +19819,17 @@
 
 	var _cert_check2 = _interopRequireDefault(_cert_check);
 
-	var _navbar = __webpack_require__(22);
+	var _navbar = __webpack_require__(25);
 
 	var _navbar2 = _interopRequireDefault(_navbar);
 
-	var _test_card = __webpack_require__(23);
+	var _test_card = __webpack_require__(26);
 
 	var _test_card2 = _interopRequireDefault(_test_card);
+
+	var _certificate3 = __webpack_require__(27);
+
+	var _certificate4 = _interopRequireDefault(_certificate3);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -19834,6 +19842,7 @@
 	app.controller('test_full', _test_full2.default);
 	app.controller('cabinet', _cabinet2.default);
 	app.controller('certificate', _certificate2.default);
+	app.controller('certificate_render', _certificate_render2.default);
 
 	// modal controllers
 	app.controller('login', _login2.default);
@@ -19843,6 +19852,7 @@
 	// directives
 	app.directive('navbar', _navbar2.default);
 	app.directive('testCard', _test_card2.default);
+	app.directive('certificate', _certificate4.default);
 
 	// services
 	app.service('auth_check', _auth2.default);
@@ -20391,6 +20401,51 @@
 /* 18 */
 /***/ function(module, exports) {
 
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	exports.default = function ($scope, $stateParams) {
+	    $scope.certificate = $stateParams;
+	};
+
+/***/ },
+/* 19 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	exports.default = function ($scope) {
+	    var canvas_elem = document.getElementById("cert_canvas");
+	    var cert = canvas_elem.getContext('2d');
+
+	    cert.fillStyle = "#E6E6E6";
+	    cert.fillRect(0, 0, canvas_elem.width, canvas_elem.height);
+
+	    var cert_template = new Image();
+	    cert_template.src = '/src/images/main/cert.png';
+	    cert_template.onload = function () {
+	        cert.fillStyle = "black";
+	        cert.font = '40px Arial';
+	        cert.textAlign = "center";
+	        cert.textBaseline = "bottom";
+	        cert.drawImage(cert_template, 0, 0, 960, 644);
+	        cert.fillText($scope.data.title, 480, 294);
+	        cert.fillText($scope.data.name, 480, 425);
+	        cert.fillText($scope.data.date, 735, 516);
+	    };
+	};
+
+/***/ },
+/* 20 */
+/***/ function(module, exports) {
+
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
@@ -20416,7 +20471,7 @@
 	};
 
 /***/ },
-/* 19 */
+/* 21 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -20444,7 +20499,7 @@
 	};
 
 /***/ },
-/* 20 */
+/* 22 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -20478,7 +20533,7 @@
 	};
 
 /***/ },
-/* 21 */
+/* 23 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -20504,52 +20559,6 @@
 	        });
 	    };
 	};
-
-/***/ },
-/* 22 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.default = navbar;
-	function navbar($cookies) {
-	    return {
-	        status: $cookies.get('dclog'),
-	        restrict: 'EA',
-	        controller: 'header',
-	        scope: false,
-	        templateUrl: function templateUrl() {
-	            if (this.status) {
-	                return '/src/scripts/ng/views/directives/user.html';
-	            } else {
-	                return '/src/scripts/ng/views/directives/guest.html';
-	            }
-	        }
-	    };
-	}
-
-/***/ },
-/* 23 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.default = test_card;
-	function test_card() {
-	    return {
-	        restrict: 'E',
-	        scope: {
-	            test: '='
-	        },
-	        templateUrl: '/src/scripts/ng/views/directives/test_card.html'
-	    };
-	}
 
 /***/ },
 /* 24 */
@@ -20589,15 +20598,68 @@
 /* 25 */
 /***/ function(module, exports) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	exports.default = navbar;
+	function navbar($cookies) {
+	    return {
+	        status: $cookies.get('dclog'),
+	        restrict: 'EA',
+	        controller: 'header',
+	        scope: false,
+	        templateUrl: function templateUrl() {
+	            if (this.status) {
+	                return '/src/scripts/ng/views/directives/user.html';
+	            } else {
+	                return '/src/scripts/ng/views/directives/guest.html';
+	            }
+	        }
+	    };
+	}
 
-	exports.default = function ($scope, $stateParams) {
-	    $scope.certificate = $stateParams;
-	};
+/***/ },
+/* 26 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = test_card;
+	function test_card() {
+	    return {
+	        restrict: 'E',
+	        scope: {
+	            test: '='
+	        },
+	        templateUrl: '/src/scripts/ng/views/directives/test_card.html'
+	    };
+	}
+
+/***/ },
+/* 27 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = navbar;
+	function navbar($cookies) {
+	    return {
+	        restrict: 'EA',
+	        controller: 'certificate_render',
+	        scope: {
+	            data: '='
+	        },
+	        templateUrl: '/src/scripts/ng/views/directives/certificate.html'
+	    };
+	}
 
 /***/ }
 /******/ ]);

@@ -11,6 +11,7 @@ import admin from './controllers/admin';
 import test_full from './controllers/test_full';
 import cabinet from './controllers/cabinet';
 import certificate from './controllers/certificate';
+import certificate_render from './controllers/certificate_render';
 
 import auth_check from './services/auth';
 import admin_check from './services/admin';
@@ -20,7 +21,7 @@ import cert_check from './services/cert_check';
 
 import navbar from './directives/navbar';
 import test_card from './directives/test_card';
-import certificate from './directives/certificate';
+import certificate_directive from './directives/certificate';
 
 var app = Angular.module('DevCertified', ['ui.router', 'ui.bootstrap', 'ngCookies']);
 
@@ -31,6 +32,7 @@ app.controller('admin', admin);
 app.controller('test_full', test_full);
 app.controller('cabinet', cabinet);
 app.controller('certificate', certificate);
+app.controller('certificate_render', certificate_render);
 
 // modal controllers
 app.controller('login', login);
@@ -40,7 +42,7 @@ app.controller('end_registration', end_registration);
 // directives
 app.directive('navbar', navbar);
 app.directive('testCard', test_card);
-app.directive('certificate', certificate);
+app.directive('certificate', certificate_directive);
 
 // services
 app.service('auth_check', auth_check);

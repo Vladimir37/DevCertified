@@ -1,10 +1,10 @@
 export default function navbar ($cookies) {
     return {
-        restrict: 'E',
-        controller: 'header',
+        restrict: 'EA',
+        controller: 'certificate_render',
         scope: {
             data: '='
         },
-        template: '<canvas id="cert_canvas"></canvas>'
+        templateUrl: '/src/scripts/ng/views/directives/certificate.html'
     }
 }
