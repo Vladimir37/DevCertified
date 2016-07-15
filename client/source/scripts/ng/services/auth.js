@@ -13,6 +13,6 @@ export default function ($http) {
         }).catch(function (err) {
             console.log(err);
             $state.go('otherwise', {}, {location: false});
-        })
+        });
     }
 }

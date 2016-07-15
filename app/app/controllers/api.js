@@ -341,7 +341,7 @@ class API {
             active: true
         }).then(function (test) {
             if (!test) {
-                return res.send(Additional.serialize(2, 'Not found'));
+                return res.send(Additional.serialize(12, 'Not found'));
             }
             else {
                 return res.send(Additional.serialize(0, test));
@@ -540,6 +540,9 @@ class API {
                 test: test_nums
             });
         }).then(function (question) {
+            if (!question) {
+                return res.send(Additional.serialize(12, 'Not Found'));
+            }
             return res.send(Additional.serialize(0, question));
         }).catch(function (err) {
             return res.send(Additional.serialize(1, 'Server error'));
@@ -597,7 +600,7 @@ class API {
             active: true
         }).then(function (test) {
             if (!test) {
-                return res.send(Additional.serialize(4, 'Test not found'));
+                return res.send(Additional.serialize(12, 'Test not found'));
             }
             return Additional.checkAvailable(user, test_num);
         }).then(function (status) {
@@ -676,7 +679,7 @@ class API {
             _id: certificate
         }).then(function (result) {
             if (!result) {
-                return res.send(Additional.serialize(2, 'Not found'));
+                return res.send(Additional.serialize(12, 'Not found'));
             }
             return res.send(Additional.serialize(0, result));
         }).catch(function (err) {

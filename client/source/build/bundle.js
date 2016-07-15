@@ -30702,6 +30702,10 @@
 
 	var _certificate_render2 = _interopRequireDefault(_certificate_render);
 
+	var _start = __webpack_require__(133);
+
+	var _start2 = _interopRequireDefault(_start);
+
 	var _auth = __webpack_require__(125);
 
 	var _auth2 = _interopRequireDefault(_auth);
@@ -30746,6 +30750,7 @@
 	app.controller('cabinet', _cabinet2.default);
 	app.controller('certificate', _certificate2.default);
 	app.controller('certificate_render', _certificate_render2.default);
+	app.controller('start', _start2.default);
 
 	// modal controllers
 	app.controller('login', _login2.default);
@@ -30802,7 +30807,7 @@
 	    }).state('check_test_full', {
 	        url: '/test_full/:cardId',
 	        controller: function controller($state, $stateParams, test_check) {
-	            test_check($state, $stateParams);
+	            test_check($state, $stateParams, 'test_full');
 	        }
 	    }).state('test_full', {
 	        templateUrl: '/src/scripts/ng/views/pages/test_full.html',
@@ -30836,7 +30841,23 @@
 	    }).state('check_start', {
 	        url: '/start/:testId',
 	        controller: function controller($state, $stateParams, cert_check) {
-	            test_check($state, $stateParams);
+	            test_check($state, $stateParams, 'start');
+	        }
+	    }).state('start', {
+	        templateUrl: '/src/scripts/ng/views/pages/start.html',
+	        controller: 'start',
+	        params: {
+	            _id: null,
+	            title: null,
+	            description: null,
+	            subjects: null,
+	            easyCol: null,
+	            middleCol: null,
+	            hardCol: null,
+	            easyTime: null,
+	            middleTime: null,
+	            hardTime: null,
+	            img: null
 	        }
 	    }).state('otherwise', {
 	        url: '*path',
@@ -31424,7 +31445,7 @@
 	});
 
 	exports.default = function ($http) {
-	    return function ($state, $stateParams) {
+	    return function ($state, $stateParams, target) {
 	        if (!$stateParams.cardId) {
 	            return $state.go('otherwise', {});
 	        }
@@ -31436,7 +31457,7 @@
 	            }
 	        }).then(function (response) {
 	            if (response.data.status === 0) {
-	                $state.go('test_full', response.data.body);
+	                $state.go(target, response.data.body);
 	            } else {
 	                $state.go('otherwise', {});
 	            }
@@ -31575,6 +31596,20 @@
 	        templateUrl: '/src/scripts/ng/views/directives/certificate.html'
 	    };
 	}
+
+/***/ },
+/* 133 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	exports.default = function ($scope, $http) {
+	    //
+	};
 
 /***/ }
 /******/ ]);

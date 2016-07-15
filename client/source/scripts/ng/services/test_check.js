@@ -1,5 +1,5 @@
 export default function ($http) {
-    return function ($state, $stateParams) {
+    return function ($state, $stateParams, target) {
         if (!$stateParams.cardId) {
             return $state.go('otherwise', {});
         }
@@ -11,7 +11,7 @@ export default function ($http) {
             }
         }).then(function (response) {
             if (response.data.status === 0) {
-                $state.go('test_full', response.data.body);
+                $state.go(target, response.data.body);
             }
             else {
                 $state.go('otherwise', {});
@@ -19,6 +19,6 @@ export default function ($http) {
         }).catch(function (err) {
             console.log(err);
             $state.go('otherwise', {});
-        })
+        });
     }
 }

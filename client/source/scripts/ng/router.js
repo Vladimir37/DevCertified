@@ -24,7 +24,7 @@ export default function ($stateProvider, $urlRouterProvider, $locationProvider) 
     }).state('check_test_full', {
         url: '/test_full/:cardId',
         controller: function ($state, $stateParams, test_check) {
-            test_check($state, $stateParams);
+            test_check($state, $stateParams, 'test_full');
         }
     }).state('test_full', {
         templateUrl: '/src/scripts/ng/views/pages/test_full.html',
@@ -58,7 +58,23 @@ export default function ($stateProvider, $urlRouterProvider, $locationProvider) 
     }).state('check_start', {
         url: '/start/:testId',
         controller: function ($state, $stateParams, cert_check) {
-            test_check($state, $stateParams);
+            test_check($state, $stateParams, 'start');
+        }
+    }).state('start', {
+        templateUrl: '/src/scripts/ng/views/pages/start.html',
+        controller: 'start',
+        params: {
+            _id: null,
+            title: null,
+            description: null,
+            subjects: null,
+            easyCol: null,
+            middleCol: null,
+            hardCol: null,
+            easyTime: null,
+            middleTime: null,
+            hardTime: null,
+            img: null
         }
     }).state('otherwise', {
         url: '*path',

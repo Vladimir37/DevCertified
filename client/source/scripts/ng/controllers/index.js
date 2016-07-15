@@ -8,5 +8,5 @@ export default function index($scope, $http) {
         }
     }).catch(function (err) {
         console.log(err);
-    })
+    });
 }

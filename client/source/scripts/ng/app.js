@@ -12,6 +12,7 @@ import test_full from './controllers/test_full';
 import cabinet from './controllers/cabinet';
 import certificate from './controllers/certificate';
 import certificate_render from './controllers/certificate_render';
+import start from './controllers/start';
 
 import auth_check from './services/auth';
 import admin_check from './services/admin';
@@ -33,6 +34,7 @@ app.controller('test_full', test_full);
 app.controller('cabinet', cabinet);
 app.controller('certificate', certificate);
 app.controller('certificate_render', certificate_render);
+app.controller('start', start);
 
 // modal controllers
 app.controller('login', login);

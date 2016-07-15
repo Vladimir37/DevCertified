@@ -28,5 +28,5 @@ export default function ($scope, $stateParams, $http) {
     }).catch(function (err) {
         console.log(err);
         $scope.error = 'Server error';
-    })
+    });
 }
