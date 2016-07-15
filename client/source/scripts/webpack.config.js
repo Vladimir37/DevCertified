@@ -7,7 +7,7 @@ const build_dir = path.join(root_dir, 'client/source/build');
 
 module.exports = {
     context: script_dir,
-    entry: ['angular', 'angular-cookies', 'angular-ui-router/release/angular-ui-router', 'angular-ui-bootstrap', './ng/app'],
+    entry: ['angular', 'angular-cookies', 'angular-ui-router', 'angular-ui-bootstrap', 'angular-moment', './ng/app'],
     output: {
         path: build_dir,
         filename: '/bundle.js'
@@ -19,15 +19,16 @@ module.exports = {
     ],
 
     resolve: {
-        extensions: ['.js'],
         modulesDirectories: [
             root_dir + '/node_modules'
         ]
     },
 
     resolveLoader: {
-        extensions: ['.js'],
-        root: path.join(root_dir, 'node_modules')
+        test: /\.jsx$/,
+        root: [
+            path.join(root_dir, 'node_modules')
+        ]
     },
 
     module: {

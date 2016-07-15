@@ -1,3 +1,5 @@
+import Moment from 'moment';
+
 export default function($scope) {
     var canvas_elem = document.getElementById("cert_canvas");
     var cert =  canvas_elem.getContext('2d');
@@ -15,6 +17,7 @@ export default function($scope) {
         cert.drawImage(cert_template, 0, 0, 960, 644);
         cert.fillText($scope.data.title, 480, 294);
         cert.fillText($scope.data.name, 480, 425);
-        cert.fillText($scope.data.date, 735, 516);
+        cert.font = '25px Arial';
+        cert.fillText(Moment($scope.data.date).format('LL'), 705, 496);
     }
 }

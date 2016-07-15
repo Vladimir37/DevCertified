@@ -55,6 +55,11 @@ export default function ($stateProvider, $urlRouterProvider, $locationProvider) 
             name: null,
             date: null
         }
+    }).state('check_start', {
+        url: '/start/:testId',
+        controller: function ($state, $stateParams, cert_check) {
+            test_check($state, $stateParams);
+        }
     }).state('otherwise', {
         url: '*path',
         onEnter: function($state) {
