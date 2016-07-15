@@ -12,7 +12,9 @@
         </article>
     </article>
     <article class="start_block">
-        <button class="btn btn-primary" ng-disabled="response.status">Start</button>
+        <a ui-sref="check_start({testId: test_data._id})">
+            <button class="btn btn-primary" ng-disabled="response.status">Start</button>
+        </a>
         <article ng-if="alert" class="alert {{ alert_type }}">
             <span ng-if="response.status == 1">
                 Server error

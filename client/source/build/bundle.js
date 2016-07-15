@@ -30726,6 +30726,10 @@
 
 	var _cert_check2 = _interopRequireDefault(_cert_check);
 
+	var _start_check = __webpack_require__(134);
+
+	var _start_check2 = _interopRequireDefault(_start_check);
+
 	var _navbar = __webpack_require__(130);
 
 	var _navbar2 = _interopRequireDefault(_navbar);
@@ -30768,6 +30772,7 @@
 	app.service('test_check', _test_check2.default);
 	app.service('user_check', _user_check2.default);
 	app.service('cert_check', _cert_check2.default);
+	app.service('start_check', _start_check2.default);
 
 	app.config(_router2.default);
 
@@ -30840,8 +30845,8 @@
 	        }
 	    }).state('check_start', {
 	        url: '/start/:testId',
-	        controller: function controller($state, $stateParams, cert_check) {
-	            test_check($state, $stateParams, 'start');
+	        controller: function controller($state, $stateParams, start_check) {
+	            start_check($state, $stateParams, 'start');
 	        }
 	    }).state('start', {
 	        templateUrl: '/src/scripts/ng/views/pages/start.html',
@@ -31601,14 +31606,75 @@
 /* 133 */
 /***/ function(module, exports) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
 
-	exports.default = function ($scope, $http) {
-	    //
+	exports.default = function ($scope, $stateParams, $http) {
+	    $scope.test_data = $stateParams;
+	    $scope.start_testing = function () {
+	        $http({
+	            method: 'POST',
+	            url: '/api/start-testing',
+	            data: {
+	                num: $scope.test_data._id
+	            }
+	        }).then(function (response) {
+	            console.log(response);
+	        }).catch(function (err) {
+	            console.log(err);
+	        });
+	    };
+	};
+
+/***/ },
+/* 134 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	exports.default = function ($http) {
+	    return function ($state, $stateParams) {
+	        if (!$stateParams.testId) {
+	            return $state.go('otherwise', {});
+	        }
+	        var test_data;
+	        return $http({
+	            method: 'GET',
+	            url: '/api/get-test',
+	            params: {
+	                test: $stateParams.testId
+	            }
+	        }).then(function (response) {
+	            if (response.data.status != 0) {
+	                return $state.go('otherwise', {});
+	            }
+	            test_data = response.data.body;
+	            return $http({
+	                method: 'GET',
+	                url: '/api/get-test-status',
+	                params: {
+	                    test: $stateParams.testId
+	                }
+	            });
+	        }).then(function (response) {
+	            response = response.data;
+	            if (response.status == 0) {
+	                return $state.go('start', test_data);
+	            } else {
+	                return $state.go('otherwise', {});
+	            }
+	        }).catch(function (err) {
+	            console.log(err);
+	            return $state.go('otherwise', {});
+	        });
+	    };
 	};
 
 /***/ }

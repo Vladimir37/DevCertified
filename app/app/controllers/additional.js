@@ -49,13 +49,13 @@ class Additional {
                     var next_date = solution.start;
                     next_date.setDate(next_date.getDate() + 30);
                     available_data.available = false;
-                    available_data.results = solutions;
+                    available_data.results = solution;
                     available_data.next = next_date;
                     resolve(available_data);
                 }
                 else {
                     available_data.available = true;
-                    available_data.results = solutions;
+                    available_data.results = solution;
                     resolve(available_data);
                 }
             }).catch(function (err) {

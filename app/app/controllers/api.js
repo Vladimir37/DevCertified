@@ -413,17 +413,17 @@ class API {
 
     startTesting(req, res, next) {
         var user = req.user;
-        var test_num = req.query.num;
+        var test_num = req.body.num;
         var test;
         var all_question;
         if (!test_num) {
             return res.send(Additional.serialize(2, 'Required fields are empty'));
         }
-        if (!user.success_tests.indexOf(test_num) > -1) {
+        if (user.success_tests.indexOf(test_num) > -1) {
             return res.send(Additional.serialize(3, 'You have already passed this test'));
         }
-        Additional.checkAvailable(user, test_num).then(function (err) {
-            if (result) {
+        Additional.checkAvailable(user, test_num).then(function (result) {
+            if (!result.available) {
                 return res.send(Additional.serialize(4, 'The recent failed attempt'));
             }
             return Models.tests.findOne({
@@ -455,10 +455,11 @@ class API {
                 answers: [],
                 result: null
             });
-        }).then(function () {
-            return res.send(Additional.serialize(0));
+        }).then(function (solution) {
+            return res.send(Additional.serialize(0, solution._id));
         }).catch(function (err) {
-            return res.send(Additional.serialize(err));
+            console.log(err);
+            return res.send(Additional.serialize(1, 'Server error'));
         });
     }
 

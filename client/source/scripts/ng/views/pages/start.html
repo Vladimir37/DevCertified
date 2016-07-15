@@ -1,3 +1,14 @@
 <section class="start">
-    //
+    <h2>{{ test_data.title }}</h2>
+    <img ng-src="/src/images/uploaded/{{ test_data.img }}" alt="cover">
+    <article class="data_list">
+        <p class="data_list">
+            <b>Questions:</b> {{ test_data.easyCol + test_data.middleCol + test_data.hardCol }}
+        </p>
+        <p class="data_list">
+            <b>Summar time:</b> {{ test_data.easyTime + test_data.middleTime + test_data.hardTime }}
+        </p>
+        <p>You can retry testing only after 30 days!</p>
+    </article>
+    <button class="btn btn-primary" ng-click="start_testing()">Start testing</button>
 </section>

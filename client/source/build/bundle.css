@@ -7298,6 +7298,16 @@ th {
   font-size: 18px;
   color: #2C3E50;
 }
+.start {
+  text-align: center;
+}
+.start img {
+  max-width: 750px;
+  margin-bottom: 15px;
+}
+.start .data_list {
+  font-size: 18px;
+}
 .not_block {
   display: inline-block;
 }

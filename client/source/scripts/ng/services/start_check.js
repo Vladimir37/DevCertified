@@ -3,17 +3,29 @@ export default function ($http) {
         if (!$stateParams.testId) {
             return $state.go('otherwise', {});
         }
-        $http({
+        var test_data;
+        return $http({
             method: 'GET',
-            url: '/api/get-test-status',
+            url: '/api/get-test',
             params: {
                 test: $stateParams.testId
             }
         }).then(function (response) {
+            if (response.data.status != 0) {
+                return $state.go('otherwise', {});
+            }
+            test_data = response.data.body;
+            return $http({
+                method: 'GET',
+                url: '/api/get-test-status',
+                params: {
+                    test: $stateParams.testId
+                }
+            });
+        }).then(function (response) {
             response = response.data;
-            $scope.response = response;
             if (response.status == 0) {
-                return $state.go('start', {});
+                return $state.go('start', test_data);
             }
             else {
                 return $state.go('otherwise', {});

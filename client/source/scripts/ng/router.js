@@ -57,8 +57,8 @@ export default function ($stateProvider, $urlRouterProvider, $locationProvider) 
         }
     }).state('check_start', {
         url: '/start/:testId',
-        controller: function ($state, $stateParams, cert_check) {
-            test_check($state, $stateParams, 'start');
+        controller: function ($state, $stateParams, start_check) {
+            start_check($state, $stateParams, 'start');
         }
     }).state('start', {
         templateUrl: '/src/scripts/ng/views/pages/start.html',
