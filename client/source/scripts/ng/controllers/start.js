@@ -1,4 +1,4 @@
-export default function ($scope, $stateParams, $http) {
+export default function ($scope, $stateParams, $http, $state) {
     $scope.test_data = $stateParams;
     $scope.start_testing = function () {
         $http({

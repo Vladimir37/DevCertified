@@ -36,6 +36,7 @@ app.controller('cabinet', cabinet);
 app.controller('certificate', certificate);
 app.controller('certificate_render', certificate_render);
 app.controller('start', start);
+app.controller('question', question);
 
 // modal controllers
 app.controller('login', login);

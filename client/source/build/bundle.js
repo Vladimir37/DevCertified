@@ -30755,6 +30755,7 @@
 	app.controller('certificate', _certificate2.default);
 	app.controller('certificate_render', _certificate_render2.default);
 	app.controller('start', _start2.default);
+	app.controller('question', question);
 
 	// modal controllers
 	app.controller('login', _login2.default);
@@ -30863,6 +30864,13 @@
 	            middleTime: null,
 	            hardTime: null,
 	            img: null
+	        }
+	    }).state('check_start', {
+	        url: '/question',
+	        templateUrl: '/src/scripts/ng/views/pages/question.html',
+	        controller: 'question',
+	        params: {
+	            solution: null
 	        }
 	    }).state('otherwise', {
 	        url: '*path',
@@ -31612,7 +31620,7 @@
 	    value: true
 	});
 
-	exports.default = function ($scope, $stateParams, $http) {
+	exports.default = function ($scope, $stateParams, $http, $state) {
 	    $scope.test_data = $stateParams;
 	    $scope.start_testing = function () {
 	        $http({
