@@ -2,6 +2,9 @@
     <h2>{{ test_data.title }}</h2>
     <img ng-src="/src/images/uploaded/{{ test_data.img }}" alt="cover">
     <article class="data_list">
+        <div class="alert alert-danger" ng-if="error">
+            {{ error }}
+        </div>
         <p class="data_list">
             <b>Questions:</b> {{ test_data.easyCol + test_data.middleCol + test_data.hardCol }}
         </p>

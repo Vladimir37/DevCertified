@@ -8,9 +8,17 @@ export default function ($scope, $stateParams, $http, $state) {
                 num: $scope.test_data._id
             }
         }).then(function (response) {
-            console.log(response);
+            response = response.data;
+            if (response.status == 0) {
+                $state.go('question', response.body);
+            }
+            else {
+                console.log(response);
+                $scope.error = 'Server error';
+            }
         }).catch(function (err) {
             console.log(err);
+            $scope.error = 'Server error';
         });
     }
 }

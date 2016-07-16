@@ -76,12 +76,15 @@ export default function ($stateProvider, $urlRouterProvider, $locationProvider) 
             hardTime: null,
             img: null
         }
-    }).state('check_start', {
+    }).state('question', {
         url: '/question',
         templateUrl: '/src/scripts/ng/views/pages/question.html',
         controller: 'question',
         params: {
-            solution: null
+            _id: null,
+            test: null,
+            answers: null,
+            questions: null
         }
     }).state('otherwise', {
         url: '*path',

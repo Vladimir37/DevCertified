@@ -456,7 +456,7 @@ class API {
                 result: null
             });
         }).then(function (solution) {
-            return res.send(Additional.serialize(0, solution._id));
+            return res.send(Additional.serialize(0, solution));
         }).catch(function (err) {
             console.log(err);
             return res.send(Additional.serialize(1, 'Server error'));
@@ -533,12 +533,12 @@ class API {
             _id: question_data.solution_num,
             user: question_data.user._id
         }).then(function (solution) {
-            if (!solution || solution.questions.indexOf(question_num) == -1) {
+            if (!solution || solution.questions.indexOf(question_data.question_num) == -1) {
                 return res.send(Additional.serialize(3, 'Incorrect data'));
             }
             return Models.questions.findOne({
-                _id: question_data,
-                test: test_nums
+                _id: question_data.question_num,
+                test: question_data.test_num
             });
         }).then(function (question) {
             if (!question) {
@@ -546,6 +546,7 @@ class API {
             }
             return res.send(Additional.serialize(0, question));
         }).catch(function (err) {
+            console.log(err);
             return res.send(Additional.serialize(1, 'Server error'));
         });
     }

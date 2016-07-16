@@ -7269,12 +7269,16 @@ th {
 .test_full .right {
   text-align: right;
 }
+.test_full .right .card_text {
+  font-size: 16px;
+  padding-bottom: 15px;
+  text-align: left;
+}
 .test_full .right .subjects {
   list-style-type: circle;
   width: 200px;
   text-align: left;
   float: right;
-  margin-top: 15px;
 }
 .test_full .start_block {
   width: 300px;

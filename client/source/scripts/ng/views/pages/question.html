@@ -1,5 +1,29 @@
 <section class="quest">
-    <article class="question_text">
-        <span>{{ num }}/{{ max_num }}</span>
+    <div class="alert alert-danger" ng-if="error">
+        {{ error }}
+    </div>
+    <article class="quest_num">{{ current_num }}/{{ max_num }}</article>
+    <article class="quest_text">{{ quest_data.text }}</article>
+    <article class="quest_code" ng-if="code">{{ quest_data.code }}</article>
+    <article class="quest_answers">
+        <form name="quest">
+            <label>
+                <input type="radio" name="answer">
+                {{ quest_data.answer1 }}
+            </label>
+            <label>
+                <input type="radio" name="answer">
+                {{ quest_data.answer2 }}
+            </label>
+            <label>
+                <input type="radio" name="answer">
+                {{ quest_data.answer3 }}
+            </label>
+            <label>
+                <input type="radio" name="answer">
+                {{ quest_data.answer4 }}
+            </label>
+        </form>
     </article>
+    <button class="btn btn-default">Enter</button>
 </section>

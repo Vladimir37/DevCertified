@@ -22702,8 +22702,8 @@
 	                if (b === 40 || b === 50 || b === 60 || b === 80 || b === 100) {
 	                    output = 'fed'; // not 30ain, 70ain or 90ain
 	                } else {
-	                        output = 'ain';
-	                    }
+	                    output = 'ain';
+	                }
 	            } else if (b > 0) {
 	                output = lookup[b];
 	            }
@@ -29346,16 +29346,16 @@
 	            } else if (hour < 6) {
 	                return ' வைகறை'; // வைகறை
 	            } else if (hour < 10) {
-	                    return ' காலை'; // காலை
-	                } else if (hour < 14) {
-	                        return ' நண்பகல்'; // நண்பகல்
-	                    } else if (hour < 18) {
-	                            return ' எற்பாடு'; // எற்பாடு
-	                        } else if (hour < 22) {
-	                                return ' மாலை'; // மாலை
-	                            } else {
-	                                    return ' யாமம்';
-	                                }
+	                return ' காலை'; // காலை
+	            } else if (hour < 14) {
+	                return ' நண்பகல்'; // நண்பகல்
+	            } else if (hour < 18) {
+	                return ' எற்பாடு'; // எற்பாடு
+	            } else if (hour < 22) {
+	                return ' மாலை'; // மாலை
+	            } else {
+	                return ' யாமம்';
+	            }
 	        },
 	        meridiemHour: function meridiemHour(hour, meridiem) {
 	            if (hour === 12) {
@@ -30702,49 +30702,53 @@
 
 	var _certificate_render2 = _interopRequireDefault(_certificate_render);
 
-	var _start = __webpack_require__(133);
+	var _start = __webpack_require__(125);
 
 	var _start2 = _interopRequireDefault(_start);
 
-	var _auth = __webpack_require__(125);
+	var _question = __webpack_require__(135);
+
+	var _question2 = _interopRequireDefault(_question);
+
+	var _auth = __webpack_require__(126);
 
 	var _auth2 = _interopRequireDefault(_auth);
 
-	var _admin3 = __webpack_require__(126);
+	var _admin3 = __webpack_require__(127);
 
 	var _admin4 = _interopRequireDefault(_admin3);
 
-	var _test_check = __webpack_require__(127);
+	var _test_check = __webpack_require__(128);
 
 	var _test_check2 = _interopRequireDefault(_test_check);
 
-	var _user_check = __webpack_require__(128);
+	var _user_check = __webpack_require__(129);
 
 	var _user_check2 = _interopRequireDefault(_user_check);
 
-	var _cert_check = __webpack_require__(129);
+	var _cert_check = __webpack_require__(130);
 
 	var _cert_check2 = _interopRequireDefault(_cert_check);
 
-	var _start_check = __webpack_require__(134);
+	var _start_check = __webpack_require__(131);
 
 	var _start_check2 = _interopRequireDefault(_start_check);
 
-	var _navbar = __webpack_require__(130);
+	var _navbar = __webpack_require__(132);
 
 	var _navbar2 = _interopRequireDefault(_navbar);
 
-	var _test_card = __webpack_require__(131);
+	var _test_card = __webpack_require__(133);
 
 	var _test_card2 = _interopRequireDefault(_test_card);
 
-	var _certificate3 = __webpack_require__(132);
+	var _certificate3 = __webpack_require__(134);
 
 	var _certificate4 = _interopRequireDefault(_certificate3);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var app = _angular2.default.module('DevCertified', ['ui.router', 'ui.bootstrap', 'ngCookies']);
+	var app = _angular2.default.module('DevCertified', ['ui.router', 'ui.bootstrap', 'ngCookies', 'angularMoment']);
 
 	// controllers
 	app.controller('header', _header2.default);
@@ -30755,7 +30759,7 @@
 	app.controller('certificate', _certificate2.default);
 	app.controller('certificate_render', _certificate_render2.default);
 	app.controller('start', _start2.default);
-	app.controller('question', question);
+	app.controller('question', _question2.default);
 
 	// modal controllers
 	app.controller('login', _login2.default);
@@ -30865,12 +30869,15 @@
 	            hardTime: null,
 	            img: null
 	        }
-	    }).state('check_start', {
+	    }).state('question', {
 	        url: '/question',
 	        templateUrl: '/src/scripts/ng/views/pages/question.html',
 	        controller: 'question',
 	        params: {
-	            solution: null
+	            _id: null,
+	            test: null,
+	            answers: null,
+	            questions: null
 	        }
 	    }).state('otherwise', {
 	        url: '*path',
@@ -31401,6 +31408,40 @@
 	    value: true
 	});
 
+	exports.default = function ($scope, $stateParams, $http, $state) {
+	    $scope.test_data = $stateParams;
+	    $scope.start_testing = function () {
+	        $http({
+	            method: 'POST',
+	            url: '/api/start-testing',
+	            data: {
+	                num: $scope.test_data._id
+	            }
+	        }).then(function (response) {
+	            response = response.data;
+	            if (response.status == 0) {
+	                $state.go('question', response.body);
+	            } else {
+	                console.log(response);
+	                $scope.error = 'Server error';
+	            }
+	        }).catch(function (err) {
+	            console.log(err);
+	            $scope.error = 'Server error';
+	        });
+	    };
+	};
+
+/***/ },
+/* 126 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
 	exports.default = function ($http) {
 	    return function ($state, component) {
 	        return $http({
@@ -31420,7 +31461,7 @@
 	};
 
 /***/ },
-/* 126 */
+/* 127 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31448,7 +31489,7 @@
 	};
 
 /***/ },
-/* 127 */
+/* 128 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31482,7 +31523,7 @@
 	};
 
 /***/ },
-/* 128 */
+/* 129 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31510,7 +31551,7 @@
 	};
 
 /***/ },
-/* 129 */
+/* 130 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31544,101 +31585,7 @@
 	};
 
 /***/ },
-/* 130 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.default = navbar;
-	function navbar($cookies) {
-	    return {
-	        status: $cookies.get('dclog'),
-	        restrict: 'EA',
-	        controller: 'header',
-	        scope: false,
-	        templateUrl: function templateUrl() {
-	            if (this.status) {
-	                return '/src/scripts/ng/views/directives/user.html';
-	            } else {
-	                return '/src/scripts/ng/views/directives/guest.html';
-	            }
-	        }
-	    };
-	}
-
-/***/ },
 /* 131 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.default = test_card;
-	function test_card() {
-	    return {
-	        restrict: 'E',
-	        scope: {
-	            test: '='
-	        },
-	        templateUrl: '/src/scripts/ng/views/directives/test_card.html'
-	    };
-	}
-
-/***/ },
-/* 132 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.default = navbar;
-	function navbar($cookies) {
-	    return {
-	        restrict: 'EA',
-	        controller: 'certificate_render',
-	        scope: {
-	            data: '='
-	        },
-	        templateUrl: '/src/scripts/ng/views/directives/certificate.html'
-	    };
-	}
-
-/***/ },
-/* 133 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	exports.default = function ($scope, $stateParams, $http, $state) {
-	    $scope.test_data = $stateParams;
-	    $scope.start_testing = function () {
-	        $http({
-	            method: 'POST',
-	            url: '/api/start-testing',
-	            data: {
-	                num: $scope.test_data._id
-	            }
-	        }).then(function (response) {
-	            console.log(response);
-	        }).catch(function (err) {
-	            console.log(err);
-	        });
-	    };
-	};
-
-/***/ },
-/* 134 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31683,6 +31630,111 @@
 	            return $state.go('otherwise', {});
 	        });
 	    };
+	};
+
+/***/ },
+/* 132 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = navbar;
+	function navbar($cookies) {
+	    return {
+	        status: $cookies.get('dclog'),
+	        restrict: 'EA',
+	        controller: 'header',
+	        scope: false,
+	        templateUrl: function templateUrl() {
+	            if (this.status) {
+	                return '/src/scripts/ng/views/directives/user.html';
+	            } else {
+	                return '/src/scripts/ng/views/directives/guest.html';
+	            }
+	        }
+	    };
+	}
+
+/***/ },
+/* 133 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = test_card;
+	function test_card() {
+	    return {
+	        restrict: 'E',
+	        scope: {
+	            test: '='
+	        },
+	        templateUrl: '/src/scripts/ng/views/directives/test_card.html'
+	    };
+	}
+
+/***/ },
+/* 134 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = navbar;
+	function navbar($cookies) {
+	    return {
+	        restrict: 'EA',
+	        controller: 'certificate_render',
+	        scope: {
+	            data: '='
+	        },
+	        templateUrl: '/src/scripts/ng/views/directives/certificate.html'
+	    };
+	}
+
+/***/ },
+/* 135 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	exports.default = function ($scope, $stateParams, $http) {
+	    $scope.solution = $stateParams;
+	    $scope.current_num = $scope.solution.answers.length + 1;
+	    $scope.max_num = $scope.solution.questions.length;
+	    var current_quest = $scope.solution.questions[$scope.solution.answers.length];
+	    $http({
+	        method: 'POST',
+	        url: '/api/get-question',
+	        data: {
+	            question: current_quest,
+	            test: $scope.solution.test,
+	            solution: $scope.solution._id
+	        }
+	    }).then(function (response) {
+	        response = response.data;
+	        if (response.status == 0) {
+	            $scope.quest_data = response.body;
+	        } else {
+	            console.log(response);
+	            $scope.error = 'Server error';
+	        }
+	    }).catch(function (err) {
+	        console.log(err);
+	        $scope.error = 'Server error';
+	    });
+	    console.log($scope.quest);
 	};
 
 /***/ }

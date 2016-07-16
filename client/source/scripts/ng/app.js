@@ -13,6 +13,7 @@ import cabinet from './controllers/cabinet';
 import certificate from './controllers/certificate';
 import certificate_render from './controllers/certificate_render';
 import start from './controllers/start';
+import question from './controllers/question';
 
 import auth_check from './services/auth';
 import admin_check from './services/admin';
@@ -25,7 +26,7 @@ import navbar from './directives/navbar';
 import test_card from './directives/test_card';
 import certificate_directive from './directives/certificate';
 
-var app = Angular.module('DevCertified', ['ui.router', 'ui.bootstrap', 'ngCookies']);
+var app = Angular.module('DevCertified', ['ui.router', 'ui.bootstrap', 'ngCookies', 'angularMoment']);
 
 // controllers
 app.controller('header', header);

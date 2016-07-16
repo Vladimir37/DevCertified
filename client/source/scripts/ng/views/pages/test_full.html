@@ -5,7 +5,7 @@
             <img ng-src="{{ '/src/images/uploaded/' + test_data.img }}" alt="test_img">
         </article>
         <article class="col-md-6 right">
-            {{ test_data.description }}
+            <p class="card_text">{{ test_data.description }}</p>
             <ul class="subjects">
                 <li ng-repeat="subject in test_data.subjects">{{ subject }}</li>
             </ul>
