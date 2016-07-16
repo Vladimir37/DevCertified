@@ -86,6 +86,15 @@ export default function ($stateProvider, $urlRouterProvider, $locationProvider) 
             answers: null,
             questions: null
         }
+    }).state('finish', {
+        url: '/finish',
+        templateUrl: '/src/scripts/ng/views/pages/finish.html',
+        // controller: 'question',
+        params: {
+            success: null,
+            answers: null,
+            certificate: null
+        }
     }).state('otherwise', {
         url: '*path',
         onEnter: function($state) {

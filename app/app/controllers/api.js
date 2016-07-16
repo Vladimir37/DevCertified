@@ -435,6 +435,7 @@ class API {
             var question_search = [];
             for (var i = 1; i <= 3; i++) {
                 question_search.push(Models.questions.find({
+                    test: test_num,
                     complexity: i
                 }));
             }
@@ -458,7 +459,7 @@ class API {
         }).then(function (solution) {
             return res.send(Additional.serialize(0, solution));
         }).catch(function (err) {
-            console.log(err);
+            console.log(err); 
             return res.send(Additional.serialize(1, 'Server error'));
         });
     }
