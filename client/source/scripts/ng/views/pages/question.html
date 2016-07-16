@@ -6,24 +6,25 @@
     <article class="quest_text">{{ quest_data.text }}</article>
     <article class="quest_code" ng-if="code">{{ quest_data.code }}</article>
     <article class="quest_answers">
-        <form name="quest">
-            <label>
-                <input type="radio" name="answer">
-                {{ quest_data.answer1 }}
-            </label>
-            <label>
-                <input type="radio" name="answer">
-                {{ quest_data.answer2 }}
-            </label>
-            <label>
-                <input type="radio" name="answer">
-                {{ quest_data.answer3 }}
-            </label>
-            <label>
-                <input type="radio" name="answer">
-                {{ quest_data.answer4 }}
-            </label>
-        </form>
+        <label>
+            <input type="radio" value="1" ng-model="selected_answer" name="answer">
+            {{ quest_data.answer1 }}
+        </label>
+        <br>
+        <label>
+            <input type="radio" value="2" ng-model="selected_answer" name="answer">
+            {{ quest_data.answer2 }}
+        </label>
+        <br>
+        <label>
+            <input type="radio" value="3" ng-model="selected_answer" name="answer">
+            {{ quest_data.answer3 }}
+        </label>
+        <br>
+        <label>
+            <input type="radio" value="4" ng-model="selected_answer" name="answer">
+            {{ quest_data.answer4 }}
+        </label>
     </article>
-    <button class="btn btn-default">Enter</button>
+    <button class="btn btn-default" ng-disabled="!selected_answer" ng-click="sending()">Enter</button>
 </section>

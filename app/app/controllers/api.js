@@ -487,14 +487,14 @@ class API {
         Promise.all(search).then(function (result) {
             if (
                 !result[0] || !result[1] ||
-                result[0].questions.indexOf(question_num) == -1 ||
-                result[1].test != test_num
+                result[0].questions.indexOf(answer_data.question_num) == -1 ||
+                result[1].test != answer_data.test_num
             ) {
                 return res.send(Additional.serialize(3, 'Incorrect data'));
             }
             target_solution = result[0];
             var current_answers = result[0].answers;
-            current_answers.push(answer_num);
+            current_answers.push(answer_data.answer_num);
             if (current_answers >= result[0].questions) {
                 last_question = true;
             }
@@ -544,6 +544,7 @@ class API {
             if (!question) {
                 return res.send(Additional.serialize(12, 'Not Found'));
             }
+            question.true_answer = null;
             return res.send(Additional.serialize(0, question));
         }).catch(function (err) {
             console.log(err);
