@@ -71,6 +71,7 @@ class Additional {
             var certify = false;
             var true_answers_col = 0;
             var target_answers_col = 0;
+            var all_col = 0;
             var questions_search = [];
             solution.questions.forEach(function (item) {
                 questions_search.push(Models.questions.findOne({
@@ -78,6 +79,7 @@ class Additional {
                 }));
             });
             Promise.all(questions_search).then(function (questions) {
+                all_col = questions.length;
                 var true_answers = _.pluck(questions, 'true_answer');
                 solution.answer.forEach(function (answer, index) {
                     answer == true_answers[index] ? true_answers_col++ : false;
@@ -105,7 +107,8 @@ class Additional {
                     resolve({
                         success: false,
                         answers: true_answers_col,
-                        target: target_answers_col
+                        target: target_answers_col,
+                        all: all_col
                     });
                 }
             }).then(function (data) {
@@ -125,6 +128,7 @@ class Additional {
                     success: true,
                     answers: true_answers_col,
                     target: target_answers_col,
+                    all: all_col,
                     certificate: certificate._id
                 });
             }).catch(function (err) {

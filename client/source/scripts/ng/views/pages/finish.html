@@ -1,7 +1,13 @@
 <section class="finish">
-    <h2 class="res_yes" ng-if="success">Accept</h2>
-    <h2 class="res_no" ng-if="!success">Not accept</h2>
-    <div class="progress">
-        <div class="progress-bar progress-bar-success" style="width: 40%">40%</div>
-    </div>
+    <h2 ng-class="{{ class }}">{{ title }}</h2>
+    <article class="statistic">
+        <p><b>Your correct answers/All answers:</b> {{ result.answers }}/{{ result.all }}</p>
+        <div class="progress">
+            <div class="progress-bar {{ bar_class }}" style="width: {{ width_res }}%">{{ width_res }}%</div>
+        </div>
+        <p><b>Minimum correct answers/All answers:</b> {{ result.target }}/{{ result.all }}</p>
+        <div class="progress">
+            <div class="progress-bar progress-bar-info" style="width: {{ width_need }}%">{{ width_need }}%</div>
+        </div>
+    </article>
 </section>
