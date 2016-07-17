@@ -496,7 +496,7 @@ class API {
             target_solution = result[0];
             var current_answers = result[0].answers;
             current_answers.push(answer_data.answer_num);
-            if (current_answers >= result[0].questions) {
+            if (current_answers.length >= result[0].questions.length) {
                 last_question = true;
             }
             else {

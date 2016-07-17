@@ -93,6 +93,8 @@ export default function ($stateProvider, $urlRouterProvider) {
         params: {
             success: null,
             answers: null,
+            target: null,
+            all: null,
             certificate: null
         }
     }).state('otherwise', {

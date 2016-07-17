@@ -30891,6 +30891,8 @@
 	        params: {
 	            success: null,
 	            answers: null,
+	            target: null,
+	            all: null,
 	            certificate: null
 	        }
 	    }).state('otherwise', {
@@ -31816,8 +31818,18 @@
 	    value: true
 	});
 
-	exports.default = function ($scope, $stateParams, $http) {
+	exports.default = function ($scope, $stateParams, $state) {
 	    $scope.result = $stateParams;
+
+	    if (!$scope.result.all) {
+	        $state.go('index');
+	    }
+
+	    $scope.calculate = function (number, max) {
+	        var one_pro = max / 100;
+	        return Math.ceil(number / one_pro);
+	    };
+
 	    if ($scope.result.success) {
 	        $scope.title = 'Accept';
 	        $scope.class = 'res_yes';
@@ -31830,11 +31842,6 @@
 
 	    $scope.width_res = $scope.calculate($scope.result.answers, $scope.result.all);
 	    $scope.width_need = $scope.calculate($scope.result.target, $scope.result.all);
-
-	    $scope.calculate = function (number, max) {
-	        var one_pro = max / 100;
-	        return Math.ceil(max / one_pro);
-	    };
 	};
 
 /***/ }

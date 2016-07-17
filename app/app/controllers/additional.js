@@ -81,7 +81,7 @@ class Additional {
             Promise.all(questions_search).then(function (questions) {
                 all_col = questions.length;
                 var true_answers = _.pluck(questions, 'true_answer');
-                solution.answer.forEach(function (answer, index) {
+                solution.answers.forEach(function (answer, index) {
                     answer == true_answers[index] ? true_answers_col++ : false;
                 });
                 var min_value = Math.ceil(questions.length * 0.75);

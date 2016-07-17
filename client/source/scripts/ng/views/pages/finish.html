@@ -10,4 +10,7 @@
             <div class="progress-bar progress-bar-info" style="width: {{ width_need }}%">{{ width_need }}%</div>
         </div>
     </article>
+    <a ng-if="result.success" ui-sref="check_certify({certId: result.certificate})">
+        <button class="btn btn-primary">View certificate</button>
+    </a>
 </section>
