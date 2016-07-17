@@ -7320,6 +7320,9 @@ th {
 .not_block {
   display: inline-block;
 }
+.nav-button {
+  cursor: pointer;
+}
 .center-container {
   text-align: center;
 }

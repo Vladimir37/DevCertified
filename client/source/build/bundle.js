@@ -30706,43 +30706,47 @@
 
 	var _start2 = _interopRequireDefault(_start);
 
-	var _question = __webpack_require__(135);
+	var _question = __webpack_require__(126);
 
 	var _question2 = _interopRequireDefault(_question);
 
-	var _auth = __webpack_require__(126);
+	var _finish = __webpack_require__(136);
+
+	var _finish2 = _interopRequireDefault(_finish);
+
+	var _auth = __webpack_require__(127);
 
 	var _auth2 = _interopRequireDefault(_auth);
 
-	var _admin3 = __webpack_require__(127);
+	var _admin3 = __webpack_require__(128);
 
 	var _admin4 = _interopRequireDefault(_admin3);
 
-	var _test_check = __webpack_require__(128);
+	var _test_check = __webpack_require__(129);
 
 	var _test_check2 = _interopRequireDefault(_test_check);
 
-	var _user_check = __webpack_require__(129);
+	var _user_check = __webpack_require__(130);
 
 	var _user_check2 = _interopRequireDefault(_user_check);
 
-	var _cert_check = __webpack_require__(130);
+	var _cert_check = __webpack_require__(131);
 
 	var _cert_check2 = _interopRequireDefault(_cert_check);
 
-	var _start_check = __webpack_require__(131);
+	var _start_check = __webpack_require__(132);
 
 	var _start_check2 = _interopRequireDefault(_start_check);
 
-	var _navbar = __webpack_require__(132);
+	var _navbar = __webpack_require__(133);
 
 	var _navbar2 = _interopRequireDefault(_navbar);
 
-	var _test_card = __webpack_require__(133);
+	var _test_card = __webpack_require__(134);
 
 	var _test_card2 = _interopRequireDefault(_test_card);
 
-	var _certificate3 = __webpack_require__(134);
+	var _certificate3 = __webpack_require__(135);
 
 	var _certificate4 = _interopRequireDefault(_certificate3);
 
@@ -30760,6 +30764,7 @@
 	app.controller('certificate_render', _certificate_render2.default);
 	app.controller('start', _start2.default);
 	app.controller('question', _question2.default);
+	app.controller('finish', _finish2.default);
 
 	// modal controllers
 	app.controller('login', _login2.default);
@@ -30791,7 +30796,7 @@
 	    value: true
 	});
 
-	exports.default = function ($stateProvider, $urlRouterProvider, $locationProvider) {
+	exports.default = function ($stateProvider, $urlRouterProvider) {
 	    $urlRouterProvider.otherwise('otherwise');
 
 	    $stateProvider.state('index', {
@@ -30882,7 +30887,7 @@
 	    }).state('finish', {
 	        url: '/finish',
 	        templateUrl: '/src/scripts/ng/views/pages/finish.html',
-	        // controller: 'question',
+	        controller: 'finish',
 	        params: {
 	            success: null,
 	            answers: null,
@@ -31062,8 +31067,8 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.default = index;
-	function index($scope, $http) {
+
+	exports.default = function ($scope, $http) {
 	    $http({
 	        method: 'GET',
 	        url: '/api/get-tests'
@@ -31074,7 +31079,7 @@
 	    }).catch(function (err) {
 	        console.log(err);
 	    });
-	}
+	};
 
 /***/ },
 /* 120 */
@@ -31451,273 +31456,6 @@
 	    value: true
 	});
 
-	exports.default = function ($http) {
-	    return function ($state, component) {
-	        return $http({
-	            method: 'GET',
-	            url: '/api/check'
-	        }).then(function (response) {
-	            if (response.data.status === 0) {
-	                $state.go(component);
-	            } else {
-	                $state.go('otherwise', {}, { location: false });
-	            }
-	        }).catch(function (err) {
-	            console.log(err);
-	            $state.go('otherwise', {}, { location: false });
-	        });
-	    };
-	};
-
-/***/ },
-/* 127 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	exports.default = function ($http) {
-	    return function ($state, component) {
-	        return $http({
-	            method: 'GET',
-	            url: '/api/check'
-	        }).then(function (response) {
-	            if (response.data.status === 0 && response.data.body.status === 2) {
-	                $state.go(component);
-	            } else {
-	                $state.go('otherwise', {}, { location: false });
-	            }
-	        }).catch(function (err) {
-	            console.log(err);
-	            $state.go('otherwise', {}, { location: false });
-	        });
-	    };
-	};
-
-/***/ },
-/* 128 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	exports.default = function ($http) {
-	    return function ($state, $stateParams, target) {
-	        if (!$stateParams.cardId) {
-	            return $state.go('otherwise', {});
-	        }
-	        return $http({
-	            method: 'GET',
-	            url: '/api/get-test',
-	            params: {
-	                test: $stateParams.cardId
-	            }
-	        }).then(function (response) {
-	            if (response.data.status === 0) {
-	                $state.go(target, response.data.body);
-	            } else {
-	                $state.go('otherwise', {});
-	            }
-	        }).catch(function (err) {
-	            console.log(err);
-	            $state.go('otherwise', {});
-	        });
-	    };
-	};
-
-/***/ },
-/* 129 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	exports.default = function ($http) {
-	    return function ($state) {
-	        return $http({
-	            method: 'GET',
-	            url: '/api/check'
-	        }).then(function (response) {
-	            if (response.data.status === 0) {
-	                $state.go('cabinet');
-	            } else {
-	                $state.go('otherwise', response.data.body);
-	            }
-	        }).catch(function (err) {
-	            console.log(err);
-	            $state.go('otherwise', {});
-	        });
-	    };
-	};
-
-/***/ },
-/* 130 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	exports.default = function ($http) {
-	    return function ($state, $stateParams) {
-	        if (!$stateParams.certId) {
-	            return $state.go('otherwise', {});
-	        }
-	        return $http({
-	            method: 'GET',
-	            url: '/api/get-certificate',
-	            params: {
-	                cert: $stateParams.certId
-	            }
-	        }).then(function (response) {
-	            if (response.data.status === 0) {
-	                $state.go('certificate', response.data.body);
-	            } else {
-	                $state.go('otherwise', {});
-	            }
-	        }).catch(function (err) {
-	            console.log(err);
-	            $state.go('otherwise', {});
-	        });
-	    };
-	};
-
-/***/ },
-/* 131 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	exports.default = function ($http) {
-	    return function ($state, $stateParams) {
-	        if (!$stateParams.testId) {
-	            return $state.go('otherwise', {});
-	        }
-	        var test_data;
-	        return $http({
-	            method: 'GET',
-	            url: '/api/get-test',
-	            params: {
-	                test: $stateParams.testId
-	            }
-	        }).then(function (response) {
-	            if (response.data.status != 0) {
-	                return $state.go('otherwise', {});
-	            }
-	            test_data = response.data.body;
-	            return $http({
-	                method: 'GET',
-	                url: '/api/get-test-status',
-	                params: {
-	                    test: $stateParams.testId
-	                }
-	            });
-	        }).then(function (response) {
-	            response = response.data;
-	            if (response.status == 0) {
-	                return $state.go('start', test_data);
-	            } else {
-	                return $state.go('otherwise', {});
-	            }
-	        }).catch(function (err) {
-	            console.log(err);
-	            return $state.go('otherwise', {});
-	        });
-	    };
-	};
-
-/***/ },
-/* 132 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.default = navbar;
-	function navbar($cookies) {
-	    return {
-	        status: $cookies.get('dclog'),
-	        restrict: 'EA',
-	        controller: 'header',
-	        scope: false,
-	        templateUrl: function templateUrl() {
-	            if (this.status) {
-	                return '/src/scripts/ng/views/directives/user.html';
-	            } else {
-	                return '/src/scripts/ng/views/directives/guest.html';
-	            }
-	        }
-	    };
-	}
-
-/***/ },
-/* 133 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.default = test_card;
-	function test_card() {
-	    return {
-	        restrict: 'E',
-	        scope: {
-	            test: '='
-	        },
-	        templateUrl: '/src/scripts/ng/views/directives/test_card.html'
-	    };
-	}
-
-/***/ },
-/* 134 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.default = navbar;
-	function navbar($cookies) {
-	    return {
-	        restrict: 'EA',
-	        controller: 'certificate_render',
-	        scope: {
-	            data: '='
-	        },
-	        templateUrl: '/src/scripts/ng/views/directives/certificate.html'
-	    };
-	}
-
-/***/ },
-/* 135 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
 	exports.default = function ($scope, $stateParams, $state, $http) {
 	    $scope.selected_answer = null;
 	    $scope.loading = function () {
@@ -31799,6 +31537,287 @@
 	    };
 
 	    $scope.loading();
+	};
+
+/***/ },
+/* 127 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	exports.default = function ($http) {
+	    return function ($state, component) {
+	        return $http({
+	            method: 'GET',
+	            url: '/api/check'
+	        }).then(function (response) {
+	            if (response.data.status === 0) {
+	                $state.go(component);
+	            } else {
+	                $state.go('otherwise', {}, { location: false });
+	            }
+	        }).catch(function (err) {
+	            console.log(err);
+	            $state.go('otherwise', {}, { location: false });
+	        });
+	    };
+	};
+
+/***/ },
+/* 128 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	exports.default = function ($http) {
+	    return function ($state, component) {
+	        return $http({
+	            method: 'GET',
+	            url: '/api/check'
+	        }).then(function (response) {
+	            if (response.data.status === 0 && response.data.body.status === 2) {
+	                $state.go(component);
+	            } else {
+	                $state.go('otherwise', {}, { location: false });
+	            }
+	        }).catch(function (err) {
+	            console.log(err);
+	            $state.go('otherwise', {}, { location: false });
+	        });
+	    };
+	};
+
+/***/ },
+/* 129 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	exports.default = function ($http) {
+	    return function ($state, $stateParams, target) {
+	        if (!$stateParams.cardId) {
+	            return $state.go('otherwise', {});
+	        }
+	        return $http({
+	            method: 'GET',
+	            url: '/api/get-test',
+	            params: {
+	                test: $stateParams.cardId
+	            }
+	        }).then(function (response) {
+	            if (response.data.status === 0) {
+	                $state.go(target, response.data.body);
+	            } else {
+	                $state.go('otherwise', {});
+	            }
+	        }).catch(function (err) {
+	            console.log(err);
+	            $state.go('otherwise', {});
+	        });
+	    };
+	};
+
+/***/ },
+/* 130 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	exports.default = function ($http) {
+	    return function ($state) {
+	        return $http({
+	            method: 'GET',
+	            url: '/api/check'
+	        }).then(function (response) {
+	            if (response.data.status === 0) {
+	                $state.go('cabinet');
+	            } else {
+	                $state.go('otherwise', response.data.body);
+	            }
+	        }).catch(function (err) {
+	            console.log(err);
+	            $state.go('otherwise', {});
+	        });
+	    };
+	};
+
+/***/ },
+/* 131 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	exports.default = function ($http) {
+	    return function ($state, $stateParams) {
+	        if (!$stateParams.certId) {
+	            return $state.go('otherwise', {});
+	        }
+	        return $http({
+	            method: 'GET',
+	            url: '/api/get-certificate',
+	            params: {
+	                cert: $stateParams.certId
+	            }
+	        }).then(function (response) {
+	            if (response.data.status === 0) {
+	                $state.go('certificate', response.data.body);
+	            } else {
+	                $state.go('otherwise', {});
+	            }
+	        }).catch(function (err) {
+	            console.log(err);
+	            $state.go('otherwise', {});
+	        });
+	    };
+	};
+
+/***/ },
+/* 132 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	exports.default = function ($http) {
+	    return function ($state, $stateParams) {
+	        if (!$stateParams.testId) {
+	            return $state.go('otherwise', {});
+	        }
+	        var test_data;
+	        return $http({
+	            method: 'GET',
+	            url: '/api/get-test',
+	            params: {
+	                test: $stateParams.testId
+	            }
+	        }).then(function (response) {
+	            if (response.data.status != 0) {
+	                return $state.go('otherwise', {});
+	            }
+	            test_data = response.data.body;
+	            return $http({
+	                method: 'GET',
+	                url: '/api/get-test-status',
+	                params: {
+	                    test: $stateParams.testId
+	                }
+	            });
+	        }).then(function (response) {
+	            response = response.data;
+	            if (response.status == 0) {
+	                return $state.go('start', test_data);
+	            } else {
+	                return $state.go('otherwise', {});
+	            }
+	        }).catch(function (err) {
+	            console.log(err);
+	            return $state.go('otherwise', {});
+	        });
+	    };
+	};
+
+/***/ },
+/* 133 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = navbar;
+	function navbar($cookies) {
+	    return {
+	        status: $cookies.get('dclog'),
+	        restrict: 'EA',
+	        controller: 'header',
+	        scope: false,
+	        templateUrl: function templateUrl() {
+	            if (this.status) {
+	                return '/src/scripts/ng/views/directives/user.html';
+	            } else {
+	                return '/src/scripts/ng/views/directives/guest.html';
+	            }
+	        }
+	    };
+	}
+
+/***/ },
+/* 134 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = test_card;
+	function test_card() {
+	    return {
+	        restrict: 'E',
+	        scope: {
+	            test: '='
+	        },
+	        templateUrl: '/src/scripts/ng/views/directives/test_card.html'
+	    };
+	}
+
+/***/ },
+/* 135 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = navbar;
+	function navbar($cookies) {
+	    return {
+	        restrict: 'EA',
+	        controller: 'certificate_render',
+	        scope: {
+	            data: '='
+	        },
+	        templateUrl: '/src/scripts/ng/views/directives/certificate.html'
+	    };
+	}
+
+/***/ },
+/* 136 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	exports.default = function ($scope, $stateParams, $http) {
+	    $scope.result = $stateParams;
 	};
 
 /***/ }

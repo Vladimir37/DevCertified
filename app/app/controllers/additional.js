@@ -70,6 +70,7 @@ class Additional {
         return new Promise(function(resolve, reject) {
             var certify = false;
             var true_answers_col = 0;
+            var target_answers_col = 0;
             var questions_search = [];
             solution.questions.forEach(function (item) {
                 questions_search.push(Models.questions.findOne({
@@ -82,6 +83,7 @@ class Additional {
                     answer == true_answers[index] ? true_answers_col++ : false;
                 });
                 var min_value = Math.ceil(questions.length * 0.75);
+                target_answers_col = min_value;
                 if (true_answers_col >= min_value) {
                     certify = true
                 }
@@ -97,15 +99,17 @@ class Additional {
                     query.push(Models.tests.findOne({
                         _id: solution.test
                     }));
+                    return Promise.all(query);
                 }
                 else {
                     resolve({
                         success: false,
-                        answers: true_answers_col
+                        answers: true_answers_col,
+                        target: target_answers_col
                     });
                 }
             }).then(function (data) {
-                if (!user) {
+                if (!data[0]) {
                     reject(1);
                 }
                 else {
@@ -120,6 +124,7 @@ class Additional {
                 resolve({
                     success: true,
                     answers: true_answers_col,
+                    target: target_answers_col,
                     certificate: certificate._id
                 });
             }).catch(function (err) {

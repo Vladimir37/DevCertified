@@ -32,7 +32,7 @@
                 You already have this certificate
             </span>
             <span ng-if="response.status == 6">
-                Next attempt: {{ response.next }}
+                Next attempt: {{ response.body.next | date }}
             </span>
             <span ng-if="error">
                 Server error

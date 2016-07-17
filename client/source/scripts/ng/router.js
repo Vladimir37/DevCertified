@@ -1,4 +1,4 @@
-export default function ($stateProvider, $urlRouterProvider, $locationProvider) {
+export default function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('otherwise');
 
     $stateProvider.state('index', {
@@ -89,7 +89,7 @@ export default function ($stateProvider, $urlRouterProvider, $locationProvider) 
     }).state('finish', {
         url: '/finish',
         templateUrl: '/src/scripts/ng/views/pages/finish.html',
-        // controller: 'question',
+        controller: 'finish',
         params: {
             success: null,
             answers: null,

@@ -14,6 +14,7 @@ import certificate from './controllers/certificate';
 import certificate_render from './controllers/certificate_render';
 import start from './controllers/start';
 import question from './controllers/question';
+import finish from './controllers/finish';
 
 import auth_check from './services/auth';
 import admin_check from './services/admin';
@@ -38,6 +39,7 @@ app.controller('certificate', certificate);
 app.controller('certificate_render', certificate_render);
 app.controller('start', start);
 app.controller('question', question);
+app.controller('finish', finish);
 
 // modal controllers
 app.controller('login', login);

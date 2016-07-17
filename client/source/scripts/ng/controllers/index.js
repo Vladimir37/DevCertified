@@ -1,4 +1,4 @@
-export default function index($scope, $http) {
+export default function ($scope, $http) {
     $http({
         method: 'GET',
         url: '/api/get-tests'
