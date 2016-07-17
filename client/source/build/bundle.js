@@ -31460,6 +31460,7 @@
 
 	exports.default = function ($scope, $stateParams, $state, $http) {
 	    $scope.selected_answer = null;
+
 	    $scope.loading = function () {
 	        $scope.solution = $stateParams;
 
@@ -31496,6 +31497,7 @@
 	            $scope.error = 'Server error';
 	        });
 	    };
+
 	    $scope.sending = function () {
 	        $scope.solution = $stateParams;
 
@@ -31536,6 +31538,11 @@
 	            console.log(err);
 	            $scope.error = 'Server error';
 	        });
+	    };
+
+	    $scope.skip = function () {
+	        $scope.selected_answer = 5;
+	        $scope.sending();
 	    };
 
 	    $scope.loading();
