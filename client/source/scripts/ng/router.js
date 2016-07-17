@@ -84,7 +84,8 @@ export default function ($stateProvider, $urlRouterProvider) {
             _id: null,
             test: null,
             answers: null,
-            questions: null
+            questions: null,
+            complexities: null
         }
     }).state('finish', {
         url: '/finish',

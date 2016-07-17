@@ -9,6 +9,7 @@ export default function ($scope, $stateParams, $http, $state) {
             }
         }).then(function (response) {
             response = response.data;
+            response.body.complexities = [$scope.test_data.easyTime, $scope.test_data.middleTime, $scope.test_data.hardTime];
             if (response.status == 0) {
                 $state.go('question', response.body);
             }

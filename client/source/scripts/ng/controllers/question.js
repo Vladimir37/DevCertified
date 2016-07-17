@@ -23,14 +23,10 @@ export default function ($scope, $stateParams, $state, $http) {
             response = response.data;
             if (response.status == 0) {
                 $scope.quest_data = response.body;
+                $scope.timer();
             }
             else {
                 console.log(response.body);
-                console.log({
-                    question: current_quest,
-                    test: $scope.solution.test,
-                    solution: $scope.solution._id
-                });
                 $scope.error = 'Server error';
             }
         }).catch(function (err) {
@@ -81,6 +77,26 @@ export default function ($scope, $stateParams, $state, $http) {
             console.log(err);
             $scope.error = 'Server error';
         });
+    };
+    
+    $scope.timer = function () {
+        var current_complexities = $scope.quest_data.complexity - 1;
+        $scope.time = $scope.solution.complexities[current_complexities];
+        $scope.time_format();
+        setInterval($scope.step, 1000);
+    };
+
+    $scope.step = function () {
+        $scope.time--;
+        if ($scope.time <= 0) {
+            $scope.skip();
+        }
+    };
+
+    $scope.time_format = function () {
+        var minutes = Math.round($scope.time / 60);
+        var seconds = Math.round($scope.time % 60);
+        $scope.formatted_time = minutes + ':' + seconds;
     };
 
     $scope.skip = function () {

@@ -30882,7 +30882,8 @@
 	            _id: null,
 	            test: null,
 	            answers: null,
-	            questions: null
+	            questions: null,
+	            complexities: null
 	        }
 	    }).state('finish', {
 	        url: '/finish',
@@ -31435,6 +31436,7 @@
 	            }
 	        }).then(function (response) {
 	            response = response.data;
+	            response.body.complexities = [$scope.test_data.easyTime, $scope.test_data.middleTime, $scope.test_data.hardTime];
 	            if (response.status == 0) {
 	                $state.go('question', response.body);
 	            } else {
@@ -31483,13 +31485,9 @@
 	            response = response.data;
 	            if (response.status == 0) {
 	                $scope.quest_data = response.body;
+	                $scope.timer();
 	            } else {
 	                console.log(response.body);
-	                console.log({
-	                    question: current_quest,
-	                    test: $scope.solution.test,
-	                    solution: $scope.solution._id
-	                });
 	                $scope.error = 'Server error';
 	            }
 	        }).catch(function (err) {
@@ -31538,6 +31536,26 @@
 	            console.log(err);
 	            $scope.error = 'Server error';
 	        });
+	    };
+
+	    $scope.timer = function () {
+	        var current_complexities = $scope.quest_data.complexity - 1;
+	        $scope.time = $scope.solution.complexities[current_complexities];
+	        $scope.time_format();
+	        setInterval($scope.step, 1000);
+	    };
+
+	    $scope.step = function () {
+	        $scope.time--;
+	        if ($scope.time <= 0) {
+	            $scope.skip();
+	        }
+	    };
+
+	    $scope.time_format = function () {
+	        var minutes = Math.round($scope.time / 60);
+	        var seconds = Math.round($scope.time % 60);
+	        $scope.formatted_time = minutes + ':' + seconds;
 	    };
 
 	    $scope.skip = function () {
