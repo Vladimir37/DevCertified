@@ -1,13 +1,17 @@
 export default function ($scope, $stateParams, $state, $http) {
     $scope.selected_answer = null;
+    $scope.times = {
+        time: null,
+        formatted_time: null
+    }
 
     $scope.loading = function () {
         $scope.solution = $stateParams;
-    
+
         if (!$scope.solution.questions) {
             $state.go('index');
         }
-    
+
         $scope.current_num = $scope.solution.answers.length + 1;
         $scope.max_num = $scope.solution.questions.length;
         var current_quest = $scope.solution.questions[$scope.solution.answers.length];
@@ -44,7 +48,8 @@ export default function ($scope, $stateParams, $state, $http) {
         if (!$scope.selected_answer) {
             return false;
         }
-    
+
+        clearInterval($scope.timer_instance);
         $scope.current_num = $scope.solution.answers.length + 1;
         $scope.max_num = $scope.solution.questions.length;
         var current_quest = $scope.solution.questions[$scope.solution.answers.length];
@@ -68,7 +73,7 @@ export default function ($scope, $stateParams, $state, $http) {
             }
             else if (response.status == 0) {
                 $state.go('finish', response.body);
-            }    
+            }
             else {
                 console.log(response);
                 $scope.error = 'Server error';
@@ -78,31 +83,37 @@ export default function ($scope, $stateParams, $state, $http) {
             $scope.error = 'Server error';
         });
     };
-    
+
     $scope.timer = function () {
         var current_complexities = $scope.quest_data.complexity - 1;
-        $scope.time = $scope.solution.complexities[current_complexities];
-        $scope.time_format();
-        setInterval($scope.step, 1000);
+        $scope.times.time = $scope.solution.complexities[current_complexities];
+        $scope.timer_instance = setInterval($scope.step, 1000);
     };
 
     $scope.step = function () {
-        $scope.time--;
-        if ($scope.time <= 0) {
+        $scope.times.time--;
+        $scope.time_format();
+        if ($scope.times.time <= 0) {
+            clearInterval($scope.timer_instance);
             $scope.skip();
         }
     };
 
     $scope.time_format = function () {
-        var minutes = Math.round($scope.time / 60);
-        var seconds = Math.round($scope.time % 60);
-        $scope.formatted_time = minutes + ':' + seconds;
+        var minutes = Math.floor($scope.times.time / 60);
+        var seconds = $scope.times.time % 60;
+        if (seconds.toString().length == 1) {
+            seconds = '0' + seconds;
+        }
+        $scope.$apply(function () {
+            $scope.times.formatted_time = minutes + ':' + seconds;
+        });
     };
 
     $scope.skip = function () {
         $scope.selected_answer = 5;
         $scope.sending();
     };
-    
+
     $scope.loading();
 }

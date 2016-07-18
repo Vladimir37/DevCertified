@@ -22702,8 +22702,8 @@
 	                if (b === 40 || b === 50 || b === 60 || b === 80 || b === 100) {
 	                    output = 'fed'; // not 30ain, 70ain or 90ain
 	                } else {
-	                    output = 'ain';
-	                }
+	                        output = 'ain';
+	                    }
 	            } else if (b > 0) {
 	                output = lookup[b];
 	            }
@@ -29346,16 +29346,16 @@
 	            } else if (hour < 6) {
 	                return ' வைகறை'; // வைகறை
 	            } else if (hour < 10) {
-	                return ' காலை'; // காலை
-	            } else if (hour < 14) {
-	                return ' நண்பகல்'; // நண்பகல்
-	            } else if (hour < 18) {
-	                return ' எற்பாடு'; // எற்பாடு
-	            } else if (hour < 22) {
-	                return ' மாலை'; // மாலை
-	            } else {
-	                return ' யாமம்';
-	            }
+	                    return ' காலை'; // காலை
+	                } else if (hour < 14) {
+	                        return ' நண்பகல்'; // நண்பகல்
+	                    } else if (hour < 18) {
+	                            return ' எற்பாடு'; // எற்பாடு
+	                        } else if (hour < 22) {
+	                                return ' மாலை'; // மாலை
+	                            } else {
+	                                    return ' யாமம்';
+	                                }
 	        },
 	        meridiemHour: function meridiemHour(hour, meridiem) {
 	            if (hour === 12) {
@@ -30710,43 +30710,43 @@
 
 	var _question2 = _interopRequireDefault(_question);
 
-	var _finish = __webpack_require__(136);
+	var _finish = __webpack_require__(127);
 
 	var _finish2 = _interopRequireDefault(_finish);
 
-	var _auth = __webpack_require__(127);
+	var _auth = __webpack_require__(128);
 
 	var _auth2 = _interopRequireDefault(_auth);
 
-	var _admin3 = __webpack_require__(128);
+	var _admin3 = __webpack_require__(129);
 
 	var _admin4 = _interopRequireDefault(_admin3);
 
-	var _test_check = __webpack_require__(129);
+	var _test_check = __webpack_require__(130);
 
 	var _test_check2 = _interopRequireDefault(_test_check);
 
-	var _user_check = __webpack_require__(130);
+	var _user_check = __webpack_require__(131);
 
 	var _user_check2 = _interopRequireDefault(_user_check);
 
-	var _cert_check = __webpack_require__(131);
+	var _cert_check = __webpack_require__(132);
 
 	var _cert_check2 = _interopRequireDefault(_cert_check);
 
-	var _start_check = __webpack_require__(132);
+	var _start_check = __webpack_require__(133);
 
 	var _start_check2 = _interopRequireDefault(_start_check);
 
-	var _navbar = __webpack_require__(133);
+	var _navbar = __webpack_require__(134);
 
 	var _navbar2 = _interopRequireDefault(_navbar);
 
-	var _test_card = __webpack_require__(134);
+	var _test_card = __webpack_require__(135);
 
 	var _test_card2 = _interopRequireDefault(_test_card);
 
-	var _certificate3 = __webpack_require__(135);
+	var _certificate3 = __webpack_require__(136);
 
 	var _certificate4 = _interopRequireDefault(_certificate3);
 
@@ -31462,6 +31462,10 @@
 
 	exports.default = function ($scope, $stateParams, $state, $http) {
 	    $scope.selected_answer = null;
+	    $scope.times = {
+	        time: null,
+	        formatted_time: null
+	    };
 
 	    $scope.loading = function () {
 	        $scope.solution = $stateParams;
@@ -31506,6 +31510,7 @@
 	            return false;
 	        }
 
+	        clearInterval($scope.timer_instance);
 	        $scope.current_num = $scope.solution.answers.length + 1;
 	        $scope.max_num = $scope.solution.questions.length;
 	        var current_quest = $scope.solution.questions[$scope.solution.answers.length];
@@ -31540,22 +31545,28 @@
 
 	    $scope.timer = function () {
 	        var current_complexities = $scope.quest_data.complexity - 1;
-	        $scope.time = $scope.solution.complexities[current_complexities];
-	        $scope.time_format();
-	        setInterval($scope.step, 1000);
+	        $scope.times.time = $scope.solution.complexities[current_complexities];
+	        $scope.timer_instance = setInterval($scope.step, 1000);
 	    };
 
 	    $scope.step = function () {
-	        $scope.time--;
-	        if ($scope.time <= 0) {
+	        $scope.times.time--;
+	        $scope.time_format();
+	        if ($scope.times.time <= 0) {
+	            clearInterval($scope.timer_instance);
 	            $scope.skip();
 	        }
 	    };
 
 	    $scope.time_format = function () {
-	        var minutes = Math.round($scope.time / 60);
-	        var seconds = Math.round($scope.time % 60);
-	        $scope.formatted_time = minutes + ':' + seconds;
+	        var minutes = Math.floor($scope.times.time / 60);
+	        var seconds = $scope.times.time % 60;
+	        if (seconds.toString().length == 1) {
+	            seconds = '0' + seconds;
+	        }
+	        $scope.$apply(function () {
+	            $scope.times.formatted_time = minutes + ':' + seconds;
+	        });
 	    };
 
 	    $scope.skip = function () {
@@ -31568,6 +31579,42 @@
 
 /***/ },
 /* 127 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	exports.default = function ($scope, $stateParams, $state) {
+	    $scope.result = $stateParams;
+
+	    if (!$scope.result.all) {
+	        $state.go('index');
+	    }
+
+	    $scope.calculate = function (number, max) {
+	        var one_pro = max / 100;
+	        return Math.ceil(number / one_pro);
+	    };
+
+	    if ($scope.result.success) {
+	        $scope.title = 'Accept';
+	        $scope.class = 'res_yes';
+	        $scope.bar_class = 'progress-bar-success';
+	    } else {
+	        $scope.title = 'Not accept';
+	        $scope.class = 'res_no';
+	        $scope.bar_class = 'progress-bar-warning';
+	    }
+
+	    $scope.width_res = $scope.calculate($scope.result.answers, $scope.result.all);
+	    $scope.width_need = $scope.calculate($scope.result.target, $scope.result.all);
+	};
+
+/***/ },
+/* 128 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31595,7 +31642,7 @@
 	};
 
 /***/ },
-/* 128 */
+/* 129 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31623,7 +31670,7 @@
 	};
 
 /***/ },
-/* 129 */
+/* 130 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31657,7 +31704,7 @@
 	};
 
 /***/ },
-/* 130 */
+/* 131 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31685,7 +31732,7 @@
 	};
 
 /***/ },
-/* 131 */
+/* 132 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31719,7 +31766,7 @@
 	};
 
 /***/ },
-/* 132 */
+/* 133 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31767,7 +31814,7 @@
 	};
 
 /***/ },
-/* 133 */
+/* 134 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31793,7 +31840,7 @@
 	}
 
 /***/ },
-/* 134 */
+/* 135 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31813,7 +31860,7 @@
 	}
 
 /***/ },
-/* 135 */
+/* 136 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31832,42 +31879,6 @@
 	        templateUrl: '/src/scripts/ng/views/directives/certificate.html'
 	    };
 	}
-
-/***/ },
-/* 136 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	exports.default = function ($scope, $stateParams, $state) {
-	    $scope.result = $stateParams;
-
-	    if (!$scope.result.all) {
-	        $state.go('index');
-	    }
-
-	    $scope.calculate = function (number, max) {
-	        var one_pro = max / 100;
-	        return Math.ceil(number / one_pro);
-	    };
-
-	    if ($scope.result.success) {
-	        $scope.title = 'Accept';
-	        $scope.class = 'res_yes';
-	        $scope.bar_class = 'progress-bar-success';
-	    } else {
-	        $scope.title = 'Not accept';
-	        $scope.class = 'res_no';
-	        $scope.bar_class = 'progress-bar-warning';
-	    }
-
-	    $scope.width_res = $scope.calculate($scope.result.answers, $scope.result.all);
-	    $scope.width_need = $scope.calculate($scope.result.target, $scope.result.all);
-	};
 
 /***/ }
 /******/ ]);

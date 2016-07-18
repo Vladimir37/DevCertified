@@ -104,7 +104,7 @@ class Additional {
                     return Promise.all(query);
                 }
                 else {
-                    resolve({
+                    return resolve({
                         success: false,
                         answers: true_answers_col,
                         target: target_answers_col,
@@ -112,8 +112,8 @@ class Additional {
                     });
                 }
             }).then(function (data) {
-                if (!data[0]) {
-                    reject(1);
+                if (!data) {
+                    return reject(1);
                 }
                 else {
                     return Models.certificates.create({
@@ -124,7 +124,10 @@ class Additional {
                     });
                 }
             }).then(function (certificate) {
-                resolve({
+                if (!certificate) {
+                    return reject(1);
+                }
+                return resolve({
                     success: true,
                     answers: true_answers_col,
                     target: target_answers_col,
