@@ -5,8 +5,8 @@
         <title>Test</title>
         <link rel="stylesheet" href="/src/build/bundle.css">
     </head>
-    <body>
-        <section class="main jumbotron" ng-app="DevCertified">
+    <body ng-app="DevCertified">
+        <section class="main jumbotron">
             <div class="navbar navbar-default">
                 <div class="collapse navbar-collapse">
                     <div class="container-fluid">
@@ -19,6 +19,9 @@
             </div>
             <section ui-view></section>
         </section>
+        <article class="footer" ng-controller="footer">
+            <a href="#" ng-click="open_modal()">Support</a>
+        </article>
         <script src="/src/build/bundle.js"></script>
     </body>
 </html>

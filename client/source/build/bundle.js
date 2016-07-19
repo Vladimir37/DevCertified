@@ -30714,6 +30714,14 @@
 
 	var _finish2 = _interopRequireDefault(_finish);
 
+	var _footer = __webpack_require__(137);
+
+	var _footer2 = _interopRequireDefault(_footer);
+
+	var _report = __webpack_require__(138);
+
+	var _report2 = _interopRequireDefault(_report);
+
 	var _auth = __webpack_require__(128);
 
 	var _auth2 = _interopRequireDefault(_auth);
@@ -30765,11 +30773,13 @@
 	app.controller('start', _start2.default);
 	app.controller('question', _question2.default);
 	app.controller('finish', _finish2.default);
+	app.controller('footer', _footer2.default);
 
 	// modal controllers
 	app.controller('login', _login2.default);
 	app.controller('registration', _registration2.default);
 	app.controller('end_registration', _end_registration2.default);
+	app.controller('report', _report2.default);
 
 	// directives
 	app.directive('navbar', _navbar2.default);
@@ -31879,6 +31889,43 @@
 	        templateUrl: '/src/scripts/ng/views/directives/certificate.html'
 	    };
 	}
+
+/***/ },
+/* 137 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	exports.default = function ($scope, $uibModal) {
+	    $scope.open_modal = function () {
+	        $uibModal.open({
+	            animation: true,
+	            templateUrl: '/src/scripts/ng/views/modals/report.html',
+	            controller: 'report',
+	            size: ''
+	        });
+	    };
+	};
+
+/***/ },
+/* 138 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	exports.default = function ($scope, $uibModalInstance) {
+	    $scope.close = function () {
+	        $uibModalInstance.close();
+	    };
+	};
 
 /***/ }
 /******/ ]);

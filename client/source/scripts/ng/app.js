@@ -15,6 +15,8 @@ import certificate_render from './controllers/certificate_render';
 import start from './controllers/start';
 import question from './controllers/question';
 import finish from './controllers/finish';
+import footer from './controllers/footer';
+import report from './controllers/modals/report';
 
 import auth_check from './services/auth';
 import admin_check from './services/admin';
@@ -40,11 +42,13 @@ app.controller('certificate_render', certificate_render);
 app.controller('start', start);
 app.controller('question', question);
 app.controller('finish', finish);
+app.controller('footer', footer);
 
 // modal controllers
 app.controller('login', login);
 app.controller('registration', registration);
 app.controller('end_registration', end_registration);
+app.controller('report', report);
 
 // directives
 app.directive('navbar', navbar);
