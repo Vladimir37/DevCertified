@@ -4,7 +4,12 @@ export default function ($scope, $uibModal) {
             animation: true,
             templateUrl: '/src/scripts/ng/views/modals/report.html',
             controller: 'report',
-            size: ''
+            size: '',
+            resolve: {
+                question() {
+                    return null
+                }
+            }
         });
     }
 }

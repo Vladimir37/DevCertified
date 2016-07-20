@@ -1,4 +1,4 @@
-export default function ($scope, $stateParams, $state, $http) {
+export default function ($scope, $stateParams, $state, $http, $uibModal) {
     $scope.selected_answer = null;
     $scope.times = {
         time: null,
@@ -113,6 +113,20 @@ export default function ($scope, $stateParams, $state, $http) {
     $scope.skip = function () {
         $scope.selected_answer = 5;
         $scope.sending();
+    };
+
+    $scope.open_support = function () {
+        $uibModal.open({
+            animation: true,
+            templateUrl: '/src/scripts/ng/views/modals/report.html',
+            controller: 'report',
+            size: '',
+            resolve: {
+                question() {
+                    return $scope.quest_data._id
+                }
+            }
+        });
     };
 
     $scope.loading();

@@ -31455,7 +31455,7 @@
 	    value: true
 	});
 
-	exports.default = function ($scope, $stateParams, $state, $http) {
+	exports.default = function ($scope, $stateParams, $state, $http, $uibModal) {
 	    $scope.selected_answer = null;
 	    $scope.times = {
 	        time: null,
@@ -31569,6 +31569,20 @@
 	        $scope.sending();
 	    };
 
+	    $scope.open_support = function () {
+	        $uibModal.open({
+	            animation: true,
+	            templateUrl: '/src/scripts/ng/views/modals/report.html',
+	            controller: 'report',
+	            size: '',
+	            resolve: {
+	                question: function question() {
+	                    return $scope.quest_data._id;
+	                }
+	            }
+	        });
+	    };
+
 	    $scope.loading();
 	};
 
@@ -31624,7 +31638,12 @@
 	            animation: true,
 	            templateUrl: '/src/scripts/ng/views/modals/report.html',
 	            controller: 'report',
-	            size: ''
+	            size: '',
+	            resolve: {
+	                question: function question() {
+	                    return null;
+	                }
+	            }
 	        });
 	    };
 	};
@@ -31639,11 +31658,15 @@
 	    value: true
 	});
 
-	exports.default = function ($scope, $cookies, $uibModal, $uibModalInstance, $http) {
+	exports.default = function ($scope, $cookies, $uibModal, $uibModalInstance, $http, question) {
 	    $scope.logged = Boolean($cookies.get('dclog'));
 	    $scope.report_data = {
 	        type: '0'
 	    };
+	    if (question) {
+	        $scope.report_data.question = question;
+	        $scope.report_data.type = '1';
+	    }
 	    $scope.close = function () {
 	        $uibModalInstance.close();
 	    };

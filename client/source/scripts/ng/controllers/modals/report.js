@@ -1,8 +1,12 @@
-export default function($scope, $cookies, $uibModal, $uibModalInstance, $http) {
+export default function($scope, $cookies, $uibModal, $uibModalInstance, $http, question) {
     $scope.logged = Boolean($cookies.get('dclog'));
     $scope.report_data = {
         type: '0'
     };
+    if (question) {
+        $scope.report_data.question = question;
+        $scope.report_data.type = '1';
+    }
     $scope.close = function () {
         $uibModalInstance.close();
     };

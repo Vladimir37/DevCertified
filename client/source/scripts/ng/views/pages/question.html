@@ -28,6 +28,9 @@
             {{ quest_data.answer4 }}
         </label>
     </article>
+    <article class="quest_support">
+        <a ng-click="open_support()">Error in question?</a>
+    </article>
     <button class="btn btn-primary" ng-disabled="!selected_answer" ng-click="sending()">Enter</button>
     <button class="btn btn-default" ng-click="skip()">Skip</button>
 </section>

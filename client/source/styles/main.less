@@ -93,15 +93,22 @@ th {
 }
 
 .quest {
-    .quest_num {
+    &_num {
         float: right;
         font-size: 20px;
         font-weight: bold;
     }
-    .quest_time {
+    &_time {
         float: left;
         font-size: 18px;
         font-weight: bold;
+    }
+    &_support {
+        text-align: right;
+        a {
+            cursor: pointer;
+            color: grey;
+        }
     }
 }
 

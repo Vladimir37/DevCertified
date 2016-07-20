@@ -7322,15 +7322,22 @@ th {
 .start .data_list {
   font-size: 18px;
 }
-.quest .quest_num {
+.quest_num {
   float: right;
   font-size: 20px;
   font-weight: bold;
 }
-.quest .quest_time {
+.quest_time {
   float: left;
   font-size: 18px;
   font-weight: bold;
+}
+.quest_support {
+  text-align: right;
+}
+.quest_support a {
+  cursor: pointer;
+  color: grey;
 }
 .not_block {
   display: inline-block;
