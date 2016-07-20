@@ -119,7 +119,10 @@ class API {
         if (!report_data.text || !report_type) {
             return res.send(Additional.serialize(2, 'Incorrect data'));
         }
+        var user = req.user ? req.user._id : null;
         var additional_report_data = {
+            user: user,
+            addr: req.body.addr,
             type: report_type,
             date: new Date(),
             solved: false
@@ -459,7 +462,7 @@ class API {
         }).then(function (solution) {
             return res.send(Additional.serialize(0, solution));
         }).catch(function (err) {
-            console.log(err); 
+            console.log(err);
             return res.send(Additional.serialize(1, 'Server error'));
         });
     }

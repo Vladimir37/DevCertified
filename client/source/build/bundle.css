@@ -7258,10 +7258,20 @@ th {
   padding-top: 0;
   border-radius: 4px;
   background: #e6e6e6;
+  margin-bottom: 5px;
 }
 .main .navbar {
   margin-left: -10px;
   margin-right: -10px;
+}
+.footer {
+  width: 980px;
+  margin: auto;
+  text-align: right;
+}
+.footer a {
+  cursor: pointer;
+  color: #2C3E50;
 }
 .test_full .left img {
   width: 100%;

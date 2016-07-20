@@ -5,9 +5,10 @@
     <div class="alert alert-danger" ng-if="error">
         {{ error }}
     </div>
-    <form name="log_form">
-        <input type="text" class="form-control" placeholder="Mail" ng-model="log_data.username" required><br>
-        <input type="password" class="form-control" placeholder="Password" ng-model="log_data.password" required>
+    <form name="report_form">
+        <input type="text" class="form-control" placeholder="Your contact address" ng-model="report_data.addr" ng-if="!logged" required>
+        <br ng-if="!logged">
+        <textarea class="form-control" placeholder="Text of meassage..." ng-model="report_data.text" required></textarea>
     </form>
 </div>
 <div class="modal-footer">

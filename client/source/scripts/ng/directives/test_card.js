@@ -1,4 +1,4 @@
-export default function test_card () {
+export default function () {
     return {
         restrict: 'E',
         scope: {

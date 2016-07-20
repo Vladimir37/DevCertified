@@ -28,7 +28,7 @@ export default function($scope, $http, $uibModal, $uibModalInstance) {
                 $uibModal.open({
                     animation: true,
                     templateUrl: '/src/scripts/ng/views/modals/end_registration.html',
-                    controller: 'end_registration',
+                    controller: 'info',
                     size: ''
                 });
             }

@@ -30674,9 +30674,9 @@
 
 	var _registration2 = _interopRequireDefault(_registration);
 
-	var _end_registration = __webpack_require__(118);
+	var _info = __webpack_require__(139);
 
-	var _end_registration2 = _interopRequireDefault(_end_registration);
+	var _info2 = _interopRequireDefault(_info);
 
 	var _index = __webpack_require__(119);
 
@@ -30714,47 +30714,47 @@
 
 	var _finish2 = _interopRequireDefault(_finish);
 
-	var _footer = __webpack_require__(137);
+	var _footer = __webpack_require__(128);
 
 	var _footer2 = _interopRequireDefault(_footer);
 
-	var _report = __webpack_require__(138);
+	var _report = __webpack_require__(129);
 
 	var _report2 = _interopRequireDefault(_report);
 
-	var _auth = __webpack_require__(128);
+	var _auth = __webpack_require__(130);
 
 	var _auth2 = _interopRequireDefault(_auth);
 
-	var _admin3 = __webpack_require__(129);
+	var _admin3 = __webpack_require__(131);
 
 	var _admin4 = _interopRequireDefault(_admin3);
 
-	var _test_check = __webpack_require__(130);
+	var _test_check = __webpack_require__(132);
 
 	var _test_check2 = _interopRequireDefault(_test_check);
 
-	var _user_check = __webpack_require__(131);
+	var _user_check = __webpack_require__(133);
 
 	var _user_check2 = _interopRequireDefault(_user_check);
 
-	var _cert_check = __webpack_require__(132);
+	var _cert_check = __webpack_require__(134);
 
 	var _cert_check2 = _interopRequireDefault(_cert_check);
 
-	var _start_check = __webpack_require__(133);
+	var _start_check = __webpack_require__(135);
 
 	var _start_check2 = _interopRequireDefault(_start_check);
 
-	var _navbar = __webpack_require__(134);
+	var _navbar = __webpack_require__(136);
 
 	var _navbar2 = _interopRequireDefault(_navbar);
 
-	var _test_card = __webpack_require__(135);
+	var _test_card = __webpack_require__(137);
 
 	var _test_card2 = _interopRequireDefault(_test_card);
 
-	var _certificate3 = __webpack_require__(136);
+	var _certificate3 = __webpack_require__(138);
 
 	var _certificate4 = _interopRequireDefault(_certificate3);
 
@@ -30778,7 +30778,7 @@
 	// modal controllers
 	app.controller('login', _login2.default);
 	app.controller('registration', _registration2.default);
-	app.controller('end_registration', _end_registration2.default);
+	app.controller('info', _info2.default);
 	app.controller('report', _report2.default);
 
 	// directives
@@ -31038,7 +31038,7 @@
 	                $uibModal.open({
 	                    animation: true,
 	                    templateUrl: '/src/scripts/ng/views/modals/end_registration.html',
-	                    controller: 'end_registration',
+	                    controller: 'info',
 	                    size: ''
 	                });
 	            } else {
@@ -31056,22 +31056,7 @@
 	};
 
 /***/ },
-/* 118 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	exports.default = function ($scope, $uibModalInstance) {
-	    $scope.close = function () {
-	        $uibModalInstance.close();
-	    };
-	};
-
-/***/ },
+/* 118 */,
 /* 119 */
 /***/ function(module, exports) {
 
@@ -31633,6 +31618,75 @@
 	    value: true
 	});
 
+	exports.default = function ($scope, $uibModal) {
+	    $scope.open_modal = function () {
+	        $uibModal.open({
+	            animation: true,
+	            templateUrl: '/src/scripts/ng/views/modals/report.html',
+	            controller: 'report',
+	            size: ''
+	        });
+	    };
+	};
+
+/***/ },
+/* 129 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	exports.default = function ($scope, $cookies, $uibModal, $uibModalInstance, $http) {
+	    $scope.logged = Boolean($cookies.get('dclog'));
+	    $scope.report_data = {
+	        type: '0'
+	    };
+	    $scope.close = function () {
+	        $uibModalInstance.close();
+	    };
+	    $scope.send = function () {
+	        if ($scope.report_form.$invalid) {
+	            $scope.error = 'Required fields are empty!';
+	            return false;
+	        }
+	        $scope.error = null;
+	        $http({
+	            method: 'POST',
+	            url: '/api/report',
+	            data: $scope.report_data
+	        }).then(function (response) {
+	            response = response.data;
+	            if (response.status == 0) {
+	                $uibModalInstance.close();
+	                $uibModal.open({
+	                    animation: true,
+	                    templateUrl: '/src/scripts/ng/views/modals/send_report.html',
+	                    controller: 'info',
+	                    size: ''
+	                });
+	            } else {
+	                $scope.error = response.body;
+	            }
+	        }).catch(function (err) {
+	            console.log(err);
+	            $scope.error = 'Server error';
+	        });
+	    };
+	};
+
+/***/ },
+/* 130 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
 	exports.default = function ($http) {
 	    return function ($state, component) {
 	        return $http({
@@ -31652,7 +31706,7 @@
 	};
 
 /***/ },
-/* 129 */
+/* 131 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31680,7 +31734,7 @@
 	};
 
 /***/ },
-/* 130 */
+/* 132 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31714,7 +31768,7 @@
 	};
 
 /***/ },
-/* 131 */
+/* 133 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31742,7 +31796,7 @@
 	};
 
 /***/ },
-/* 132 */
+/* 134 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31776,7 +31830,7 @@
 	};
 
 /***/ },
-/* 133 */
+/* 135 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31824,7 +31878,7 @@
 	};
 
 /***/ },
-/* 134 */
+/* 136 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31832,8 +31886,8 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.default = navbar;
-	function navbar($cookies) {
+
+	exports.default = function ($cookies) {
 	    return {
 	        status: $cookies.get('dclog'),
 	        restrict: 'EA',
@@ -31847,48 +31901,7 @@
 	            }
 	        }
 	    };
-	}
-
-/***/ },
-/* 135 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.default = test_card;
-	function test_card() {
-	    return {
-	        restrict: 'E',
-	        scope: {
-	            test: '='
-	        },
-	        templateUrl: '/src/scripts/ng/views/directives/test_card.html'
-	    };
-	}
-
-/***/ },
-/* 136 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.default = navbar;
-	function navbar($cookies) {
-	    return {
-	        restrict: 'EA',
-	        controller: 'certificate_render',
-	        scope: {
-	            data: '='
-	        },
-	        templateUrl: '/src/scripts/ng/views/directives/certificate.html'
-	    };
-	}
+	};
 
 /***/ },
 /* 137 */
@@ -31900,19 +31913,39 @@
 	    value: true
 	});
 
-	exports.default = function ($scope, $uibModal) {
-	    $scope.open_modal = function () {
-	        $uibModal.open({
-	            animation: true,
-	            templateUrl: '/src/scripts/ng/views/modals/report.html',
-	            controller: 'report',
-	            size: ''
-	        });
+	exports.default = function () {
+	    return {
+	        restrict: 'E',
+	        scope: {
+	            test: '='
+	        },
+	        templateUrl: '/src/scripts/ng/views/directives/test_card.html'
 	    };
 	};
 
 /***/ },
 /* 138 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	exports.default = function ($cookies) {
+	    return {
+	        restrict: 'EA',
+	        controller: 'certificate_render',
+	        scope: {
+	            data: '='
+	        },
+	        templateUrl: '/src/scripts/ng/views/directives/certificate.html'
+	    };
+	};
+
+/***/ },
+/* 139 */
 /***/ function(module, exports) {
 
 	"use strict";

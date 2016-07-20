@@ -1,4 +1,4 @@
-export default function navbar ($cookies) {
+export default function ($cookies) {
     return {
         restrict: 'EA',
         controller: 'certificate_render',

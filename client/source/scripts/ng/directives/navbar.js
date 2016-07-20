@@ -1,4 +1,4 @@
-export default function navbar ($cookies) {
+export default function ($cookies) {
     return {
         status: $cookies.get('dclog'),
         restrict: 'EA',

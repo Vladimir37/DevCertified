@@ -5,7 +5,7 @@ import Router from './router';
 import header from './controllers/header';
 import login from './controllers/modals/login';
 import registration from './controllers/modals/registration';
-import end_registration from './controllers/modals/end_registration';
+import info from './controllers/modals/info';
 import index from './controllers/index';
 import admin from './controllers/admin';
 import test_full from './controllers/test_full';
@@ -47,7 +47,7 @@ app.controller('footer', footer);
 // modal controllers
 app.controller('login', login);
 app.controller('registration', registration);
-app.controller('end_registration', end_registration);
+app.controller('info', info);
 app.controller('report', report);
 
 // directives

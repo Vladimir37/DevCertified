@@ -21,7 +21,7 @@ router.get('/get-certificates', Middlewares.onlyUser, API.getCertificates);
 router.post('/registration', API.registration);
 router.post('/login', API.login);
 router.post('/logout', API.logout);
-router.post('/report', Middlewares.onlyUser, API.report);
+router.post('/report', API.report);
 router.post('/solve-report', Middlewares.onlyAdmin, API.solveReport);
 router.post('/create-test', Middlewares.onlyAdmin, API.createTest);
 router.post('/edit-test', Middlewares.onlyAdmin, API.editTest);
