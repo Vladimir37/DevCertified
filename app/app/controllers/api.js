@@ -693,6 +693,18 @@ class API {
             return res.send(Additional.serialize(1, 'Server error'));
         });
     }
+
+    getReports(req, res, next) {
+        var type = req.query.type || 0;
+        Models.reports.find({
+            solved: false,
+            type: type
+        }).then(function (reports) {
+            return res.send(Additional.serialize(0, reports));
+        }).catch(function (err) {
+            return res.send(Additional.serialize(1, 'Server error'));
+        });
+    }
 }
 
 module.exports = API;

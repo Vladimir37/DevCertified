@@ -189,5 +189,23 @@
                 </tr>
             </table>
         </uib-accordion-group>
+        <uib-accordion-group heading="Reports">
+            <select class="form-control" ng-model="reports.type">
+                <option value="0">Simple</option>
+                <option value="1">Question</option>
+            </select>
+            <br>
+            <button class="btn btn-primary" ng-click="select_report_type()">Select</button>
+            <article ng-if="reports.list">
+                <article class="report" ng-repeat="report in reports.list">
+                    <p>{{ report.text }}</p>
+                    <article class="report_date">{{ report.date | date }}</article>
+                    <article class="report_user" ng-if="report.user">User: {{ report.user }}</article>
+                    <article class="report_addr" ng-if="report.addr">Address: {{ report.addr }}</article>
+                    <article class="report_quest" ng-if="report.question">Question: {{ report.question }}</article>
+                    <button class="btn btn-primary" ng-click="resolve_report(report._id)">Resolve</button>
+                </article>
+            </article>
+        </uib-accordion-group>
     </uib-accordion>
 </section>

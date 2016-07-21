@@ -7312,6 +7312,14 @@ th {
   font-size: 18px;
   color: #2C3E50;
 }
+.admin .report {
+  border: 1px solid black;
+  padding: 10px;
+  margin: 10px 0;
+}
+.admin .report p {
+  font-size: 16px;
+}
 .start {
   text-align: center;
 }

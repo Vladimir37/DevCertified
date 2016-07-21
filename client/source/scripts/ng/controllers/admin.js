@@ -6,6 +6,9 @@ export default function($scope, $http) {
         create: false,
         edit: false
     };
+    $scope.reports = {
+        type: 0
+    };
     $scope.select_edit_test = function () {
         if (!$scope.selected_data.edit_test) {
             $scope.error = 'Test is not selected';
@@ -131,6 +134,46 @@ export default function($scope, $http) {
             else {
                 $scope.error = response.body;
                 $scope.message = null;
+            }
+        }).catch(function (err) {
+            console.log(err);
+            $scope.error = 'Server error';
+        });
+    };
+    $scope.select_report_type = function () {
+        $http({
+            method: 'GET',
+            url: '/api/get-reports',
+            params: {
+                type: $scope.reports.type
+            }
+        }).then(function (response) {
+            response = response.data;
+            if (response.status == 0) {
+                $scope.reports.list = response.body;
+            }
+            else {
+                $scope.error = response.body;
+            }
+        }).catch(function (err) {
+            console.log(err);
+            $scope.error = 'Server error';
+        });
+    };
+    $scope.resolve_report = function (id) {
+        $http({
+            method: 'POST',
+            url: '/api/solve-report',
+            data: {
+                report: id
+            }
+        }).then(function (response) {
+            response = response.data;
+            if (response.status == 0) {
+                $scope.reports.list = null;
+            }
+            else {
+                $scope.error = response.body;
             }
         }).catch(function (err) {
             console.log(err);

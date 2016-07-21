@@ -30674,7 +30674,7 @@
 
 	var _registration2 = _interopRequireDefault(_registration);
 
-	var _info = __webpack_require__(139);
+	var _info = __webpack_require__(118);
 
 	var _info2 = _interopRequireDefault(_info);
 
@@ -31056,7 +31056,22 @@
 	};
 
 /***/ },
-/* 118 */,
+/* 118 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	exports.default = function ($scope, $uibModalInstance) {
+	    $scope.close = function () {
+	        $uibModalInstance.close();
+	    };
+	};
+
+/***/ },
 /* 119 */
 /***/ function(module, exports) {
 
@@ -31096,6 +31111,9 @@
 	    $scope.allow_code = {
 	        create: false,
 	        edit: false
+	    };
+	    $scope.reports = {
+	        type: 0
 	    };
 	    $scope.select_edit_test = function () {
 	        if (!$scope.selected_data.edit_test) {
@@ -31218,6 +31236,44 @@
 	            } else {
 	                $scope.error = response.body;
 	                $scope.message = null;
+	            }
+	        }).catch(function (err) {
+	            console.log(err);
+	            $scope.error = 'Server error';
+	        });
+	    };
+	    $scope.select_report_type = function () {
+	        $http({
+	            method: 'GET',
+	            url: '/api/get-reports',
+	            params: {
+	                type: $scope.reports.type
+	            }
+	        }).then(function (response) {
+	            response = response.data;
+	            if (response.status == 0) {
+	                $scope.reports.list = response.body;
+	            } else {
+	                $scope.error = response.body;
+	            }
+	        }).catch(function (err) {
+	            console.log(err);
+	            $scope.error = 'Server error';
+	        });
+	    };
+	    $scope.resolve_report = function (id) {
+	        $http({
+	            method: 'POST',
+	            url: '/api/solve-report',
+	            data: {
+	                report: id
+	            }
+	        }).then(function (response) {
+	            response = response.data;
+	            if (response.status == 0) {
+	                $scope.reports.list = null;
+	            } else {
+	                $scope.error = response.body;
 	            }
 	        }).catch(function (err) {
 	            console.log(err);
@@ -31964,22 +32020,6 @@
 	            data: '='
 	        },
 	        templateUrl: '/src/scripts/ng/views/directives/certificate.html'
-	    };
-	};
-
-/***/ },
-/* 139 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	exports.default = function ($scope, $uibModalInstance) {
-	    $scope.close = function () {
-	        $uibModalInstance.close();
 	    };
 	};
 
