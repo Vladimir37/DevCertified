@@ -7340,6 +7340,16 @@ th {
   font-size: 18px;
   font-weight: bold;
 }
+.quest_code {
+  color: black;
+  background: white;
+  white-space: pre-wrap;
+  border: 1px solid black;
+  margin: 10px;
+  padding: 10px;
+  line-height: 1em;
+  font-family: monospace;
+}
 .quest_support {
   text-align: right;
 }

@@ -6,7 +6,7 @@
     <article class="quest_time">{{ times.formatted_time }}</article>
     <div class="clearfix"></div>
     <article class="quest_text">{{ quest_data.text }}</article>
-    <article class="quest_code" ng-if="code">{{ quest_data.code }}</article>
+    <article class="quest_code" ng-if="quest_data.code">{{ quest_data.code }}</article>
     <article class="quest_answers">
         <label>
             <input type="radio" value="1" ng-model="selected_answer" name="answer">
