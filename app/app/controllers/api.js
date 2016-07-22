@@ -39,6 +39,9 @@ class API {
             _.extend(user_data, additional_user_data);
             return Models.users.create(user_data);
         }).then(function (user) {
+            if (!user.mail) {
+                return false;
+            }
             Mail.registration(user);
             Mail.confirm(user);
             return res.send(Additional.serialize(0));
