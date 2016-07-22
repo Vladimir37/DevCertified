@@ -98,6 +98,11 @@ export default function ($stateProvider, $urlRouterProvider) {
             all: null,
             certificate: null
         }
+    }).state('activation', {
+        url: '/activation/:code',
+        controller: 'activation'
+    }).state('success_activation', {
+        templateUrl: '/src/scripts/ng/views/pages/success_activation.html'
     }).state('otherwise', {
         url: '*path',
         onEnter: function($state) {

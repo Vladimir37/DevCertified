@@ -6,6 +6,7 @@ var userSchema = new mongoose.Schema({
     mail: String,
     pass: String,
     status: Number,
+    code: Number,
     success_tests: Array
 });
 

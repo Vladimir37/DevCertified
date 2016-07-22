@@ -17,6 +17,7 @@ import question from './controllers/question';
 import finish from './controllers/finish';
 import footer from './controllers/footer';
 import report from './controllers/modals/report';
+import activation from './controllers/activation';
 
 import auth_check from './services/auth';
 import admin_check from './services/admin';
@@ -43,6 +44,7 @@ app.controller('start', start);
 app.controller('question', question);
 app.controller('finish', finish);
 app.controller('footer', footer);
+app.controller('activation', activation);
 
 // modal controllers
 app.controller('login', login);

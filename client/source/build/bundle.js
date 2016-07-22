@@ -30722,6 +30722,10 @@
 
 	var _report2 = _interopRequireDefault(_report);
 
+	var _activation = __webpack_require__(139);
+
+	var _activation2 = _interopRequireDefault(_activation);
+
 	var _auth = __webpack_require__(130);
 
 	var _auth2 = _interopRequireDefault(_auth);
@@ -30774,6 +30778,7 @@
 	app.controller('question', _question2.default);
 	app.controller('finish', _finish2.default);
 	app.controller('footer', _footer2.default);
+	app.controller('activation', _activation2.default);
 
 	// modal controllers
 	app.controller('login', _login2.default);
@@ -30906,6 +30911,11 @@
 	            all: null,
 	            certificate: null
 	        }
+	    }).state('activation', {
+	        url: '/activation/:code',
+	        controller: 'activation'
+	    }).state('success_activation', {
+	        templateUrl: '/src/scripts/ng/views/pages/success_activation.html'
 	    }).state('otherwise', {
 	        url: '*path',
 	        onEnter: function onEnter($state) {
@@ -32021,6 +32031,39 @@
 	        },
 	        templateUrl: '/src/scripts/ng/views/directives/certificate.html'
 	    };
+	};
+
+/***/ },
+/* 139 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	exports.default = function ($scope, $stateParams, $state, $http) {
+	    var code = $stateParams.code;
+	    if (!code) {
+	        $state.go('otherwise');
+	    }
+	    $http({
+	        method: 'GET',
+	        url: '/api/confirm',
+	        params: { code: code }
+	    }).then(function (response) {
+	        response = response.data;
+	        console.log(response);
+	        if (response.status == 0) {
+	            $state.go('success_activation');
+	        } else {
+	            $state.go('otherwise');
+	        }
+	    }).catch(function (err) {
+	        console.log(err);
+	        $state.go('otherwise');
+	    });
 	};
 
 /***/ }

@@ -5,10 +5,13 @@ var _ = require('underscore');
 var formidable = require('formidable');
 var md5 = require('md5');
 var fs = require('fs');
+var random = require('random-token');
 
 var Models = require('../models/main');
 var Additional = new (require('./additional'))();
 var Mail = new (require('./mail'))();
+
+var generate_code = random.create('0123456789');
 
 class API {
     // Auth and registration
@@ -17,7 +20,8 @@ class API {
             mail: req.body.mail,
             pass: md5(req.body.password),
             first: req.body.first,
-            last: req.body.last
+            last: req.body.last,
+            code: generate_code(12)
         };
         if (!Additional.checkArguments(user_data)) {
             return res.send(Additional.serialize(2, 'Required fields are empty'));
@@ -89,14 +93,14 @@ class API {
             return res.send(Additional.serialize(2, 'No code'));
         }
         Models.users.findOne({
-            _id: confirmation_code,
+            code: confirmation_code,
             status: 0
         }).then(function (user) {
             if (!user) {
                 return res.send(Additional.serialize(2, 'Incorrect code'));
             }
             return Models.users.update({
-                _id: confirmation_code,
+                code: confirmation_code,
                 status: 0
             }, {
                 status: 1
