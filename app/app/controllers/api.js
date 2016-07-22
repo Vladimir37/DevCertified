@@ -47,7 +47,6 @@ class API {
             return res.send(Additional.serialize(0));
         }).catch(function (err) {
             console.log(err);
-            // TODO Error - user exists
             return res.send(Additional.serialize(1, 'Server error'));
         });
     }

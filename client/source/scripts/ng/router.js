@@ -51,6 +51,7 @@ export default function ($stateProvider, $urlRouterProvider) {
         templateUrl: '/src/scripts/ng/views/pages/certificate.html',
         controller: 'certificate',
         params: {
+            cert: null,
             title: null,
             name: null,
             date: null

@@ -46,7 +46,7 @@
         <uib-tab index="4" heading="Certificates">
             <article class="cabinet_tab">
                 <ul class="certificates_link">
-                    <li ng-repeat="cert in certificates"><a ui-sref="certificate({id: cert._id})">{{ cert.title }}</a></li>
+                    <li ng-repeat="cert in certificates"><a ui-sref="certificate({cert: cert})">{{ cert.title }}</a></li>
                 </ul>
             </article>
         </uib-tab>

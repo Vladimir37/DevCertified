@@ -7301,7 +7301,7 @@ th {
 .cabinet .cert-btn {
   float: right;
 }
-.cabinet .cabinet_tab {
+.cabinet_tab {
   padding: 10px;
   padding-top: 15px;
 }
@@ -7311,6 +7311,7 @@ th {
 .cabinet .certificates_link li a {
   font-size: 18px;
   color: #2C3E50;
+  cursor: pointer;
 }
 .admin .report {
   border: 1px solid black;
@@ -7379,8 +7380,14 @@ th {
   text-align: center;
   padding: 15px;
 }
-#cert_canvas {
+.certificate #cert_canvas {
   background: #b5b5b5;
+}
+.certificate .address {
+  width: 60%;
+  text-align: center;
+  margin: auto;
+  margin-top: 15px;
 }
 .clearfix {
   clear: both;

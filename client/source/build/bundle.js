@@ -30864,6 +30864,7 @@
 	        templateUrl: '/src/scripts/ng/views/pages/certificate.html',
 	        controller: 'certificate',
 	        params: {
+	            cert: null,
 	            title: null,
 	            name: null,
 	            date: null
@@ -31428,14 +31429,19 @@
 /* 123 */
 /***/ function(module, exports) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
 
 	exports.default = function ($scope, $stateParams) {
-	    $scope.certificate = $stateParams;
+	    $scope.certificate = $stateParams.cert || $stateParams;
+	    $scope.addr = window.location.hostname + '/#/certificate/' + $scope.certificate._id;
+
+	    $scope.select_text = function ($event) {
+	        $event.target.select();
+	    };
 	};
 
 /***/ },

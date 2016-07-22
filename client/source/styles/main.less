@@ -68,7 +68,7 @@ th {
     .cert-btn {
         float: right;
     }
-    .cabinet_tab {
+    &_tab {
         padding: 10px;
         padding-top: 15px;
     }
@@ -78,6 +78,7 @@ th {
     .certificates_link li a {
         font-size: 18px;
         color: @main;
+        cursor: pointer;
     }
 }
 
@@ -155,8 +156,16 @@ th {
     text-align: center;
     padding: 15px;
 }
-#cert_canvas {
-    background: @back;
+.certificate {
+    #cert_canvas {
+        background: @back;
+    }
+    .address {
+        width: 60%;
+        text-align: center;
+        margin: auto;
+        margin-top: 15px;
+    }
 }
 
 .clearfix {
