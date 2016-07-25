@@ -30722,43 +30722,43 @@
 
 	var _report2 = _interopRequireDefault(_report);
 
-	var _activation = __webpack_require__(139);
+	var _activation = __webpack_require__(130);
 
 	var _activation2 = _interopRequireDefault(_activation);
 
-	var _auth = __webpack_require__(130);
+	var _auth = __webpack_require__(131);
 
 	var _auth2 = _interopRequireDefault(_auth);
 
-	var _admin3 = __webpack_require__(131);
+	var _admin3 = __webpack_require__(132);
 
 	var _admin4 = _interopRequireDefault(_admin3);
 
-	var _test_check = __webpack_require__(132);
+	var _test_check = __webpack_require__(133);
 
 	var _test_check2 = _interopRequireDefault(_test_check);
 
-	var _user_check = __webpack_require__(133);
+	var _user_check = __webpack_require__(134);
 
 	var _user_check2 = _interopRequireDefault(_user_check);
 
-	var _cert_check = __webpack_require__(134);
+	var _cert_check = __webpack_require__(135);
 
 	var _cert_check2 = _interopRequireDefault(_cert_check);
 
-	var _start_check = __webpack_require__(135);
+	var _start_check = __webpack_require__(136);
 
 	var _start_check2 = _interopRequireDefault(_start_check);
 
-	var _navbar = __webpack_require__(136);
+	var _navbar = __webpack_require__(137);
 
 	var _navbar2 = _interopRequireDefault(_navbar);
 
-	var _test_card = __webpack_require__(137);
+	var _test_card = __webpack_require__(138);
 
 	var _test_card2 = _interopRequireDefault(_test_card);
 
-	var _certificate3 = __webpack_require__(138);
+	var _certificate3 = __webpack_require__(139);
 
 	var _certificate4 = _interopRequireDefault(_certificate3);
 
@@ -30864,6 +30864,7 @@
 	        templateUrl: '/src/scripts/ng/views/pages/certificate.html',
 	        controller: 'certificate',
 	        params: {
+	            _id: null,
 	            cert: null,
 	            title: null,
 	            name: null,
@@ -31782,6 +31783,39 @@
 	    value: true
 	});
 
+	exports.default = function ($scope, $stateParams, $state, $http) {
+	    var code = $stateParams.code;
+	    if (!code) {
+	        $state.go('otherwise');
+	    }
+	    $http({
+	        method: 'GET',
+	        url: '/api/confirm',
+	        params: { code: code }
+	    }).then(function (response) {
+	        response = response.data;
+	        console.log(response);
+	        if (response.status == 0) {
+	            $state.go('success_activation');
+	        } else {
+	            $state.go('otherwise');
+	        }
+	    }).catch(function (err) {
+	        console.log(err);
+	        $state.go('otherwise');
+	    });
+	};
+
+/***/ },
+/* 131 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
 	exports.default = function ($http) {
 	    return function ($state, component) {
 	        return $http({
@@ -31801,7 +31835,7 @@
 	};
 
 /***/ },
-/* 131 */
+/* 132 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31829,7 +31863,7 @@
 	};
 
 /***/ },
-/* 132 */
+/* 133 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31863,7 +31897,7 @@
 	};
 
 /***/ },
-/* 133 */
+/* 134 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31891,7 +31925,7 @@
 	};
 
 /***/ },
-/* 134 */
+/* 135 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31925,7 +31959,7 @@
 	};
 
 /***/ },
-/* 135 */
+/* 136 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31973,7 +32007,7 @@
 	};
 
 /***/ },
-/* 136 */
+/* 137 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31999,7 +32033,7 @@
 	};
 
 /***/ },
-/* 137 */
+/* 138 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -32019,7 +32053,7 @@
 	};
 
 /***/ },
-/* 138 */
+/* 139 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -32037,39 +32071,6 @@
 	        },
 	        templateUrl: '/src/scripts/ng/views/directives/certificate.html'
 	    };
-	};
-
-/***/ },
-/* 139 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	exports.default = function ($scope, $stateParams, $state, $http) {
-	    var code = $stateParams.code;
-	    if (!code) {
-	        $state.go('otherwise');
-	    }
-	    $http({
-	        method: 'GET',
-	        url: '/api/confirm',
-	        params: { code: code }
-	    }).then(function (response) {
-	        response = response.data;
-	        console.log(response);
-	        if (response.status == 0) {
-	            $state.go('success_activation');
-	        } else {
-	            $state.go('otherwise');
-	        }
-	    }).catch(function (err) {
-	        console.log(err);
-	        $state.go('otherwise');
-	    });
 	};
 
 /***/ }
