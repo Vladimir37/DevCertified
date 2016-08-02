@@ -10,6 +10,7 @@ var random = require('random-token');
 var Models = require('../models/main');
 var Additional = new (require('./additional'))();
 var Mail = new (require('./mail'))();
+var Orders = new (require('./orders'))();
 
 var generate_code = random.create('0123456789');
 
@@ -723,6 +724,55 @@ class API {
             user: user._id
         }).then(function (solutions) {
             return res.send(Additional.serialize(0, solutions));
+        }).catch(function (err) {
+            return res.send(Additional.serialize(1, 'Server error'));
+        });
+    }
+
+    createOrder(req, res, next) {
+        var user = req.user;
+        var order_data = {
+            certificate: req.body.certificate,
+            mail: req.body.mail,
+        };
+        var addr_data = {
+            line1: req.body.line1,
+            city: req.body.city,
+            state: req.body.state,
+            postal_code: req.body.postal,
+            country_code: req.body.country
+        }
+        var telephone_data = {
+            country: req.body.t_country,
+            national: req.body.t_national
+        }
+        if (
+            !Additional.checkArguments(order_data) ||
+            !Additional.checkArguments(telephone_data) ||
+            !Additional.checkArguments(addr_data) ||
+            !user
+        ) {
+            return res.send(Additional.serialize(2, 'Required fields are empty'));
+        }
+        order_data.addr = addr_data;
+        order_data.telephone = telephone_data;
+        order_data.user = user._id;
+        Orders.create(order_data, user).then(function () {
+            return res.send(Additional.serialize(0));
+        }).catch(function (err) {
+            return res.send(Additional.serialize(1, 'Server error'));
+        });
+    }
+
+    getOrders(req, res, next) {
+        var user = req.user;
+        if (!user) {
+            return res.send(Additional.serialize(3, 'You must be a user'));
+        }
+        Models.orders.find({
+            user: user._id
+        }).then(function (orders) {
+            return res.send(Additional.serialize(0, orders));
         }).catch(function (err) {
             return res.send(Additional.serialize(1, 'Server error'));
         });

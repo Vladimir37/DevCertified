@@ -16,7 +16,7 @@ class Orders {
     }
 
     create(data, user) {
-        Models.orders.create({
+        return Models.orders.create({
             paid: false,
             certificate: data.certificate,
             mail: data.mail,
@@ -28,12 +28,11 @@ class Orders {
                 state: data.addr.state,
                 postal_code: data.addr.postal,
                 country_code: data.addr.country
+            },
+            telephone: {
+                contry: data.telephone.country,
+                national: data.telephone.national
             }
-        }).then(function () {
-            return true;
-        }).catch(function (err) {
-            console.log(err);
-            throw err;
         });
     }
 
