@@ -510,6 +510,8 @@ class API {
             }
             else {
                 return Models.solutions.update({
+                    _id: answer_data.solution_num
+                }, {
                     answers: current_answers
                 });
             }
@@ -521,10 +523,11 @@ class API {
                 return res.send(Additional.serialize(0));
             }
         }).then(function (result) {
-            if (result) {
+            if (!result.socket) {
                 return res.send(Additional.serialize(0, result));
             }
         }).catch(function (err) {
+            console.log(err);
             return res.send(Additional.serialize(1, 'Server error'));
         });
     }

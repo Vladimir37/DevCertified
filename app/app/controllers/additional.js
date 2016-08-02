@@ -90,7 +90,7 @@ class Additional {
                     certify = true
                 }
                 return Models.solutions.update({
-                    result: true_answers_col
+                    result: true_answers_col,
                     certify
                 });
             }).then(function () {
