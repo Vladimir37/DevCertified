@@ -44,8 +44,8 @@ class Orders {
             var create_invoice_json = {
                 "merchant_info": {
                     "email": "PPX.DevNet-facilitator@gmail.com",
-                    "first_name": "Dennis",
-                    "last_name": "Doctor",
+                    "first_name": "Not applicable",
+                    "last_name": "Not applicable",
                     "business_name": "DevCertified",
                     "phone": {
                         "country_code": "001",
@@ -67,7 +67,7 @@ class Orders {
                     "quantity": 1,
                     "unit_price": {
                         "currency": "USD",
-                        "value": 100
+                        "value": 90
                     }
                 }],
                 "note": "Medical Invoice 16 Jul, 2013 PST",
@@ -93,7 +93,7 @@ class Orders {
                 "tax_inclusive": false,
                 "total_amount": {
                     "currency": "USD",
-                    "value": "100.00"
+                    "value": "90.00"
                 }
             };
             this.paypal.invoice.create(create_invoice_json, function (error, invoice) {

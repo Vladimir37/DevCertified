@@ -635,6 +635,7 @@ class API {
             return res.send(Additional.serialize(2, 'Required fields are empty'));
         }
         var all_tests = {
+            all: {},
             received: [],
             unreceived: [],
             available: [],
@@ -645,6 +646,7 @@ class API {
             active: true
         }).then(function (tests) {
             tests.forEach(function (test) {
+                all_tests.all[test._id] = test.title;
                 if (user.success_tests.indexOf(test._id) > -1) {
                     all_tests.received.push(test);
                 }
@@ -707,6 +709,17 @@ class API {
             type: type
         }).then(function (reports) {
             return res.send(Additional.serialize(0, reports));
+        }).catch(function (err) {
+            return res.send(Additional.serialize(1, 'Server error'));
+        });
+    }
+
+    getSolutions(req, res, next) {
+        var user = req.user;
+        Models.solutions.find({
+            user: user._id
+        }).then(function (solutions) {
+            return res.send(Additional.serialize(0, solutions));
         }).catch(function (err) {
             return res.send(Additional.serialize(1, 'Server error'));
         });

@@ -18,6 +18,7 @@ router.get('/available-test', Middlewares.onlyUser, API.availableTest);
 router.get('/get-category-tests', Middlewares.onlyUser, API.getCategoryTests);
 router.get('/get-certificates', Middlewares.onlyUser, API.getCertificates);
 router.get('/get-reports', Middlewares.onlyAdmin, API.getReports);
+router.get('/get-solutions', Middlewares.onlyUser, API.getSolutions);
 
 router.post('/registration', API.registration);
 router.post('/login', API.login);

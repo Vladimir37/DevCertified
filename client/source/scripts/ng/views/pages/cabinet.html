@@ -50,5 +50,26 @@
                 </ul>
             </article>
         </uib-tab>
+        <uib-tab index="5" heading="Attempts">
+            <table class="table">
+                <thead class="thead-default">
+                    <tr>
+                        <th>#</th>
+                        <th>Start</th>
+                        <th>Test</th>
+                        <th>Answers</th>
+                        <th>Result</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="(i, solution) in solutions">
+                        <th>{{ i + 1 }}</th>
+                        <td>{{ solution.start | date }}</td>
+                        <td>{{ tests.all[solution.test] }}</td>
+                        <td>{{ solution.result || 0 }}/{{ solution.questions.length }}</td>
+                        <td>{{ solution.certify }}</td>
+                    </tr>
+                    <tr>
+        </uib-tab>
     </uib-tabset>
 </section>
