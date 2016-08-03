@@ -20,7 +20,7 @@ var models = {
     reports,
     users,
     certificates: certificates.certificate,
-    order: certificates.order,
+    orders: certificates.order,
     tests: tests.test,
     questions: tests.question,
     solutions: tests.solution

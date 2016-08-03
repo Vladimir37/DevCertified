@@ -10,6 +10,8 @@ var certificateModel = mongoose.model('Certificate', certificateSchema);
 
 var orderSchema = new mongoose.Schema({
     paid: Boolean,
+    status: Number,
+    date: Date,
     certificate: String,
     mail: String,
     first: String,

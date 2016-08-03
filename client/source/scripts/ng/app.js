@@ -17,6 +17,7 @@ import question from './controllers/question';
 import finish from './controllers/finish';
 import footer from './controllers/footer';
 import report from './controllers/modals/report';
+import order from './controllers/modals/order';
 import activation from './controllers/activation';
 
 import auth_check from './services/auth';
@@ -51,6 +52,7 @@ app.controller('login', login);
 app.controller('registration', registration);
 app.controller('info', info);
 app.controller('report', report);
+app.controller('order', order);
 
 // directives
 app.directive('navbar', navbar);

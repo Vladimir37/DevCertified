@@ -30722,43 +30722,47 @@
 
 	var _report2 = _interopRequireDefault(_report);
 
-	var _activation = __webpack_require__(130);
+	var _order = __webpack_require__(130);
+
+	var _order2 = _interopRequireDefault(_order);
+
+	var _activation = __webpack_require__(131);
 
 	var _activation2 = _interopRequireDefault(_activation);
 
-	var _auth = __webpack_require__(131);
+	var _auth = __webpack_require__(132);
 
 	var _auth2 = _interopRequireDefault(_auth);
 
-	var _admin3 = __webpack_require__(132);
+	var _admin3 = __webpack_require__(133);
 
 	var _admin4 = _interopRequireDefault(_admin3);
 
-	var _test_check = __webpack_require__(133);
+	var _test_check = __webpack_require__(134);
 
 	var _test_check2 = _interopRequireDefault(_test_check);
 
-	var _user_check = __webpack_require__(134);
+	var _user_check = __webpack_require__(135);
 
 	var _user_check2 = _interopRequireDefault(_user_check);
 
-	var _cert_check = __webpack_require__(135);
+	var _cert_check = __webpack_require__(136);
 
 	var _cert_check2 = _interopRequireDefault(_cert_check);
 
-	var _start_check = __webpack_require__(136);
+	var _start_check = __webpack_require__(137);
 
 	var _start_check2 = _interopRequireDefault(_start_check);
 
-	var _navbar = __webpack_require__(137);
+	var _navbar = __webpack_require__(138);
 
 	var _navbar2 = _interopRequireDefault(_navbar);
 
-	var _test_card = __webpack_require__(138);
+	var _test_card = __webpack_require__(139);
 
 	var _test_card2 = _interopRequireDefault(_test_card);
 
-	var _certificate3 = __webpack_require__(139);
+	var _certificate3 = __webpack_require__(140);
 
 	var _certificate4 = _interopRequireDefault(_certificate3);
 
@@ -30785,6 +30789,7 @@
 	app.controller('registration', _registration2.default);
 	app.controller('info', _info2.default);
 	app.controller('report', _report2.default);
+	app.controller('order', _order2.default);
 
 	// directives
 	app.directive('navbar', _navbar2.default);
@@ -31389,7 +31394,7 @@
 	    value: true
 	});
 
-	exports.default = function ($scope, $http) {
+	exports.default = function ($scope, $uibModal, $http) {
 	    $scope.tests = {
 	        all: {},
 	        received: [],
@@ -31398,6 +31403,22 @@
 	        unavailable: []
 	    };
 	    $scope.certificates = [];
+	    $scope.order_data = {};
+	    $scope.statuses = ['Created', 'Paid', 'Sended'];
+
+	    $scope.order_open = function () {
+	        $uibModal.open({
+	            animation: true,
+	            templateUrl: '/src/scripts/ng/views/modals/order.html',
+	            controller: 'order',
+	            size: '',
+	            resolve: {
+	                user: function user() {
+	                    return $scope.user;
+	                }
+	            }
+	        });
+	    };
 
 	    $scope.getData = function () {
 	        var requests = [];
@@ -31413,12 +31434,22 @@
 	            method: 'GET',
 	            url: '/api/get-solutions'
 	        }));
+	        requests.push($http({
+	            method: 'GET',
+	            url: '/api/get-orders'
+	        }));
+	        requests.push($http({
+	            method: 'GET',
+	            url: '/api/check'
+	        }));
 
 	        Promise.all(requests).then(function (response) {
-	            if (response[0].data.status == 0 && response[1].data.status == 0 && response[2].data.status == 0) {
+	            if (response[0].data.status == 0 && response[1].data.status == 0 && response[2].data.status == 0 && response[3].data.status == 0 && response[4].data.status == 0) {
 	                $scope.tests = response[0].data.body;
 	                $scope.certificates = response[1].data.body;
 	                $scope.solutions = response[2].data.body;
+	                $scope.orders = response[3].data.body;
+	                $scope.user = response[4].data.body;
 	                $scope.$apply();
 	            } else {
 	                $scope.error = 'Server error';
@@ -31783,6 +31814,24 @@
 /* 130 */
 /***/ function(module, exports) {
 
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	exports.default = function ($scope, $http, $uibModalInstance, user) {
+	    $scope.user = user;
+
+	    $scope.close = function () {
+	        $uibModalInstance.close();
+	    };
+	};
+
+/***/ },
+/* 131 */
+/***/ function(module, exports) {
+
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
@@ -31813,7 +31862,7 @@
 	};
 
 /***/ },
-/* 131 */
+/* 132 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31841,7 +31890,7 @@
 	};
 
 /***/ },
-/* 132 */
+/* 133 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31869,7 +31918,7 @@
 	};
 
 /***/ },
-/* 133 */
+/* 134 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31903,7 +31952,7 @@
 	};
 
 /***/ },
-/* 134 */
+/* 135 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31931,7 +31980,7 @@
 	};
 
 /***/ },
-/* 135 */
+/* 136 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31965,7 +32014,7 @@
 	};
 
 /***/ },
-/* 136 */
+/* 137 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -32013,7 +32062,7 @@
 	};
 
 /***/ },
-/* 137 */
+/* 138 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -32039,7 +32088,7 @@
 	};
 
 /***/ },
-/* 138 */
+/* 139 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -32059,7 +32108,7 @@
 	};
 
 /***/ },
-/* 139 */
+/* 140 */
 /***/ function(module, exports) {
 
 	'use strict';

@@ -18,6 +18,8 @@ class Orders {
     create(data, user) {
         return Models.orders.create({
             paid: false,
+            status: 0,
+            date: new Date(),
             certificate: data.certificate,
             mail: data.mail,
             first: user.first,
