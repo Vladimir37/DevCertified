@@ -6,7 +6,11 @@
         {{ error }}
     </div>
     <form name="order_form">
-        <h3>Address</h3>
+        <h4>Certificate</h4>
+        <select ng-model="order_data.certificate" class="form-control" required>
+            <option ng-repeat="cert in certs" value="cert._id">{{ cert.title }}</option>
+        </select>
+        <h4>Address</h4>
         <input type="text" class="form-control" placeholder="Country code" ng-model="order_data.country" required>
         <br>
         <input type="text" class="form-control" placeholder="Postal code" ng-model="order_data.postal" required>
@@ -16,19 +20,28 @@
         <input type="text" class="form-control" placeholder="City" ng-model="order_data.city" required>
         <br>
         <input type="text" class="form-control" placeholder="Address" ng-model="order_data.line1" required>
-        <h3>Telephone</h3>
-        <input type="text" class="form-control" placeholder="Country" ng-model="order_data.t_contry" required>
+        <h4>Telephone</h4>
+        <input type="text" class="form-control" placeholder="Country" ng-model="order_data.t_country" required>
         <br>
         <input type="text" class="form-control" placeholder="National" ng-model="order_data.t_national" required>
-        <h3>Personal</h3>
-        <input type="text" class="form-control" placeholder="First name" ng-model="user.first" disabled>
+        <h4>Personal</h4>
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="First name" ng-model="user.first" disabled>
+            <div class="input-group-addon">First name</div>
+        </div>
         <br>
-        <input type="text" class="form-control" placeholder="Last name" ng-model="user.last" disabled>
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Last name" ng-model="user.last" disabled>
+            <div class="input-group-addon">Last name</div>
+        </div>
         <br>
-        <input type="text" class="form-control" placeholder="Mail" ng-model="user.mail" disabled>
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Mail" ng-model="user.mail" disabled>
+            <div class="input-group-addon">E-Mail</div>
+        </div>
     </form>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-click="send_log()">Login</button>
+    <button class="btn btn-primary" type="button" ng-click="send_order()">Create order</button>
     <button class="btn btn-default" type="button" ng-click="close()">Close</button>
 </div>

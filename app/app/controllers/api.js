@@ -733,7 +733,7 @@ class API {
         var user = req.user;
         var order_data = {
             certificate: req.body.certificate,
-            mail: req.body.mail,
+            test: req.body.test
         };
         var addr_data = {
             line1: req.body.line1,
@@ -757,9 +757,11 @@ class API {
         order_data.addr = addr_data;
         order_data.telephone = telephone_data;
         order_data.user = user._id;
+        order_data.mail = user.mail;
         Orders.create(order_data, user).then(function () {
             return res.send(Additional.serialize(0));
         }).catch(function (err) {
+            console.log(err);
             return res.send(Additional.serialize(1, 'Server error'));
         });
     }

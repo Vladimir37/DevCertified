@@ -17,6 +17,7 @@ var orderSchema = new mongoose.Schema({
     first: String,
     last: String,
     user: String,
+    test: String,
     address: {
         line1: String,
         city: String,

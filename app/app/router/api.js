@@ -35,5 +35,6 @@ router.post('/delete-quest', Middlewares.onlyAdmin, API.deleteQuestion);
 router.post('/start-testing', Middlewares.onlyUser, API.startTesting);
 router.post('/take-answer', Middlewares.onlyUser, API.takeAnswer);
 router.post('/get-question', Middlewares.onlyUser, API.getQuestion);
+router.post('/create-order', Middlewares.onlyUser, API.createOrder);
 
 module.exports = router;

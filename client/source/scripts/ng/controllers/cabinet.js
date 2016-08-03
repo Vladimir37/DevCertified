@@ -7,7 +7,6 @@ export default function($scope, $uibModal, $http) {
         unavailable: []
     };
     $scope.certificates = [];
-    $scope.order_data = {};
     $scope.statuses = ['Created', 'Paid', 'Sended'];
 
     $scope.order_open = function () {
@@ -19,6 +18,9 @@ export default function($scope, $uibModal, $http) {
             resolve: {
                 user() {
                     return $scope.user;
+                },
+                certs() {
+                    return $scope.certificates;
                 }
             }
         });

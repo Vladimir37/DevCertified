@@ -95,7 +95,7 @@
                         <td ng-if="order.paid"><img src="/src/images/main/sp_t.png" alt="sp"></td>
                         <td ng-if="!order.paid"><img src="/src/images/main/sp_f.png" alt="sp"></td>
                         <td>{{ statuses[order.status] }}</td>
-                        <td>{{ order.first_name }} {{ order.last_name }}</td>
+                        <td>{{ order.first }} {{ order.last }}</td>
                         <td>{{ order.address.country_code }} {{ order.address.postal_code }} 
                             {{ order.address.state }} {{ order.address.city }} {{ order.address.line1 }}</td>
                         <td>{{ order.telephone.country }} {{ order.telephone.national }}</td>

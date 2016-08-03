@@ -24,6 +24,8 @@ class Orders {
             mail: data.mail,
             first: user.first,
             last: user.last,
+            user: user._id,
+            test: data.test,
             address: {
                 line1: data.addr.line1,
                 city: data.addr.city,
