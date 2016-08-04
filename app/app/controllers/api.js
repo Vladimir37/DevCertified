@@ -779,6 +779,16 @@ class API {
             return res.send(Additional.serialize(1, 'Server error'));
         });
     }
+
+    getInvoice(req, res, next) {
+        var order = req.body.order;
+        Orders.invoice(order).then(function (result) {
+            console.log(result);
+        }).catch(function (err) {
+            console.log(err);
+            return res.send(Additional.serialize(1, 'Server error'));
+        });
+    }
 }
 
 module.exports = API;

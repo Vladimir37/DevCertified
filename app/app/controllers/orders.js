@@ -30,8 +30,8 @@ class Orders {
                 line1: data.addr.line1,
                 city: data.addr.city,
                 state: data.addr.state,
-                postal_code: data.addr.postal,
-                country_code: data.addr.country
+                postal_code: data.addr.postal_code,
+                country_code: data.addr.country_code
             },
             telephone: {
                 country: data.telephone.country,
@@ -99,13 +99,16 @@ class Orders {
                     "value": "90.00"
                 }
             };
-            this.paypal.invoice.create(create_invoice_json, function (error, invoice) {
-                if (error) {
-                    throw error;
-                } else {
-                    console.log("Create Invoice Response");
-                    console.log(invoice);
-                }
+            return new Promise(function (resolve, reject) {
+                this.paypal.invoice.create(create_invoice_json, function (error, invoice) {
+                    if (error) {
+                        reject(error);
+                    } else {
+                        console.log("Create Invoice Response");
+                        console.log(invoice);
+                        resolve();
+                    }
+                });
             });
         });
     }

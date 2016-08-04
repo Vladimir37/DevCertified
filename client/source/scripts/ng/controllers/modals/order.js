@@ -1,4 +1,4 @@
-export default function($scope, $http, $uibModalInstance, user, certs) {
+export default function($scope, $http, $uibModalInstance, $state, user, certs) {
     $scope.user = user;
     $scope.certs = certs;
     $scope.order_data = {};
@@ -22,7 +22,8 @@ export default function($scope, $http, $uibModalInstance, user, certs) {
         }).then(function (response) {
             response = response.data;
             if (response.status == 0) {
-                console.log(response);
+                $uibModalInstance.close();
+                $state.reload();
             }
             else {
                 $scope.error = response.body;
