@@ -34,7 +34,7 @@ class Orders {
                 country_code: data.addr.country
             },
             telephone: {
-                contry: data.telephone.country,
+                country: data.telephone.country,
                 national: data.telephone.national
             }
         });

@@ -26,7 +26,7 @@ var orderSchema = new mongoose.Schema({
         country_code: String
     },
     telephone: {
-        contry: String,
+        country: String,
         national: String
     }
 });

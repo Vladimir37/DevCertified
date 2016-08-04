@@ -31834,6 +31834,11 @@
 	            return false;
 	        }
 	        $scope.error = null;
+	        certs.forEach(function (cert) {
+	            if (cert._id == $scope.order_data.certificate) {
+	                $scope.order_data.test = cert.title;
+	            }
+	        });
 	        $http({
 	            method: 'POST',
 	            url: '/api/create-order',

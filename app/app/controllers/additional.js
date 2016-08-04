@@ -90,6 +90,8 @@ class Additional {
                     certify = true
                 }
                 return Models.solutions.update({
+                    _id: solution._id
+                }, {
                     result: true_answers_col,
                     certify
                 });

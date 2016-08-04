@@ -90,7 +90,7 @@
                 <tbody>
                     <tr ng-repeat="(i, order) in orders">
                         <th>{{ i + 1 }}</th>
-                        <td>{{ tests.all[order.test] }}</td>
+                        <td>{{ order.test }}</td>
                         <td>{{ order.date | date }}</td>
                         <td ng-if="order.paid"><img src="/src/images/main/sp_t.png" alt="sp"></td>
                         <td ng-if="!order.paid"><img src="/src/images/main/sp_f.png" alt="sp"></td>
