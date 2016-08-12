@@ -12,7 +12,7 @@ class Mail {
     constructor() {
         this.letter_files = ['certify', 'pass_change', 'registration', 'reminder', 'confirm'];
         this.letter_files.forEach((subject) => {
-            fs.readFile('client/templates/' + subject + '.ejs', 'utf-8', (err, tpl) => {
+            fs.readFile('client/letters/' + subject + '.ejs', 'utf-8', (err, tpl) => {
                 assert.ifError(err);
                 this[subject + '_tpl'] = tpl;
             });
