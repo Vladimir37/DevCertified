@@ -105,6 +105,9 @@ export default function ($stateProvider, $urlRouterProvider) {
         controller: 'activation'
     }).state('success_activation', {
         templateUrl: '/src/scripts/ng/views/pages/success_activation.html'
+    }).state('success_payment', {
+        url: '/success',
+        templateUrl: '/src/scripts/ng/views/pages/success_payment.html'
     }).state('otherwise', {
         url: '*path',
         onEnter: function($state) {

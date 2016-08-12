@@ -85,6 +85,7 @@
                         <th>Name</th>
                         <th>Address</th>
                         <th>Phone</th>
+                        <th>Payment</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -99,6 +100,18 @@
                         <td>{{ order.address.country_code }} {{ order.address.postal_code }} 
                             {{ order.address.state }} {{ order.address.city }} {{ order.address.line1 }}</td>
                         <td>{{ order.telephone.country }} {{ order.telephone.national }}</td>
+                        <td>
+                            <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top"> 
+                                <input type="hidden" name="cmd" value="_s-xclick"> 
+                                <input type="hidden" name="return" value="{{ notify_url + '/#/success'}}"> 
+                                <input type="hidden" name="item_name" value="Certificate"> 
+                                <input type="hidden" name="item_number" value="{{ order._id }}"> 
+                                <input type="hidden" name="rm" value="2"> 
+                                <input type="hidden" name="notify_url" value="{{ notify_url + '/api/payment_data'}}"> 
+                                <input type="hidden" name="hosted_button_id" value="GD5MESHQRXLJE"> 
+                                <button class="btn btn-primary">Pay</button>
+                            </form>
+                        </td>
                     </tr>
                 </tbody>
             </table>

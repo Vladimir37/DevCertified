@@ -780,10 +780,24 @@ class API {
         });
     }
 
-    getInvoice(req, res, next) {
-        var order = req.body.order;
-        Orders.invoice(order).then(function (result) {
-            console.log(result);
+    payment_data(req, res, next) {
+        var id = req.body.item_number;
+        Models.orders.update({
+            _id: id
+        }, {
+            payment: req.body
+        }).then(function (orders) {
+            if (req.body.payment_status == 'Completed') {
+                return Models.orders.update({
+                    _id: id
+                }, {
+                    status: 1,
+                    paid: true
+                }); 
+            }
+            return res.send(Additional.serialize(0, orders));
+        }).then(function () {
+            return res.send(Additional.serialize(0, orders));
         }).catch(function (err) {
             console.log(err);
             return res.send(Additional.serialize(1, 'Server error'));

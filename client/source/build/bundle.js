@@ -30923,6 +30923,9 @@
 	        controller: 'activation'
 	    }).state('success_activation', {
 	        templateUrl: '/src/scripts/ng/views/pages/success_activation.html'
+	    }).state('success_payment', {
+	        url: '/success',
+	        templateUrl: '/src/scripts/ng/views/pages/success_payment.html'
 	    }).state('otherwise', {
 	        url: '*path',
 	        onEnter: function onEnter($state) {
@@ -31403,7 +31406,8 @@
 	        unavailable: []
 	    };
 	    $scope.certificates = [];
-	    $scope.statuses = ['Created', 'Paid', 'Sended'];
+	    $scope.statuses = ['Created', 'Checking', 'Paid', 'Sended'];
+	    $scope.notify_url = window.location.origin;
 
 	    $scope.order_open = function () {
 	        $uibModal.open({

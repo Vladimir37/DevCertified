@@ -7,7 +7,8 @@ export default function($scope, $uibModal, $http) {
         unavailable: []
     };
     $scope.certificates = [];
-    $scope.statuses = ['Created', 'Paid', 'Sended'];
+    $scope.statuses = ['Created', 'Checking', 'Paid', 'Sended'];
+    $scope.notify_url = window.location.origin;
 
     $scope.order_open = function () {
         $uibModal.open({

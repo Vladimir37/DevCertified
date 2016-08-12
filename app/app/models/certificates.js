@@ -28,7 +28,8 @@ var orderSchema = new mongoose.Schema({
     telephone: {
         country: String,
         national: String
-    }
+    },
+    payment: Object
 });
 var orderModel = mongoose.model('Order', orderSchema);
 
