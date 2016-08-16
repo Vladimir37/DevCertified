@@ -833,8 +833,10 @@ class API {
                 confirmed: false
             });
         }).then(function (change) {
-            Mail.pass_change(change);
-            return res.send(Additional.serialize(0));
+            if (change.user) {
+                Mail.pass_change(change);
+                return res.send(Additional.serialize(0));
+            }
         }).catch(function (err) {
             console.log(err);
             return res.send(Additional.serialize(1, 'Server error'));
@@ -859,7 +861,7 @@ class API {
                 pass: change.pass
             });
         }).then(function () {
-            return Models.change.update({
+            return Models.changes.update({
                 _id: change_id
             }, {
                 confirmed: true

@@ -31511,8 +31511,7 @@
 	            if (response.status == 0) {
 	                $state.go('change_send');
 	            } else {
-	                console.log(response.body);
-	                $scope.change_error = 'Server error';
+	                $scope.change_error = response.body;
 	            }
 	        }).catch(function (err) {
 	            console.log(err);
@@ -32235,17 +32234,20 @@
 	        if (!$stateParams.code) {
 	            return $state.go('otherwise', {});
 	        }
+	        // 57b30748058bfaad2eac6905
 	        return $http({
-	            method: 'GET',
+	            method: 'POST',
 	            url: '/api/change-pass-confirm',
 	            data: {
 	                id: $stateParams.code
 	            }
 	        }).then(function (response) {
-	            if (response.data.status === 0) {
+	            response = response.data;
+	            console.log(response);
+	            if (response.status === 0) {
 	                $state.go('success_change');
 	            } else {
-	                $state.go('otherwise', response.data.body);
+	                $state.go('otherwise', response.body);
 	            }
 	        }).catch(function (err) {
 	            console.log(err);

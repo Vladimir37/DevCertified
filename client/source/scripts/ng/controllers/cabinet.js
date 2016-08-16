@@ -106,8 +106,7 @@ export default function($scope, $uibModal, $state, $http) {
                 $state.go('change_send');
             }
             else {
-                console.log(response.body);
-                $scope.change_error = 'Server error';
+                $scope.change_error = response.body;
             }
         }).catch(function (err) {
             console.log(err);
