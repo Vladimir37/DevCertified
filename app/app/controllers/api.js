@@ -780,6 +780,16 @@ class API {
         });
     }
 
+    getAllOrders(req, res, next) {
+        Models.orders.find({
+            paid: true
+        }).then(function (orders) {
+           return res.send(Additional.serialize(0, orders));
+        }).catch(function (err) {
+            return res.send(Additional.serialize(1, 'Server error'));
+        });
+    }
+
     paymentData(req, res, next) {
         var id = req.body.item_number;
         Models.orders.update({

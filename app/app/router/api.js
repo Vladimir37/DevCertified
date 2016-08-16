@@ -20,6 +20,7 @@ router.get('/get-certificates', Middlewares.onlyUser, API.getCertificates);
 router.get('/get-reports', Middlewares.onlyAdmin, API.getReports);
 router.get('/get-solutions', Middlewares.onlyUser, API.getSolutions);
 router.get('/get-orders', Middlewares.onlyUser, API.getOrders);
+router.get('/get-all-orders', Middlewares.onlyAdmin, API.getAllOrders);
 
 router.post('/registration', API.registration);
 router.post('/login', API.login);

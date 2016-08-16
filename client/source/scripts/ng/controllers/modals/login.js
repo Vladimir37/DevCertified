@@ -14,8 +14,8 @@ export default function($scope, $http, $uibModalInstance) {
             data: $scope.log_data
         }).then(function (response) {
             if (response.data.status == 0) {
-                // todo reload navbar
-                console.log($scope.$parent);
+                // // todo reload navbar
+                // console.log($scope.$parent);
                 if (response.data.body.status == 2) {
                     window.location.pathname = '/#/admin';
                     $scope.close();

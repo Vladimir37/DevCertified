@@ -2,6 +2,7 @@ export default function($scope, $http) {
     $scope.selected_data = {};
     $scope.question_data = {};
     $scope.active = {};
+    $scope.orders = {};
     $scope.allow_code = {
         create: false,
         edit: false
@@ -181,50 +182,42 @@ export default function($scope, $http) {
         });
     };
 
-    // Request for tests and questions
-    $http({
-        method: 'GET',
-        url: '/api/all-tests'
-    }).then(function (response) {
-        response = response.data;
-        if (response.status == 0) {
-            $scope.tests = response.body;
-        }
-        else {
-            $scope.error = response.body;
-        }
-    }).catch(function (err) {
-        console.log(err);
-        $scope.error = 'Server error';
-    });
-    $http({
-        method: 'GET',
-        url: '/api/all-questions'
-    }).then(function (response) {
-        response = response.data;
-        if (response.status == 0) {
-            $scope.questions = response.body;
-        }
-        else {
-            $scope.error = response.body;
-        }
-    }).catch(function (err) {
-        console.log(err);
-        $scope.error = 'Server error';
-    });
-    $http({
-        method: 'GET',
-        url: '/api/get-questions-col'
-    }).then(function (response) {
-        response = response.data;
-        if (response.status == 0) {
-            $scope.questions_cols = response.body;
-        }
-        else {
-            $scope.error = response.body;
-        }
-    }).catch(function (err) {
-        console.log(err);
-        $scope.error = 'Server error';
-    });
+    $scope.getData = function () {
+        var requests = [];
+
+        requests.push($http({
+            method: 'GET',
+            url: '/api/all-tests'
+        }));
+        requests.push($http({
+            method: 'GET',
+            url: '/api/all-questions'
+        }));
+        requests.push($http({
+            method: 'GET',
+            url: '/api/get-questions-col'
+        }));
+        requests.push($http({
+            method: 'GET',
+            url: '/api/get-all-orders'
+        }));
+
+        Promise.all(requests).then(function (data) {
+            var titles = ['tests', 'questions', 'questions_cols', 'orders'];
+            data.forEach(function(item, num) {
+                item = item.data;
+                if (item.status != 0) {
+                    $scope.error = item.body;
+                }
+                else {
+                    $scope[titles[num]] = item.body;
+                }
+            });
+        }).catch(function (err) {
+            console.log(err);
+            $scope.error = 'Server error';
+        });
+    }
+
+    $scope.getData();
 }
