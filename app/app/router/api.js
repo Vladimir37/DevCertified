@@ -36,6 +36,6 @@ router.post('/start-testing', Middlewares.onlyUser, API.startTesting);
 router.post('/take-answer', Middlewares.onlyUser, API.takeAnswer);
 router.post('/get-question', Middlewares.onlyUser, API.getQuestion);
 router.post('/create-order', Middlewares.onlyUser, API.createOrder);
-router.post('/payment_data', API.payment_data);
+router.post('/payment_data', API.paymentData);
 
 module.exports = router;

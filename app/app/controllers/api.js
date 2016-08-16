@@ -780,7 +780,7 @@ class API {
         });
     }
 
-    payment_data(req, res, next) {
+    paymentData(req, res, next) {
         var id = req.body.item_number;
         Models.orders.update({
             _id: id
@@ -801,6 +801,69 @@ class API {
         }).catch(function (err) {
             console.log(err);
             return res.send(Additional.serialize(1, 'Server error'));
+        });
+    }
+
+    changePass(req, res, next) {
+        var user = req.user;
+        var pass_data = {
+            old: req.body.old,
+            new1: req.body.new1,
+            new2: req.body.new2
+        }
+        if (!Additional.checkArguments(pass_data) || !user) {
+            return res.send(Additional.serialize(2, 'Required fields are empty'));
+        }
+        if (pass_data.new1 != pass_data.new2) {
+            return res.send(Additional.serialize(4, 'Passwords are not equal'));
+        }
+        pass_data.old_hash = md5(pass_data.old);
+        Models.users.findOne({
+            _id: user._id
+        }).then(function (user) {
+            if (!user) {
+                return res.send(Additional.serialize(3, 'You must be a user'));
+            }
+            if (user.pass != pass_data.old_hash) {
+                return res.send(Additional.serialize(5, 'Incorrect old password'));
+            }
+            return Models.changes.create({
+                user: user._id,
+                pass: md5(pass_data.new1),
+                confirmed: false
+            });
+        }).then(function (change) {
+            Mail.pass_change(change);
+            return res.send(Additional.serialize(0));
+        }).catch(function (err) {
+            console.log(err);
+            return res.send(Additional.serialize(1, 'Server error'));
+        });
+    }
+
+    changePassConfirm(req, res, next) {
+        var change_id = req.body.id;
+        if (!change_id) {
+            return res.send(Additional.serialize(2, 'Required fields are empty'));
+        }
+        Models.changes.findOne({
+            _id: change_id,
+            confirmed: false
+        }).then(function (change) {
+            if (!change) {
+                return res.send(Additional.serialize(3, 'Change not found'));
+            }
+            return Models.users.update({
+                _id: change.user
+            }, {
+                pass: change.pass
+            });
+        }).then(function () {
+            return Models.change.update({
+                _id: change_id
+            }, {
+                confirmed: true
+            });
         });
     }
 }

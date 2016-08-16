@@ -12,4 +12,15 @@ var userSchema = new mongoose.Schema({
 
 var userModel = mongoose.model('User', userSchema);
 
-module.exports = userModel;
+var changeSchema = new mongoose.Schema({
+    user: String,
+    pass: String,
+    confirmed: Boolean
+});
+
+var changeModel = mongoose.model('Change', changeSchema);
+
+module.exports = {
+    users: userModel,
+    changes: changeModel
+};
