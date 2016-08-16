@@ -1,4 +1,4 @@
-export default function($scope, $uibModal, $http) {
+export default function($scope, $uibModal, $state, $http) {
     $scope.tests = {
         all: {},
         received: [],
@@ -9,6 +9,14 @@ export default function($scope, $uibModal, $http) {
     $scope.certificates = [];
     $scope.statuses = ['Created', 'Checking', 'Paid', 'Sended'];
     $scope.notify_url = window.location.origin;
+    $scope.change_data = {
+        old: '',
+        new1: '',
+        new2: ''
+    };
+    $scope.forms = {};
+    $scope.error = null;
+    $scope.change_error = null;
 
     $scope.order_open = function () {
         $uibModal.open({
@@ -71,6 +79,39 @@ export default function($scope, $uibModal, $http) {
         }).catch(function (err) {
             $scope.error = 'Server error';
             console.log(err);
+        });
+    };
+
+    $scope.change_pass = function () {
+        if ($scope.forms.change_form.$invalid) {
+            $scope.change_error = 'Required fields are empty';
+            return false;
+        }
+        if ($scope.change_data.new1 != $scope.change_data.new2) {
+            $scope.change_error = 'Passwords are not equal';
+            return false;
+        }
+        if ($scope.change_data.new1.length < 6) {
+            $scope.change_error = 'New password too short';
+            return false;
+        }
+        $scope.change_error = null;
+        $http({
+            method: 'POST',
+            url: '/api/change-pass',
+            data: $scope.change_data
+        }).then(function (response) {
+            response = response.data;
+            if (response.status == 0) {
+                $state.go('change_send');
+            }
+            else {
+                console.log(response.body);
+                $scope.change_error = 'Server error';
+            }
+        }).catch(function (err) {
+            console.log(err);
+            $scope.error = 'Server error';
         });
     };
 

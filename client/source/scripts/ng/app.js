@@ -26,6 +26,7 @@ import test_check from './services/test_check';
 import user_check from './services/user_check';
 import cert_check from './services/cert_check';
 import start_check from './services/start_check';
+import change_check from './services/change_check';
 
 import navbar from './directives/navbar';
 import test_card from './directives/test_card';
@@ -66,5 +67,6 @@ app.service('test_check', test_check);
 app.service('user_check', user_check);
 app.service('cert_check', cert_check);
 app.service('start_check', start_check);
+app.service('change_check', change_check);
 
 app.config(Router);

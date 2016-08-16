@@ -108,6 +108,15 @@ export default function ($stateProvider, $urlRouterProvider) {
     }).state('success_payment', {
         url: '/success',
         templateUrl: '/src/scripts/ng/views/pages/success_payment.html'
+    }).state('change', {
+        url: '/change_confirm/:code',
+        controller: function ($state, $stateParams, change_check) {
+            change_check($state, $stateParams);
+        }
+    }).state('success_change', {
+        templateUrl: '/src/scripts/ng/views/pages/success_change.html'
+    }).state('change_send', {
+        templateUrl: '/src/scripts/ng/views/pages/change_send.html'
     }).state('otherwise', {
         url: '*path',
         onEnter: function($state) {

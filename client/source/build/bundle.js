@@ -30754,6 +30754,10 @@
 
 	var _start_check2 = _interopRequireDefault(_start_check);
 
+	var _change_check = __webpack_require__(141);
+
+	var _change_check2 = _interopRequireDefault(_change_check);
+
 	var _navbar = __webpack_require__(138);
 
 	var _navbar2 = _interopRequireDefault(_navbar);
@@ -30803,6 +30807,7 @@
 	app.service('user_check', _user_check2.default);
 	app.service('cert_check', _cert_check2.default);
 	app.service('start_check', _start_check2.default);
+	app.service('change_check', _change_check2.default);
 
 	app.config(_router2.default);
 
@@ -30926,6 +30931,15 @@
 	    }).state('success_payment', {
 	        url: '/success',
 	        templateUrl: '/src/scripts/ng/views/pages/success_payment.html'
+	    }).state('change', {
+	        url: '/change_confirm/:code',
+	        controller: function controller($state, $stateParams, change_check) {
+	            change_check($state, $stateParams);
+	        }
+	    }).state('success_change', {
+	        templateUrl: '/src/scripts/ng/views/pages/success_change.html'
+	    }).state('change_send', {
+	        templateUrl: '/src/scripts/ng/views/pages/change_send.html'
 	    }).state('otherwise', {
 	        url: '*path',
 	        onEnter: function onEnter($state) {
@@ -31397,7 +31411,7 @@
 	    value: true
 	});
 
-	exports.default = function ($scope, $uibModal, $http) {
+	exports.default = function ($scope, $uibModal, $state, $http) {
 	    $scope.tests = {
 	        all: {},
 	        received: [],
@@ -31408,6 +31422,14 @@
 	    $scope.certificates = [];
 	    $scope.statuses = ['Created', 'Checking', 'Paid', 'Sended'];
 	    $scope.notify_url = window.location.origin;
+	    $scope.change_data = {
+	        old: '',
+	        new1: '',
+	        new2: ''
+	    };
+	    $scope.forms = {};
+	    $scope.error = null;
+	    $scope.change_error = null;
 
 	    $scope.order_open = function () {
 	        $uibModal.open({
@@ -31463,6 +31485,38 @@
 	        }).catch(function (err) {
 	            $scope.error = 'Server error';
 	            console.log(err);
+	        });
+	    };
+
+	    $scope.change_pass = function () {
+	        if ($scope.forms.change_form.$invalid) {
+	            $scope.change_error = 'Required fields are empty';
+	            return false;
+	        }
+	        if ($scope.change_data.new1 != $scope.change_data.new2) {
+	            $scope.change_error = 'Passwords are not equal';
+	            return false;
+	        }
+	        if ($scope.change_data.new1.length < 6) {
+	            $scope.change_error = 'New password too short';
+	            return false;
+	        }
+	        $scope.change_error = null;
+	        $http({
+	            method: 'POST',
+	            url: '/api/change-pass',
+	            data: $scope.change_data
+	        }).then(function (response) {
+	            response = response.data;
+	            if (response.status == 0) {
+	                $state.go('change_send');
+	            } else {
+	                console.log(response.body);
+	                $scope.change_error = 'Server error';
+	            }
+	        }).catch(function (err) {
+	            console.log(err);
+	            $scope.error = 'Server error';
 	        });
 	    };
 
@@ -32163,6 +32217,40 @@
 	            data: '='
 	        },
 	        templateUrl: '/src/scripts/ng/views/directives/certificate.html'
+	    };
+	};
+
+/***/ },
+/* 141 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	exports.default = function ($http) {
+	    return function ($state, $stateParams) {
+	        if (!$stateParams.code) {
+	            return $state.go('otherwise', {});
+	        }
+	        return $http({
+	            method: 'GET',
+	            url: '/api/change-pass-confirm',
+	            data: {
+	                id: $stateParams.code
+	            }
+	        }).then(function (response) {
+	            if (response.data.status === 0) {
+	                $state.go('success_change');
+	            } else {
+	                $state.go('otherwise', response.data.body);
+	            }
+	        }).catch(function (err) {
+	            console.log(err);
+	            $state.go('otherwise', {});
+	        });
 	    };
 	};
 

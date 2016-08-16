@@ -864,6 +864,11 @@ class API {
             }, {
                 confirmed: true
             });
+        }).then(function () {
+            return res.send(Additional.serialize(0));
+        }).catch(function (err) {
+            console.log(err);
+            return res.send(Additional.serialize(1, 'Server error'));
         });
     }
 }

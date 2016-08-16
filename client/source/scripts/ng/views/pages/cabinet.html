@@ -101,13 +101,13 @@
                             {{ order.address.state }} {{ order.address.city }} {{ order.address.line1 }}</td>
                         <td>{{ order.telephone.country }} {{ order.telephone.national }}</td>
                         <td>
-                            <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top"> 
+                            <form action="https://www.paypal.com/cgi-bin/webscr" ng-if="!order.paid" method="post" target="_top"> 
                                 <input type="hidden" name="cmd" value="_s-xclick"> 
                                 <input type="hidden" name="return" value="{{ notify_url + '/#/success'}}"> 
                                 <input type="hidden" name="item_name" value="Certificate"> 
                                 <input type="hidden" name="item_number" value="{{ order._id }}"> 
                                 <input type="hidden" name="rm" value="2"> 
-                                <input type="hidden" name="notify_url" value="{{ notify_url + '/api/payment_data'}}"> 
+                                <input type="hidden" name="notify_url" value="{{ notify_url + '/api/payment-data'}}"> 
                                 <input type="hidden" name="hosted_button_id" value="GD5MESHQRXLJE"> 
                                 <button class="btn btn-primary">Pay</button>
                             </form>
@@ -116,6 +116,22 @@
                 </tbody>
             </table>
             <button class="btn btn-primary" ng-click="order_open()">Order the certificate (90$)</button>
+        </uib-tab>
+        <uib-tab index="7" heading="Account">
+            <article class="center_block">
+                <div class="alert alert-danger" ng-if="change_error">
+                    {{ change_error }}
+                </div>
+                <form name="forms.change_form">
+                    <input type="password" class="form-control" placeholder="Old password" ng-model="change_data.old" required>
+                    <br>
+                    <input type="password" class="form-control" placeholder="New password" ng-model="change_data.new1" required>
+                    <br>
+                    <input type="password" class="form-control" placeholder="New password again" ng-model="change_data.new2" required>
+                    <br>
+                </form>
+            <button class="btn btn-primary" ng-click="change_pass()">Change password</button>
+            </article>
         </uib-tab>
     </uib-tabset>
 </section>
