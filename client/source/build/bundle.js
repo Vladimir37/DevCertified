@@ -30754,19 +30754,19 @@
 
 	var _start_check2 = _interopRequireDefault(_start_check);
 
-	var _change_check = __webpack_require__(141);
+	var _change_check = __webpack_require__(138);
 
 	var _change_check2 = _interopRequireDefault(_change_check);
 
-	var _navbar = __webpack_require__(138);
+	var _navbar = __webpack_require__(139);
 
 	var _navbar2 = _interopRequireDefault(_navbar);
 
-	var _test_card = __webpack_require__(139);
+	var _test_card = __webpack_require__(140);
 
 	var _test_card2 = _interopRequireDefault(_test_card);
 
-	var _certificate3 = __webpack_require__(140);
+	var _certificate3 = __webpack_require__(141);
 
 	var _certificate4 = _interopRequireDefault(_certificate3);
 
@@ -31150,6 +31150,8 @@
 	    $scope.reports = {
 	        type: 0
 	    };
+	    $scope.statuses = ['Created', 'Checking', 'Paid', 'Sended'];
+
 	    $scope.select_edit_test = function () {
 	        if (!$scope.selected_data.edit_test) {
 	            $scope.error = 'Test is not selected';
@@ -31309,6 +31311,27 @@
 	                $scope.reports.list = null;
 	            } else {
 	                $scope.error = response.body;
+	            }
+	        }).catch(function (err) {
+	            console.log(err);
+	            $scope.error = 'Server error';
+	        });
+	    };
+
+	    $scope.change_status = function (id, up) {
+	        var addr = up ? 'inc-order' : 'dec-order';
+	        $http({
+	            method: 'POST',
+	            url: '/api/' + addr,
+	            data: {
+	                id: id
+	            }
+	        }).then(function (response) {
+	            response = response.data;
+	            if (response.status != 0) {
+	                $scope.error = response.body;
+	            } else {
+	                $scope.getData();
 	            }
 	        }).catch(function (err) {
 	            console.log(err);
@@ -32157,73 +32180,6 @@
 	    value: true
 	});
 
-	exports.default = function ($cookies) {
-	    return {
-	        status: $cookies.get('dclog'),
-	        restrict: 'EA',
-	        controller: 'header',
-	        scope: false,
-	        templateUrl: function templateUrl() {
-	            if (this.status) {
-	                return '/src/scripts/ng/views/directives/user.html';
-	            } else {
-	                return '/src/scripts/ng/views/directives/guest.html';
-	            }
-	        }
-	    };
-	};
-
-/***/ },
-/* 139 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	exports.default = function () {
-	    return {
-	        restrict: 'E',
-	        scope: {
-	            test: '='
-	        },
-	        templateUrl: '/src/scripts/ng/views/directives/test_card.html'
-	    };
-	};
-
-/***/ },
-/* 140 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	exports.default = function ($cookies) {
-	    return {
-	        restrict: 'EA',
-	        controller: 'certificate_render',
-	        scope: {
-	            data: '='
-	        },
-	        templateUrl: '/src/scripts/ng/views/directives/certificate.html'
-	    };
-	};
-
-/***/ },
-/* 141 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
 	exports.default = function ($http) {
 	    return function ($state, $stateParams) {
 	        if (!$stateParams.code) {
@@ -32248,6 +32204,73 @@
 	            console.log(err);
 	            $state.go('otherwise', {});
 	        });
+	    };
+	};
+
+/***/ },
+/* 139 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	exports.default = function ($cookies) {
+	    return {
+	        status: $cookies.get('dclog'),
+	        restrict: 'EA',
+	        controller: 'header',
+	        scope: false,
+	        templateUrl: function templateUrl() {
+	            if (this.status) {
+	                return '/src/scripts/ng/views/directives/user.html';
+	            } else {
+	                return '/src/scripts/ng/views/directives/guest.html';
+	            }
+	        }
+	    };
+	};
+
+/***/ },
+/* 140 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	exports.default = function () {
+	    return {
+	        restrict: 'E',
+	        scope: {
+	            test: '='
+	        },
+	        templateUrl: '/src/scripts/ng/views/directives/test_card.html'
+	    };
+	};
+
+/***/ },
+/* 141 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	exports.default = function ($cookies) {
+	    return {
+	        restrict: 'EA',
+	        controller: 'certificate_render',
+	        scope: {
+	            data: '='
+	        },
+	        templateUrl: '/src/scripts/ng/views/directives/certificate.html'
 	    };
 	};
 

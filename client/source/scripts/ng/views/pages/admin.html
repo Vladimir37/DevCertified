@@ -199,16 +199,29 @@
             <article ng-if="reports.list">
                 <article class="report" ng-repeat="report in reports.list">
                     <p>{{ report.text }}</p>
-                    <article class="report_date">{{ report.date | date }}</article>
-                    <article class="report_user" ng-if="report.user">User: {{ report.user }}</article>
-                    <article class="report_addr" ng-if="report.addr">Address: {{ report.addr }}</article>
-                    <article class="report_quest" ng-if="report.question">Question: {{ report.question }}</article>
+                    <article class="report_data">{{ report.date | date }}</article>
+                    <article class="report_data" ng-if="report.user">User: {{ report.user }}</article>
+                    <article class="report_data" ng-if="report.addr">Address: {{ report.addr }}</article>
+                    <article class="report_data" ng-if="report.question">Question: {{ report.question }}</article>
                     <button class="btn btn-primary" ng-click="resolve_report(report._id)">Resolve</button>
                 </article>
             </article>
         </uib-accordion-group>
         <uib-accordion-group heading="Orders">
-            //
+            <article class="order" ng-repeat="order in orders">
+                <p>{{ statuses[order.status] }}</p>
+                <article class="order_data">{{ order.date | date }}</article>
+                <article class="order_data">Certificate: {{ order.certificate }}</article>
+                <article class="order_data">First: {{ order.first }}</article>
+                <article class="order_data">Last: {{ order.last }}</article>
+                <article class="order_data">Line1: {{ order.address.line1 }}</article>
+                <article class="order_data">City: {{ order.address.city }}</article>
+                <article class="order_data">State: {{ order.address.state }}</article>
+                <article class="order_data">Postal code: {{ order.address.postal_code }}</article>
+                <article class="order_data">Country code: {{ order.address.country_code }}</article>
+                <button class="btn btn-primary" ng-click="change_status(order._id, true)">Up status</button>
+                <button class="btn btn-primary" ng-click="change_status(order._id, false)">Down status</button>
+            </article>
         </uib-accordion-group>
     </uib-accordion>
 </section>

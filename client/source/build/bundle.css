@@ -7318,12 +7318,14 @@ th {
   width: 450px;
   text-align: center;
 }
-.admin .report {
+.admin .report,
+.admin .order {
   border: 1px solid black;
   padding: 10px;
   margin: 10px 0;
 }
-.admin .report p {
+.admin .report p,
+.admin .order p {
   font-size: 16px;
 }
 .start {

@@ -883,6 +883,36 @@ class API {
             return res.send(Additional.serialize(1, 'Server error'));
         });
     }
+
+    incOrder(req, res, next) {
+        var order_id = req.body.id;
+        Models.orders.update({
+            _id: order_id
+        }, {
+            $inc: {
+                status: 1
+            }
+        }).then(function () {
+            return res.send(Additional.serialize(0));
+        }).catch(function (err) {
+            return res.send(Additional.serialize(1, 'Server error'));
+        });
+    }
+
+    decOrder(req, res, next) {
+        var order_id = req.body.id;
+        Models.orders.update({
+            _id: order_id
+        }, {
+            $inc: {
+                status: -1
+            }
+        }).then(function () {
+            return res.send(Additional.serialize(0));
+        }).catch(function (err) {
+            return res.send(Additional.serialize(1, 'Server error'));
+        });
+    }
 }
 
 module.exports = API;

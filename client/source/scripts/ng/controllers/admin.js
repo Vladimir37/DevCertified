@@ -10,6 +10,9 @@ export default function($scope, $http) {
     $scope.reports = {
         type: 0
     };
+    $scope.statuses = ['Created', 'Checking', 'Paid', 'Sended'];
+
+
     $scope.select_edit_test = function () {
         if (!$scope.selected_data.edit_test) {
             $scope.error = 'Test is not selected';
@@ -181,6 +184,28 @@ export default function($scope, $http) {
             $scope.error = 'Server error';
         });
     };
+
+    $scope.change_status = function (id, up) {
+        var addr = up ? 'inc-order' : 'dec-order';
+        $http({
+            method: 'POST',
+            url: '/api/' + addr,
+            data: {
+                id
+            }
+        }).then(function (response) {
+            response = response.data;
+            if (response.status != 0) {
+                $scope.error = response.body;
+            }
+            else {
+                $scope.getData();
+            }
+        }).catch(function (err) {
+            console.log(err);
+            $scope.error = 'Server error';
+        });
+    }
 
     $scope.getData = function () {
         var requests = [];

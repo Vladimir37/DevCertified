@@ -40,5 +40,7 @@ router.post('/create-order', Middlewares.onlyUser, API.createOrder);
 router.post('/payment-data', API.paymentData);
 router.post('/change-pass', Middlewares.onlyUser, API.changePass);
 router.post('/change-pass-confirm', API.changePassConfirm);
+router.post('/inc-order', Middlewares.onlyAdmin, API.incOrder);
+router.post('/dec-order', Middlewares.onlyAdmin, API.decOrder);
 
 module.exports = router;
