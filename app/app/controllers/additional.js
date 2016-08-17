@@ -3,7 +3,6 @@
 var _ = require('underscore');
 var md5 = require('md5');
 
-var Mail = new (require('./mail'))();
 var Models = require('../models/main');
 
 class Additional {
