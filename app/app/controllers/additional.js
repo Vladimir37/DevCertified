@@ -3,6 +3,7 @@
 var _ = require('underscore');
 var md5 = require('md5');
 
+var Mail = new (require('./mail'))();
 var Models = require('../models/main');
 
 class Additional {
@@ -129,6 +130,7 @@ class Additional {
                 if (!certificate) {
                     return reject(1);
                 }
+                Mail.certify(certificate);
                 return resolve({
                     success: true,
                     answers: true_answers_col,
