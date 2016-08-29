@@ -27,6 +27,6 @@ var models = {
     solutions: tests.solution
 };
 
-mongoose.connect('mongodb://localhost/devcertified');
+mongoose.connect('mongodb://localhost:27017/devcertified');
 
 module.exports = models;

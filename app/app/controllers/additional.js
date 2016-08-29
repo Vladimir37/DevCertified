@@ -2,6 +2,7 @@
 
 var _ = require('underscore');
 var md5 = require('md5');
+var mongodump = require('mongodump-stream');
 
 var Mail = new (require('./mail'))();
 var Models = require('../models/main');
@@ -143,6 +144,17 @@ class Additional {
                 reject(1);
             });
         });
+    }
+
+    downloadBackup(res) {
+        var mongoUrl = 'mongodb://localhost:27017/devcertified';
+        var mongoCollections = ['certificates', 'changes', 'orders', 'questions', 'reports', 'solutions', 'tests', 'users'];
+        var now = Date.now();
+ 
+        var fname = mongoCollections[0] + '-' + now + '.bson';
+        
+        var stream = mongodump.slurp.binary(mongoUrl, mongoCollections[0]);
+        console.log(stream);
     }
 }
 

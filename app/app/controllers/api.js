@@ -913,6 +913,10 @@ class API {
             return res.send(Additional.serialize(1, 'Server error'));
         });
     }
+
+    downloadBackup(req, res, next) {
+        Additional.downloadBackup(req);
+    }
 }
 
 module.exports = API;

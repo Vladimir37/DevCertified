@@ -21,6 +21,7 @@ router.get('/get-reports', Middlewares.onlyAdmin, API.getReports);
 router.get('/get-solutions', Middlewares.onlyUser, API.getSolutions);
 router.get('/get-orders', Middlewares.onlyUser, API.getOrders);
 router.get('/get-all-orders', Middlewares.onlyAdmin, API.getAllOrders);
+router.get('/download-backup', Middlewares.onlyAdmin, API.downloadBackup);
 
 router.post('/registration', API.registration);
 router.post('/login', API.login);
