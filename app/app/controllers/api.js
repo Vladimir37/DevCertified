@@ -915,7 +915,7 @@ class API {
     }
 
     downloadBackup(req, res, next) {
-        Additional.downloadBackup(req);
+        Additional.downloadBackup(res);
     }
 }
 

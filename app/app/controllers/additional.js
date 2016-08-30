@@ -2,7 +2,7 @@
 
 var _ = require('underscore');
 var md5 = require('md5');
-var mongodump = require('mongodump-stream');
+var mongodump = require('mongo-dump-stream');
 
 var Mail = new (require('./mail'))();
 var Models = require('../models/main');
@@ -149,12 +149,16 @@ class Additional {
     downloadBackup(res) {
         var mongoUrl = 'mongodb://localhost:27017/devcertified';
         var mongoCollections = ['certificates', 'changes', 'orders', 'questions', 'reports', 'solutions', 'tests', 'users'];
-        var now = Date.now();
- 
-        var fname = mongoCollections[0] + '-' + now + '.bson';
-        
-        var stream = mongodump.slurp.binary(mongoUrl, mongoCollections[0]);
-        console.log(stream);
+        var handler = {
+            write: res.send,
+            end: res.end
+        };
+
+        return mongodump.dump(mongoUrl, res, function(err) {
+            if (!err) { 
+                res.end('Error!')
+            }
+        });
     }
 }
 
